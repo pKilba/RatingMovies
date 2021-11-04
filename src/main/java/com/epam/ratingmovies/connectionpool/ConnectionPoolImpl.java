@@ -1,4 +1,4 @@
-package connectionpool;
+package com.epam.ratingmovies.connectionpool;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
