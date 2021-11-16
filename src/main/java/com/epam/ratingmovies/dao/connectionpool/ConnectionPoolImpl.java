@@ -1,4 +1,4 @@
-package com.epam.ratingmovies.connectionpool;
+package com.epam.ratingmovies.dao.connectionpool;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,10 +12,10 @@ import java.util.concurrent.locks.ReentrantLock;
 //final ubrats?
 public final class ConnectionPoolImpl implements ConnectionPool {
 
-    private static final String DB_URL = "";
-    private static final String USER = "";
-    private static final String PASS = "";
-    private static final String DRIVER = "";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/mydb";
+    private static final String USER = "root";
+    private static final String PASS = "jsp1977";
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static int INITIAL_PO0L_SIZE = 5;
     private static final AtomicBoolean IS_POOL_CREATED = new AtomicBoolean(false);
     private static final ReentrantLock INSTANCE_LOCKER = new ReentrantLock();
@@ -141,9 +141,11 @@ public final class ConnectionPoolImpl implements ConnectionPool {
                 ProxyConnection proxyConnection = new ProxyConnection(connection, this);
                 availableConnections.add(proxyConnection);
             }
+            System.out.printf("vse good");
             return true;
         } catch (SQLException e) {
             //ubrats return nahui
+            System.out.printf("problem");
             return false;
             //dopilits
             // throw new ConnectionPoolException();
