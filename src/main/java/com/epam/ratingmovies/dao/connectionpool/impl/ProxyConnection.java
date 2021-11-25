@@ -1,4 +1,6 @@
-package com.epam.ratingmovies.dao.connectionpool;
+package com.epam.ratingmovies.dao.connectionpool.impl;
+
+import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 
 import java.sql.*;
 import java.util.Map;

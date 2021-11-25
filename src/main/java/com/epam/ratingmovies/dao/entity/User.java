@@ -17,6 +17,13 @@ public class User extends AbstractEntity<Long> {
 
     //todo add yourself and change tip profile picture mb na string
 
+//todo test удалить потом
+    public User(String login,String password){
+       this.login = login;
+       this.password = password;
+        System.out.println(login +" --login ; password -- " +password);
+    }
+
 
     public User(String name, String login, String password,
                 UserRole userRole, Integer profilePictureId, String email,

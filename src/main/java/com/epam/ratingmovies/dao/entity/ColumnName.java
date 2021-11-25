@@ -7,8 +7,8 @@ public final class ColumnName {
     public static final String USER_LOGIN = "login";
     public static final String USER_PASSWORD = "password";
     public static final String USER_ROLE = "role_id";
-    public static final String USER_NAME = "first_name";
-    public static final String USER_EMAIL = "email";
+    public static final String USER_NAME = "name";
+    public static final String USER_EMAIL = "mail";
     public static final String USER_TELEGRAM = "account_telegram";
     public static final String USER_STATUS = "status_id";
     public static final String USER_CREATE_TIME = "create_time";

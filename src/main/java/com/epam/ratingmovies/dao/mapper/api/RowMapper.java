@@ -1,4 +1,4 @@
-package com.epam.ratingmovies.dao.mapper;
+package com.epam.ratingmovies.dao.mapper.api;
 
 import com.epam.ratingmovies.dao.entity.AbstractEntity;
 
