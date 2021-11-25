@@ -12,6 +12,7 @@
     <title>Title</title>
 </head>
 <body class="main-bg">
+<form method="POST" name="loginForm"  action="${pageContext.request.contextPath}/ratingMovies?command=login" class="flex-box col-md-6">
 <div class="login-container text-c animated flipInX">
     <div>
         <h1 class="logo-badge text-whitesmoke"><span class="fa fa-user-circle"></span></h1>
@@ -21,10 +22,10 @@
     <div class="container-content">
         <form class="margin-t">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="login" required="">
+                <input type="text" class="form-control" minlength="8" maxlength="32" name="login" value="${login}" requiredplaceholder="login" required="">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="*****" required="">
+                <input type="password" class="form-control" placeholder="*****"  minlength="8" maxlength="32"  required="">
             </div>
             <button type="submit" class="form-button button-l margin-b">Sign In</button>
 
@@ -35,6 +36,7 @@
         <p class="margin-t text-whitesmoke"><small> Pavel Kilbas &copy; 2021</small> </p>
     </div>
 </div>
+</form>
 </body>
 <!--<div class="container py-3">
     <div class="row flex-column">

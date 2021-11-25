@@ -7,8 +7,8 @@ import java.util.Arrays;
 public enum ApplicationCommand {
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand(), CommandName.SIGN_UP_PAGE),
     GO_TO_LOGIN_PAGE(new GoToLoginPageCommand(), CommandName.LOGIN_PAGE),
-    /*  GO_TO_PROFILE_PAGE(new GoToProfilePageCommand(), CommandName.PROFILE_PAGE),
-      GO_TO_ACCOUNT_SETTING_PAGE(new GoToAccountSettingPageCommand(), CommandName.ACCOUNT_SETTINGS_PAGE),
+      GO_TO_USER_PAGE(new GoToUserPageCommand(), CommandName.PROFILE_PAGE),
+    /*  GO_TO_ACCOUNT_SETTING_PAGE(new GoToAccountSettingPageCommand(), CommandName.ACCOUNT_SETTINGS_PAGE),
       GO_TO_GAME_PAGE(new GoToGamePageCommand(), CommandName.PLAY_PAGE),
       GO_TO_GAMBLERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
       GO_TO_STATISTIC_GAMES(new GoToStatisticGamesPageCommand(),CommandName.STATISTIC_GAMES_PAGE),

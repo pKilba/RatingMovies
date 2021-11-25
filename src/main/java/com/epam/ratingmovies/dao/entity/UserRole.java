@@ -9,8 +9,8 @@ import com.epam.ratingmovies.controller.command.CommandName.*;
 import static com.epam.ratingmovies.controller.command.CommandName.HOME_PAGE;
 
 public enum UserRole {
-    USER(1,HOME_PAGE),
-    ADMIN(2,HOME_PAGE);
+    USER(0,HOME_PAGE),
+    ADMIN(1,HOME_PAGE);
 
     private int id;
     private final Set<String> commandsName = new HashSet<>();

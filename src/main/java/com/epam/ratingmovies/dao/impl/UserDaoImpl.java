@@ -31,6 +31,7 @@ public class UserDaoImpl implements UserDAO {
 
     private static final String SQL_FIND_ALL_USERS = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users";
     private static final String SQL_FIND_USER_BY_LOGIN = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE login = ?";
+    private static final String SQL_FIND_USER_BY_ID = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE user_id = ?";
     private static final String SQL_FIND_USER_BY_ACCOUNT_TELEGRAM = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE account_telegram = ?";
     private static final              String SQL_FIND_USER_BY_MAIL = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE mail = ?";
 
@@ -103,13 +104,39 @@ public class UserDaoImpl implements UserDAO {
 
     }
 
+    public Optional<User> findUserById(long id){
+        ResultSet resultSet = null;
+        Optional<User> userOptional = null;
+        try (Connection connection = connectionPool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ID)) {
+            statement.setLong(1, id);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+
+                userOptional = Optional.of(mapper.map(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return userOptional;
+
+    }
+
+
     @Override
     public List<User> findAll() {
         Connection connection = connectionPool.takeConnection();
         List<User> result = new ArrayList<>();
         try {
-
-
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USERS);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
