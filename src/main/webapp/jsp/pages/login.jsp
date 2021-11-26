@@ -25,7 +25,7 @@
                 <input type="text" class="form-control" minlength="8" maxlength="32" name="login" value="${login}" requiredplaceholder="login" required="">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="*****"  minlength="8" maxlength="32"  required="">
+                <input type="password" class="form-control" placeholder="*****" name="password"  minlength="8" maxlength="32"  required="">
             </div>
             <button type="submit" class="form-button button-l margin-b">Sign In</button>
 

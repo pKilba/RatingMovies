@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class User extends AbstractEntity<Long> {
 
-    private  Timestamp createTime;
+    private Timestamp createTime;
     private String name;
     private String login;
     private String password;
@@ -17,11 +17,11 @@ public class User extends AbstractEntity<Long> {
 
     //todo add yourself and change tip profile picture mb na string
 
-//todo test удалить потом
-    public User(String login,String password){
-       this.login = login;
-       this.password = password;
-        System.out.println(login +" --login ; password -- " +password);
+    //todo test удалить потом
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+        System.out.println(login + " --login ; password -- " + password);
     }
 
 
@@ -119,7 +119,7 @@ public class User extends AbstractEntity<Long> {
         this.userStatus = userStatus;
     }
 
-    public static UserBuilder builder(){
+    public static UserBuilder builder() {
         return new UserBuilder();
     }
 
@@ -167,12 +167,13 @@ public class User extends AbstractEntity<Long> {
             newUser.setTelegramAccount(telegram);
             return this;
         }
+
         public UserBuilder setCreateTime(Timestamp timestamp) {
             newUser.setCreateTime(timestamp);
             return this;
         }
 
-        public UserBuilder setProfilePicture(Integer pictureId){
+        public UserBuilder setProfilePicture(Integer pictureId) {
             newUser.setProfilePictureId(pictureId);
             return this;
         }

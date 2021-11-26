@@ -15,6 +15,8 @@ import com.epam.ratingmovies.dao.mapper.impl.UserRowMapper;
 import java.sql.*;
 import java.util.*;
 
+import static com.epam.ratingmovies.dao.entity.ColumnName.USER_ID;
+
 public class UserDaoImpl implements UserDAO {
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
@@ -31,7 +33,9 @@ public class UserDaoImpl implements UserDAO {
 
     private static final String SQL_FIND_ALL_USERS = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users";
     private static final String SQL_FIND_USER_BY_LOGIN = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE login = ?";
+    private static final String SQL_FIND_ID_BY_LOGIN = "SELECT user_id FROM users WHERE login = ?";
     private static final String SQL_FIND_USER_BY_ID = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE user_id = ?";
+    private static final String SQL_FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE login = ? and password = ?";
     private static final String SQL_FIND_USER_BY_ACCOUNT_TELEGRAM = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE account_telegram = ?";
     private static final              String SQL_FIND_USER_BY_MAIL = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE mail = ?";
 
@@ -64,6 +68,7 @@ public class UserDaoImpl implements UserDAO {
             //todo добавить заполнение айди юзера из бд
 
 
+
             int execute = preparedStatement.executeUpdate();
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -80,6 +85,33 @@ public class UserDaoImpl implements UserDAO {
             System.out.println("что то совсем не так");
         }
         return user;
+    }
+
+    public long findIdByLogin(String login){
+        ResultSet resultSet = null;
+       long id = 0 ;
+        try (Connection connection = connectionPool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_ID_BY_LOGIN)) {
+            statement.setString(1, login);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+
+                id =resultSet.getInt(USER_ID);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return id;
     }
 
     @Override
@@ -170,8 +202,34 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public Optional<User> findUserByLoginPassword(String login, String password) throws DaoException {
-        return Optional.empty();
+
+        ResultSet resultSet = null;
+        Optional<User> userOptional = Optional.empty();
+        try (Connection connection = connectionPool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN_AND_PASSWORD)) {
+            statement.setString(1, login);
+            statement.setString(2, password);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+
+                userOptional = Optional.of(mapper.map(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return userOptional;
     }
+
+
 
 
     public Optional<User> findUserByTelegram(String telegram) throws DaoException {

@@ -24,4 +24,16 @@ public class UserService {
         return user.get();
     }
 
+
+    //todo optional return
+    public User findUserByLogin(String login){
+        Optional<User> user = userDao.findUserByLogin(login);
+        return user.get();
+    }
+
+    public Optional<User>findUserByLoginAndPassword(String login,String password){
+        Optional<User> user = userDao.findUserByLoginPassword(login,password);
+        return user;
+    }
+
 }
