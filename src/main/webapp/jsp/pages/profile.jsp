@@ -1,3 +1,5 @@
+
+<jsp:useBean id="user" scope="request" type="com.epam.ratingmovies.dao.entity.User"/>
 <%--
   Created by IntelliJ IDEA.
   User: Asus
@@ -11,6 +13,7 @@
     <title>Title</title>
 </head>
 <body>
+<h4>${user.email}</h4>
 <h1>Ура !!! вы авторизовались и теперь вы в профиле</h1>
 </body>
 </html>

@@ -12,7 +12,8 @@ import com.epam.ratingmovies.service.UserService;
 import com.google.protobuf.ServiceException;
 
 public class GoToUserPageCommand implements Command {
-    public static final String USERS = "/jsp/pages/users.jsp";
+
+    public static final String USER = "/jsp/pages/profile.jsp";
     private static final UserService userService = UserService.getInstance();
 
     @Override
@@ -20,7 +21,7 @@ public class GoToUserPageCommand implements Command {
         long id = ParameterTaker.takeId(request);
         User user = userService.findUserById(id);
         request.addAttribute(Attribute.USER, user);
-        return CommandResponse.forward(USERS);
+        return CommandResponse.forward(USER);
     }
     }
 
