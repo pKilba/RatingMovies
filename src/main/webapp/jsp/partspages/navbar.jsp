@@ -13,7 +13,7 @@
         <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
           <li><a href="${pageContext.request.contextPath}/ratingMovies?command=home-page"
                  class="nav-link px-2 text-white">Домой</a></li>
-          <li><a href="${pageContext.request.contextPath}/ratingMovies?command=login-page"
+          <li><a href="${pageContext.request.contextPath}/ratingMovies?command=movies-page"
                  class="nav-link px-2 text-white">Просмотр фильмов</a>
         </ul>
         <div class="text-end">
@@ -27,6 +27,73 @@
              class="btn btn-outline-light me-2 langToggle" data-onstyle="light">EN</a>
         </div>
         </sc:access>
+
+        <sc:access role="USER">
+            <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=home-page"
+                       class="nav-link px-2 text-white">Домой</a></li>
+                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=movies-page"
+                       class="nav-link px-2 text-white">Фильмы</a>
+                </li>
+
+                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=statistic-comments-page&p=1&s=10" class="nav-link px-2 text-white">
+                    Статистика комментариев пользователя</a>
+                </li>
+            </ul>
+
+            <div class="dropdown text-end mr-3">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="${pageContext.request.contextPath}/images/photo/${sessionScope.photo}" alt="mdo"
+                         width="40" height="40" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ratingMovies?command=account-settings-page">Настройка аккаунта</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ratingMovies?command=profile-page&id=${sessionScope.get("userId")}">Профиль</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item"
+                           href="${pageContext.request.contextPath}/ratingMovies?command=logout">Выход
+                           </a></li>
+                </ul>
+            </div>
+        </sc:access>
+
+
+        <sc:access role="ADMIN">
+            <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=home-page"
+                       class="nav-link px-2 text-white">Домой</a></li>
+                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=movies-page"
+                       class="nav-link px-2 text-white">Фильмы</a>
+                </li>
+                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=users-page&p=1&s=10" class="nav-link px-2 text-white">
+                    Пользователи</a>
+                </li>
+                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=statistic-comments-page&p=1&s=10" class="nav-link px-2 text-white">
+                    Статистика комментариев</a>
+                </li>
+            </ul>
+            <div class="dropdown text-end mr-3">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="${pageContext.request.contextPath}/images/photo/${sessionScope.photo}" alt="mdo"
+                         width="40" height="40" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ratingMovies?command=account-settings-page">Настройки</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ratingMovies?command=profile-page&id=${sessionScope.get("userId")}">Профиль</a></li>
+                    <li><a class="dropdown-item bg-warning" href="${pageContext.request.contextPath}/ratingMovies?command=admin-panel-page&p=1&s=10">Панель админа</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item"
+                           href="${pageContext.request.contextPath}/ratingMovies?command=logout">Выход</a></li>
+                </ul>
+            </div>
+        </sc:access>
+
 
     </div>
   </div>

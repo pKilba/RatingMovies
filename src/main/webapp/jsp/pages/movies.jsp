@@ -1,10 +1,8 @@
-
-<jsp:useBean id="user" scope="request" type="com.epam.ratingmovies.dao.entity.User"/>
 <%--
   Created by IntelliJ IDEA.
   User: Asus
-  Date: 25.11.2021
-  Time: 02:12
+  Date: 27.11.2021
+  Time: 13:47
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -19,7 +17,6 @@
 <body>
 
 <c:import url="/jsp/partspages/navbar.jsp"/>
-<h4>${user.userRole}</h4>
-<h1>Ура !!! вы авторизовались и теперь вы в профиле</h1>
+<h1>movies</h1>
 </body>
 </html>

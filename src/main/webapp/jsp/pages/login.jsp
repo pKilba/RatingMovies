@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="../../css/login.css">
     <title>Title</title>
 </head>
+
 <body class="main-bg">
 <form method="POST" name="loginForm"  action="${pageContext.request.contextPath}/ratingMovies?command=login" class="flex-box col-md-6">
 <div class="login-container text-c animated flipInX">

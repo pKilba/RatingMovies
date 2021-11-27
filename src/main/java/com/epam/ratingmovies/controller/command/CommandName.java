@@ -5,7 +5,7 @@ public class CommandName {
     public static final String HOME_PAGE = "home-page";
     public static final String LOGIN_PAGE = "login-page";
     public static final String PROFILE_PAGE = "profile-page";
-
+    public static final String MOVIES_PAGE = "movies-page";
     public static final String LOGIN = "login";
 
     public static final String SIGN_UP = "sign-up";
