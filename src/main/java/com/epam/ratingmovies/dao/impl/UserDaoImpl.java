@@ -180,7 +180,6 @@ public class UserDaoImpl implements UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(Arrays.toString(result.toArray()));
         return result;
     }
 

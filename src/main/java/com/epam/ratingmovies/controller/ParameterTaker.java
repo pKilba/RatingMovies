@@ -14,6 +14,18 @@ public class ParameterTaker {
             return Long.parseLong(idStr);
 
     }
+    public static int takeNumber(String parameterName, RequestContext requestContext)
+            {
+        String numberStr = requestContext.getRequestParameter(parameterName);
+        int number = -1;
+        try {
+            number = Integer.parseInt(numberStr);
+        } catch (NumberFormatException e) {
+        }
+        if (number < 0) {
+        }
+        return number;
+    }
 
 
 }
