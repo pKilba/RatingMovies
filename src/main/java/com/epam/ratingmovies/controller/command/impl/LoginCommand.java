@@ -24,7 +24,7 @@ public class LoginCommand implements Command {
 
     private static final String PROFILE_PAGE_COMMAND = "ratingMovies?command=" + CommandName.PROFILE_PAGE + "&id=";
     private static final String INCORRECT_DATA_KEY = "incorrect";
-    private static final String BANNED_USER_KEY = "banned";
+    private static final String FREEZE_USER_KEY = "banned";
   //  private static final long LIFE_TIME_COOKIE = ConfigReaderJwt.getAccessTokenLifeTime();
     private static final UserService service = UserService.getInstance();
     private static final int TIMEZONE_GMT_PLUS_THREE = 60*60*3;
@@ -66,7 +66,7 @@ public class LoginCommand implements Command {
 */
                 return CommandResponse.redirect(PROFILE_PAGE_COMMAND + id);
             }
-            request.addAttribute(Attribute.ERROR_MESSAGE, BANNED_USER_KEY);
+            request.addAttribute(Attribute.ERROR_MESSAGE, FREEZE_USER_KEY);
         } else {
             request.addAttribute(Attribute.ERROR_MESSAGE, INCORRECT_DATA_KEY);
         }

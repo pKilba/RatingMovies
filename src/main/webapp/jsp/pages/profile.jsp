@@ -13,7 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<h4>${user.email}</h4>
+<h4>${user.userRole}</h4>
 <h1>Ура !!! вы авторизовались и теперь вы в профиле</h1>
 </body>
 </html>
