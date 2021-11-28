@@ -10,6 +10,7 @@ public class GoToSignUpPageCommand implements Command {
 
     @Override
     public CommandResponse execute(RequestContext request) {
+
         return CommandResponse.forward(SIGN_UP);
     }
 }

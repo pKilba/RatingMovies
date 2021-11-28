@@ -17,6 +17,9 @@ public class Attribute {
     public static final String INVALIDATE_ATTRIBUTE = "invalidate";
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String SUCCES_MESSAGE = "successMessage";
+    public static final String MOVIE_LIST = "movieList";
+    public static final String CINEMA = "cinema";
+
 
     //dto
     public static final String USER_DTO_LIST = "userDtoList";

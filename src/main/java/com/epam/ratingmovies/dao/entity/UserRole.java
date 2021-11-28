@@ -6,22 +6,18 @@ import java.util.Set;
 
 import com.epam.ratingmovies.controller.command.CommandName.*;
 
-import static com.epam.ratingmovies.controller.command.CommandName.HOME_PAGE;
+
 
 public enum UserRole {
-    USER(0,HOME_PAGE),
-    ADMIN(1,HOME_PAGE);
+    USER(0),
+    ADMIN(1);
 
     private int id;
-    private final Set<String> commandsName = new HashSet<>();
 
-    UserRole(int id,String ... commandsName){
+    UserRole(int id){
         this.id = id;
     }
 
-    public Set<String> getRole() {
-        return commandsName;
-    }
 
 
     public int getId() {

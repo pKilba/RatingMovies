@@ -7,20 +7,20 @@ import java.util.Arrays;
 enum ApplicationCommand {
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand(), CommandName.SIGN_UP_PAGE),
     GO_TO_LOGIN_PAGE(new GoToLoginPageCommand(), CommandName.LOGIN_PAGE),
-      GO_TO_USER_PAGE(new GoToUserPageCommand(), CommandName.PROFILE_PAGE),
-      GO_TO_MOVIES_PAGE(new GoToMoviesPageCommand(), CommandName.MOVIES_PAGE),
-    /*  GO_TO_ACCOUNT_SETTING_PAGE(new GoToAccountSettingPageCommand(), CommandName.ACCOUNT_SETTINGS_PAGE),
-      GO_TO_GAME_PAGE(new GoToGamePageCommand(), CommandName.PLAY_PAGE),
-      GO_TO_GAMBLERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
+    GO_TO_USER_PAGE(new GoToUserPageCommand(), CommandName.PROFILE_PAGE),
+    //GO_TO_ACCOUNT_SETTING_PAGE(new GoToAccountSettingPageCommand(), CommandName.ACCOUNT_SETTINGS_PAGE),
+    /*  GO_TO_GAMBLERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
       GO_TO_STATISTIC_GAMES(new GoToStatisticGamesPageCommand(),CommandName.STATISTIC_GAMES_PAGE),
       GO_TO_ADMIN_PANEL_PAGE(new GoToAdminPanelPageCommand(), CommandName.ADMIN_PANEL_PAGE),
 
       */
     GO_TO_HOME_PAGE(new GoToHomePageCommand(), CommandName.HOME_PAGE),
     //todo добавить только для админа ?
-GO_TO_USERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
+    GO_TO_USERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
+    GO_TO_MOVIES_PAGE(new GoToMoviesPageCommand(), CommandName.MOVIES_PAGE),
     SIGN_UP(new SignUpCommand(), CommandName.SIGN_UP),
     LOGIN(new LoginCommand(), CommandName.LOGIN);
+
     /*LOGOUT(new LogoutCommand(), CommandName.LOGOUT),
     LOCALIZATION(new LocalizationCommand(), CommandName.LOCALIZATION),
     CHANGE_PASSWORD(new ChangePasswordCommand(), CommandName.CHANGE_PASSWORD),

@@ -36,10 +36,9 @@
                 <tbody>
                 <%! private int i = 0; %>
 
-                <c:forEach items="${userList}" var="user">
+                <c:forEach items="${userList}"  varStatus="counter"  var="user">
                     <tr>
-                        <td><%= ++i %>
-                        </td>
+                        <td>${counter.index+1}</td>
                         <td>
                                 ${user.getName()}
                         </td>
@@ -57,6 +56,30 @@
                 </c:forEach>
                 </tbody>
             </table>
+
+            <c:if test="${userList.size() != 0}">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <c:forEach var="i" begin="1" end="${maxPage}">
+                            <c:if test="${i == currentPage+4}">
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            </c:if>
+                            <c:if test="${(((currentPage-1) == i) || ((i < currentPage+3) && (i > currentPage-3))) || (i > maxPage-2) || (i == 1)}">
+                                <li class="page-item <c:if test="${currentPage == i}">active</c:if>">
+                                    <a class="page-link"
+                                       href="${pageContext.request.contextPath}/ratingMovies?command=users-page&p=<c:out value = "${i}"/>&s=${amountOfPage}">
+                                        <c:out value="${i}"/>
+                                    </a>
+                                </li>
+                            </c:if>
+                        </c:forEach>
+                    </ul>
+                </nav>
+            </c:if>
+
+
 
         </div>
     </div>
