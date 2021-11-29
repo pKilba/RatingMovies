@@ -44,7 +44,7 @@
             <div class="dropdown text-end mr-3">
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="${pageContext.request.contextPath}/images/photo/${sessionScope.photo}" alt="mdo"
+                    <img src="${pageContext.request.contextPath}/images/photo/img.png" alt="mdo"
                          width="40" height="40" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">

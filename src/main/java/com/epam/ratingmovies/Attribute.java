@@ -18,7 +18,7 @@ public class Attribute {
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String SUCCES_MESSAGE = "successMessage";
     public static final String MOVIE_LIST = "movieList";
-    public static final String CINEMA = "cinema";
+    public static final String MOVIE = "movie";
 
 
     //dto

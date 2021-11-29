@@ -6,7 +6,7 @@ public class CommandName {
     public static final String LOGIN_PAGE = "login-page";
     public static final String PROFILE_PAGE = "profile-page";
 
-    public static final String CINEMA_PAGE = "cinema-page";
+    public static final String MOVIE_PAGE = "movie-page";
 
     public static final String MOVIES_PAGE = "movies-page";
     public static final String LOGIN = "login";

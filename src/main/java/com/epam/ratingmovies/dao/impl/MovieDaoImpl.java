@@ -32,6 +32,7 @@ public class MovieDaoImpl implements MovieDao {
 
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
+    private Integer idMovie;
 
     @Override
     public Movie save(Movie movie) {
@@ -100,6 +101,8 @@ connectionPool.returnConnection(connection);
         return result;
     }
 
+
+
     //todo изменить логику крч я сравниваю по айди а например в моей бд
     //были удалены юзеры с некоторыми айди поэтому не ровно выводит
     //todo!!!! obezatelno
@@ -143,7 +146,8 @@ connectionPool.returnConnection(connection);
 
 
     @Override
-    public Optional<Movie> findById(Integer idMovie) {
+    public Optional<Movie> findMovieById(Integer idMovie) {
+        this.idMovie = idMovie;
         ResultSet resultSet = null;
         Optional<Movie> movieOptional = null;
         try (Connection connection = connectionPool.takeConnection();
@@ -171,8 +175,10 @@ connectionPool.returnConnection(connection);
         return movieOptional;
     }
 
+
+    //todo удалить
     @Override
-    public Optional<Movie> findMovieById(Integer id) throws DaoException {
+    public Optional<Movie> findById(Integer id) throws DaoException {
         return Optional.empty();
     }
 

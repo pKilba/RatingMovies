@@ -12,7 +12,7 @@ import com.epam.ratingmovies.service.MovieService;
 import com.google.protobuf.ServiceException;
 
 public class GoToMoviePageCommand implements Command {
-    public static final String CINEMA = "/jsp/pages/cinema.jsp";
+    public static final String MOVIE = "/jsp/pages/movie.jsp";
     public static final MovieService movieService = new MovieService();
 
     @Override
@@ -21,8 +21,8 @@ public class GoToMoviePageCommand implements Command {
 
         //todo хуита
         Movie movie = movieService.findMovieById(id);
-        request.addAttribute(Attribute.CINEMA, movie);
-        return CommandResponse.forward(CINEMA);
+        request.addAttribute(Attribute.MOVIE, movie);
+        return CommandResponse.forward(MOVIE);
 
     }
 }

@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>ФИЛЬМ ВАШ </h1>
+<h1>ФИЛЬМ ВАШ ${movie.getAbout()} </h1>
+
 </body>
 </html>

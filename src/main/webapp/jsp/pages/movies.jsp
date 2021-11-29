@@ -39,7 +39,7 @@
                         <td>${counter.index+1}</td>
 
                         <td>
-                            <a href="${pageContext.request.contextPath}/ratingMovies?command=cinema-page&id=${movie.getId()}">
+                            <a href="${pageContext.request.contextPath}/ratingMovies?command=movie-page&id=${movie.getId()}">
                                     ${movie.getAbout()}
                             </a>
                         </td>
