@@ -23,4 +23,11 @@ public final class ColumnName {
     public static final String MOVIE_AMOUNT_DISLIKE = "amount_dislike";
     public static final String MOVIE_GENRE_ID = "genre_id";
 
+    //Table comments
+    public static final String COMMENT_ID = "comment_id";
+    public static final String COMMENT_MESSAGE = "message";
+    public static final String COMMENT_MOVIE_ID = "movie_id";
+    public static final String COMMENT_USER_ID = "user_id";
+    public static final String COMMENT_CREATE_TIME = "create_time";
+
 }

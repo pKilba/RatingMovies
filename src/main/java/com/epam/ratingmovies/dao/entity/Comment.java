@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 
 public class Comment extends AbstractEntity<Long> {
     private String message;
-    private Movie movie;
-    private User user;
+    private long movieId;
+    private long userId;
     private Timestamp createTimeComment;
 
     Comment() {
@@ -19,20 +19,20 @@ public class Comment extends AbstractEntity<Long> {
         this.message = message;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public long getMovieId() {
+        return movieId;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setMovieId(long movieId) {
+        this.movieId = movieId;
     }
 
-    public User getUser() {
-        return user;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public Timestamp getCreateTimeComment() {
@@ -43,10 +43,10 @@ public class Comment extends AbstractEntity<Long> {
         this.createTimeComment = createTimeComment;
     }
 
-    public Comment(String message, Movie movie, User user, Timestamp createTimeComment) {
+    public Comment(String message, long movieId, long userId, Timestamp createTimeComment) {
         this.message = message;
-        this.movie = movie;
-        this.user = user;
+        this.movieId = movieId;
+        this.userId = userId;
         this.createTimeComment = createTimeComment;
     }
 
@@ -72,13 +72,13 @@ public class Comment extends AbstractEntity<Long> {
             return this;
         }
 
-        public Comment.CommentBuilder setMovie(Movie movie) {
-            newComment.setMovie(movie);
+        public Comment.CommentBuilder setMovie(long movieId) {
+            newComment.setMovieId(movieId);
             return this;
         }
 
-        public Comment.CommentBuilder setUser(User user) {
-            newComment.setUser(user);
+        public Comment.CommentBuilder setUser(long userId) {
+            newComment.setUserId(userId);
             return this;
         }
 

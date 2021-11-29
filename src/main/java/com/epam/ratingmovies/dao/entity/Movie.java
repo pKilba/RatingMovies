@@ -2,7 +2,7 @@ package com.epam.ratingmovies.dao.entity;
 
 import java.sql.Timestamp;
 
-public class Movie extends AbstractEntity<Integer> {
+public class Movie extends AbstractEntity<Long> {
     private String poster;
     private String about;
     private Timestamp releaseDate;
@@ -83,7 +83,7 @@ public class Movie extends AbstractEntity<Integer> {
             newMovie = new Movie();
         }
 
-        public Movie.MovieBuilder setMovieId(int movieId) {
+        public Movie.MovieBuilder setMovieId(long movieId) {
             newMovie.setId(movieId);
             return this;
         }
