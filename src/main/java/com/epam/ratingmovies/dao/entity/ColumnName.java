@@ -3,7 +3,9 @@ package com.epam.ratingmovies.dao.entity;
 public final class ColumnName {
     private ColumnName(){}
     //Table "users"
+
     public static final String USER_ID = "user_id";
+    public static final String USER = "user";
     public static final String USER_LOGIN = "login";
     public static final String USER_PASSWORD = "password";
     public static final String USER_ROLE = "role_id";
@@ -16,12 +18,16 @@ public final class ColumnName {
 
     //Table movies
     public static final String MOVIE_ID = "movie_id";
+    public static final String MOVIE = "movie";
     public static final String MOVIE_POSTER = "poster";
     public static final String MOVIE_ABOUT = "about";
     public static final String MOVIE_RELEASE_DATE = "movie_release_date";
     public static final String MOVIE_AMOUNT_LIKE = "amount_like";
     public static final String MOVIE_AMOUNT_DISLIKE = "amount_dislike";
     public static final String MOVIE_GENRE_ID = "genre_id";
+
+
+
 
     //Table comments
     public static final String COMMENT_ID = "comment_id";

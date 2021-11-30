@@ -19,7 +19,8 @@ public class MovieDaoImpl implements MovieDao {
 
     private final RowMapper<Movie> mapper = new MovieRowMapper();
 
-    private static final String SQL_SAVE_MOVIE = "INSERT INTO movies(poster,about,movie_release_date,amount_like,amount_dislike,genre_id)" +
+    private static final String SQL_SAVE_MOVIE = "INSERT INTO movies(poster,about," +
+            "movie_release_date,amount_like,amount_dislike,genre_id)" +
             " values (?,?,?,?,?,?)";
     private static final String SQL_FIND_ALL_MOVIES = "SELECT movie_id, poster, about," +
             "movie_release_date,amount_like,amount_dislike," +
@@ -32,7 +33,7 @@ public class MovieDaoImpl implements MovieDao {
 
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
-    private Integer idMovie;
+    private long idMovie;
 
     @Override
     public Movie save(Movie movie) {
@@ -50,7 +51,7 @@ public class MovieDaoImpl implements MovieDao {
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    movie.setId(generatedKeys.getInt(1));
+                    movie.setId(generatedKeys.getLong(1));
                 } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
@@ -76,9 +77,10 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
 
     }
+
 
     @Override
     public List<Movie> findAll() {
@@ -101,6 +103,10 @@ connectionPool.returnConnection(connection);
         return result;
     }
 
+    @Override
+    public Optional<Movie> findById(Long idEntity) {
+        return Optional.empty();
+    }
 
 
     //todo изменить логику крч я сравниваю по айди а например в моей бд
@@ -146,7 +152,7 @@ connectionPool.returnConnection(connection);
 
 
     @Override
-    public Optional<Movie> findMovieById(Integer idMovie) {
+    public Optional<Movie> findMovieById(long idMovie) {
         this.idMovie = idMovie;
         ResultSet resultSet = null;
         Optional<Movie> movieOptional = null;
@@ -175,12 +181,6 @@ connectionPool.returnConnection(connection);
         return movieOptional;
     }
 
-
-    //todo удалить
-    @Override
-    public Optional<Movie> findById(Integer id) throws DaoException {
-        return Optional.empty();
-    }
 
     @Override
     public List<Movie> findMoviesByGenre(String genre) throws DaoException {

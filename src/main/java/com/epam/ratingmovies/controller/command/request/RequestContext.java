@@ -2,7 +2,6 @@ package com.epam.ratingmovies.controller.command.request;
 
 import com.epam.ratingmovies.Attribute;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -17,15 +16,12 @@ public class RequestContext {
     private final Map<String, Object> sessionAttributes;
     private final Map<String, String[]> requestParameters;
     private final String requestHeader;
-    private final Cookie[] cookies;
-    private final Set<Cookie> newCookies = new HashSet<>();
 
     public RequestContext(HttpServletRequest req) {
         this.requestAttributes = retrieveRequestAttributes(req);
         this.requestParameters = req.getParameterMap();
         this.sessionAttributes = retrieveSessionAttributes(req);
         this.requestHeader = req.getHeader(REFERER_HEADER);
-        this.cookies = req.getCookies();
     }
 
     private Map<String, Object> retrieveSessionAttributes(HttpServletRequest req) {
@@ -48,13 +44,6 @@ public class RequestContext {
         return attributes;
     }
 
-    public Optional<String> readCookie(String key) {
-        return Arrays.stream(this.cookies)
-                .filter(c -> key.equals(c.getName()))
-                .map(Cookie::getValue)
-                .findAny();
-    }
-
     public void fillData(HttpServletRequest request, HttpServletResponse response) {
         Set<String> requestAttributeNames = this.requestAttributes.keySet();
         for (String attributeName : requestAttributeNames) {
@@ -72,9 +61,6 @@ public class RequestContext {
                 session.setAttribute(attributeName, attributeValue);
             }
         }
-        for (Cookie cookie : newCookies) {
-            response.addCookie(cookie);
-        }
     }
 
     public String getRequestParameter(String parameterName) {
@@ -85,9 +71,6 @@ public class RequestContext {
         return parameters[0];
     }
 
-    public void addCookie(Cookie cookie) {
-        this.newCookies.add(cookie);
-    }
 
     public void addAttribute(String attributeName, Object attributeContent) {
         requestAttributes.put(attributeName, attributeContent);
@@ -117,9 +100,6 @@ public class RequestContext {
         return sessionAttributes.get(attributeName);
     }
 
-    public Cookie[] getCookies() {
-        return cookies;
-    }
 
     public String getHeader() {
         return requestHeader;

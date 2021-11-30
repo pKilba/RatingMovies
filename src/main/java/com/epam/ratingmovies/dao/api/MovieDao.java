@@ -7,10 +7,10 @@ import com.epam.ratingmovies.dao.exception.DaoException;
 import java.util.List;
 import java.util.Optional;
 
-public interface MovieDao extends DAO<Movie,Integer>{
+public interface MovieDao extends DAO<Movie,Long>{
 
 
 
-    Optional<Movie> findMovieById(Integer id) throws DaoException;
+    Optional<Movie> findMovieById(long id) throws DaoException;
     List<Movie> findMoviesByGenre(String genre) throws DaoException;
 }

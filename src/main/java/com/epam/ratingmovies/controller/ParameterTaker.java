@@ -14,6 +14,12 @@ public class ParameterTaker {
             return Long.parseLong(idStr);
 
     }
+    public static long takeIdNow(RequestContext requestContext)
+    {
+        String idStr = requestContext.getRequestParameter("");
+        return Long.parseLong(idStr);
+
+    }
     public static int takeNumber(String parameterName, RequestContext requestContext)
             {
         String numberStr = requestContext.getRequestParameter(parameterName);

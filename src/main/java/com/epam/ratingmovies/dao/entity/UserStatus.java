@@ -3,9 +3,8 @@ package com.epam.ratingmovies.dao.entity;
 import java.util.Arrays;
 
 public enum UserStatus {
-    Active(1),
-    Asleep(2),
-    Freeze(3);
+    ACTIVE(1),
+    BANNED(2);
     private int id;
 
     UserStatus(int id){

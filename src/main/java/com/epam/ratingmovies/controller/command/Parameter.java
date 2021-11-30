@@ -16,4 +16,6 @@ public class Parameter {
     public static final String SIZE = "s";
     public static final String DATE = "date";
     public static final String BIO = "bio";
+    public static final String LEAVE_COMMENT = "leaveComment";
+
 }

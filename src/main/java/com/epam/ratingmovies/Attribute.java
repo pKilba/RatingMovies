@@ -19,14 +19,13 @@ public class Attribute {
     public static final String SUCCES_MESSAGE = "successMessage";
     public static final String MOVIE_LIST = "movieList";
     public static final String MOVIE = "movie";
+    public static final String COMMENT_LIST = "commentList";
 
 
     //dto
-    public static final String USER_DTO_LIST = "userDtoList";
     public static final String USER_LIST = "userList";
     public static final String CURRENT_PAGE = "currentPage";
     public static final String MAX_PAGE = "maxPage";
-    public static final String STATISTIC_OF_GAME_LIST = "statisticResultGameList";
     public static final String AMOUNT_OF_PAGE = "amountOfPage";
     //game
     public static final String TABLE_WITH_HYPHEN = "table-%d";

@@ -36,7 +36,7 @@
                 <tbody>
                 <%! private int i = 0; %>
 
-                <c:forEach items="${userList}"  varStatus="counter"  var="user">
+                <c:forEach items="${userList}" varStatus="counter" var="user">
                     <tr>
                         <td>${counter.index+1}</td>
                         <td>
@@ -49,9 +49,7 @@
                         </td>
                         <td>${user.getCreateTime()}</td>
                         <td>${user.getUserRole()}</td>
-                        <td>
-                            <span>${user.getUserStatus()}</span>
-                        </td>
+                        <td>${user.getUserStatus()}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -78,7 +76,6 @@
                     </ul>
                 </nav>
             </c:if>
-
 
 
         </div>

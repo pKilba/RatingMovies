@@ -33,7 +33,7 @@ public class LoginCommand implements Command {
         String hashPass = lineHasher.hashingLine(pass);
         Optional<User> user = service.findUserByLoginAndPassword(login,pass);
         if (user.isPresent()) {
-            if (user.get().getUserStatus() != UserStatus.Freeze) {
+            if (user.get().getUserStatus() != UserStatus.BANNED) {
                 long id = user.get().getId();
                 UserRole role = user.get().getUserRole();
                 request.addSession(Attribute.USER_ID, id);

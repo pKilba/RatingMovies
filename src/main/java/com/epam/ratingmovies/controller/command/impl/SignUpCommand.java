@@ -40,7 +40,7 @@ public class SignUpCommand implements Command {
                     setName(ParameterTaker.takeString(Parameter.NAME, requestContext)).
                     setEmail(ParameterTaker.takeString(Parameter.EMAIL, requestContext)).
                     setTelegram(ParameterTaker.takeString(Parameter.TELEGRAM, requestContext)).
-                    setUserStatus(UserStatus.Asleep).
+                    setUserStatus(UserStatus.ACTIVE).
                     setCreateTime(nowTime).
                     setProfilePicture(100 - 7).build();
 
