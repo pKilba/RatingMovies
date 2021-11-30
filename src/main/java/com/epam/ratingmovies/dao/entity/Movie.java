@@ -3,6 +3,7 @@ package com.epam.ratingmovies.dao.entity;
 import java.sql.Timestamp;
 
 public class Movie extends AbstractEntity<Long> {
+    private String name;
     private String poster;
     private String about;
     private Timestamp releaseDate;
@@ -10,8 +11,16 @@ public class Movie extends AbstractEntity<Long> {
     private int amount_dislike;
     private Genre genre;
 
+    public String getName() {
+        return name;
+    }
 
-    public Movie(String poster, String about, Timestamp releaseDate, int amount_like, int amount_dislike, Genre genre) {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Movie(String name, String poster, String about, Timestamp releaseDate, int amount_like, int amount_dislike, Genre genre) {
+        this.name = name;
         this.poster = poster;
         this.about = about;
         this.releaseDate = releaseDate;
@@ -81,6 +90,11 @@ public class Movie extends AbstractEntity<Long> {
 
         MovieBuilder() {
             newMovie = new Movie();
+        }
+
+        public Movie.MovieBuilder setMovieName(String name) {
+            newMovie.setName(name);
+            return this;
         }
 
         public Movie.MovieBuilder setMovieId(long movieId) {

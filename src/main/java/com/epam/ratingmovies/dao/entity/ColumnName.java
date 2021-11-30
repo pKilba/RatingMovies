@@ -18,13 +18,13 @@ public final class ColumnName {
 
     //Table movies
     public static final String MOVIE_ID = "movie_id";
-    public static final String MOVIE = "movie";
     public static final String MOVIE_POSTER = "poster";
     public static final String MOVIE_ABOUT = "about";
     public static final String MOVIE_RELEASE_DATE = "movie_release_date";
     public static final String MOVIE_AMOUNT_LIKE = "amount_like";
     public static final String MOVIE_AMOUNT_DISLIKE = "amount_dislike";
     public static final String MOVIE_GENRE_ID = "genre_id";
+    public static final String MOVIE_NAME = "name";
 
 
 

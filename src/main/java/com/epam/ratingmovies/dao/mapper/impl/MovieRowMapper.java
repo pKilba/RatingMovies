@@ -29,6 +29,7 @@ public class MovieRowMapper implements RowMapper<Movie> {
                 .setAmountLike(resultSet.getInt(MOVIE_AMOUNT_LIKE))
                 .setAmountDislike(resultSet.getInt(MOVIE_AMOUNT_DISLIKE))
                 .setMovieGenre(Genre.getById(resultSet.getInt(MOVIE_GENRE_ID)))
+                .setMovieName(resultSet.getString(MOVIE_NAME))
                 .build();
     }
 }

@@ -20,16 +20,16 @@ public class MovieDaoImpl implements MovieDao {
     private final RowMapper<Movie> mapper = new MovieRowMapper();
 
     private static final String SQL_SAVE_MOVIE = "INSERT INTO movies(poster,about," +
-            "movie_release_date,amount_like,amount_dislike,genre_id)" +
-            " values (?,?,?,?,?,?)";
+            "movie_release_date,amount_like,amount_dislike,genre_id,name)" +
+            " values (?,?,?,?,?,?,?)";
     private static final String SQL_FIND_ALL_MOVIES = "SELECT movie_id, poster, about," +
             "movie_release_date,amount_like,amount_dislike," +
-            "genre_id FROM movies";
+            "genre_id,name FROM movies";
 
     private static final String SQL_FIND_MOVIE_BY_ID =
             "SELECT movie_id, poster, about," +
                     "movie_release_date,amount_like,amount_dislike," +
-                    "genre_id FROM movies WHERE movie_id = ?";
+                    "genre_id , name FROM movies WHERE movie_id = ?";
 
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
@@ -46,6 +46,7 @@ public class MovieDaoImpl implements MovieDao {
             preparedStatement.setInt(4, movie.getAmount_like());
             preparedStatement.setInt(5, movie.getAmount_dislike());
             preparedStatement.setInt(6, movie.getGenre().getId());
+            preparedStatement.setString(7, movie.getName());
 
             int execute = preparedStatement.executeUpdate();
 

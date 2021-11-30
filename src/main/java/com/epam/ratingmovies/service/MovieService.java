@@ -17,12 +17,16 @@ public class MovieService {
     }
 
     public Movie findMovieById(long id) throws ServiceException {
-        Optional<Movie> movie = movieDao.findMovieById((int)id);
+        Optional<Movie> movie = movieDao.findMovieById((int) id);
         if (movie.isPresent()) {
             return movie.get();
         } else throw new ServiceException("Error Service");
     }
 
+
+    public void save(Movie movie) {
+        movieDao.save(movie);
+    }
 
     public List<Movie> findMoviesRange(int amountQuery, int size) {
 

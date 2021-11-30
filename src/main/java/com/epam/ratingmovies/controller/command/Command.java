@@ -5,9 +5,11 @@ import com.google.protobuf.ServiceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.text.ParseException;
+
 public interface Command {
 
-    CommandResponse execute(RequestContext request) throws ServiceException; //throws ServiceException, InvalidParametersException;;
+    CommandResponse execute(RequestContext request) throws ServiceException, ParseException; //throws ServiceException, InvalidParametersException;;
 
     static Command withName(String name) {
         return ApplicationCommand.of(name);
