@@ -10,16 +10,44 @@ public class Movie extends AbstractEntity<Long> {
     private int amount_like;
     private int amount_dislike;
     private Genre genre;
+    private String producer;
+    private int duration;
+    private String background;
 
     public String getName() {
         return name;
+    }
+
+    public String getProducer() {
+        return producer;
+    }
+
+    public void setProducer(String producer) {
+        this.producer = producer;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public Movie(String name, String poster, String about, Timestamp releaseDate, int amount_like, int amount_dislike, Genre genre) {
+    public Movie(String name, String poster, String about, Timestamp releaseDate, int amount_like, int amount_dislike, Genre genre,String producer,int duration,String background)
+    {
         this.name = name;
         this.poster = poster;
         this.about = about;
@@ -27,6 +55,9 @@ public class Movie extends AbstractEntity<Long> {
         this.amount_like = amount_like;
         this.amount_dislike = amount_dislike;
         this.genre = genre;
+        this.producer = producer;
+        this.duration = duration;
+        this.background = background;
     }
 
     public String getPoster() {
@@ -77,6 +108,7 @@ public class Movie extends AbstractEntity<Long> {
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
+
     public static Movie.MovieBuilder builder() {
         return new Movie.MovieBuilder();
     }
@@ -92,6 +124,19 @@ public class Movie extends AbstractEntity<Long> {
             newMovie = new Movie();
         }
 
+        public Movie.MovieBuilder setMovieProducer(String producer) {
+            newMovie.setProducer(producer);
+            return this;
+        }
+        public Movie.MovieBuilder setMovieDuration(int duration) {
+            newMovie.setDuration(duration);
+            return this;
+        }
+
+        public Movie.MovieBuilder setMovieBackground(String background) {
+            newMovie.setBackground(background);
+            return this;
+        }
         public Movie.MovieBuilder setMovieName(String name) {
             newMovie.setName(name);
             return this;

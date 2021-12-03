@@ -10,7 +10,7 @@ public class User extends AbstractEntity<Long> {
     private String login;
     private String password;
     private UserRole userRole;
-    private Integer profilePictureId;
+    private String profilePicture;
     private String email;
     private String telegramAccount;
     private UserStatus userStatus;
@@ -26,13 +26,13 @@ public class User extends AbstractEntity<Long> {
 
 
     public User(String name, String login, String password,
-                UserRole userRole, Integer profilePictureId, String email,
+                UserRole userRole, String profilePicture, String email,
                 String telegramAccount, UserStatus userStatus, Timestamp createTime) {
         this.name = name;
         this.login = login;
         this.password = password;
         this.userRole = userRole;
-        this.profilePictureId = profilePictureId;
+        this.profilePicture = profilePicture;
         this.email = email;
         this.telegramAccount = telegramAccount;
         this.userStatus = userStatus;
@@ -87,12 +87,12 @@ public class User extends AbstractEntity<Long> {
         this.userRole = userRole;
     }
 
-    public Integer getProfilePictureId() {
-        return profilePictureId;
+    public String getProfilePicture() {
+        return profilePicture;
     }
 
-    public void setProfilePictureId(Integer profilePictureId) {
-        this.profilePictureId = profilePictureId;
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public String getEmail() {
@@ -173,8 +173,8 @@ public class User extends AbstractEntity<Long> {
             return this;
         }
 
-        public UserBuilder setProfilePicture(Integer pictureId) {
-            newUser.setProfilePictureId(pictureId);
+        public UserBuilder setProfilePicture(String picture) {
+            newUser.setProfilePicture(picture);
             return this;
         }
 

@@ -11,7 +11,8 @@ public  enum ApplicationCommand {
     GO_TO_MOVIE_PAGE(new GoToMoviePageCommand(),CommandName.MOVIE_PAGE),
     LEAVE_COMMENT(new AddCommentCommand(),CommandName.LEAVE_COMMENT),
 
-    //GO_TO_ACCOUNT_SETTING_PAGE(new GoToAccountSettingPageCommand(), CommandName.ACCOUNT_SETTINGS_PAGE),
+    GO_TO_ACCOUNT_SETTING_PAGE(new GoToAccountSettingPageCommand(), CommandName.ACCOUNT_SETTINGS_PAGE),
+    CHANGE_GENERAL_INFO(new ChangeGeneralInfoProfile(), CommandName.CHANGE_GENERAL_INFO),
     /*  GO_TO_GAMBLERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
       GO_TO_STATISTIC_GAMES(new GoToStatisticGamesPageCommand(),CommandName.STATISTIC_GAMES_PAGE),
 
@@ -26,8 +27,8 @@ public  enum ApplicationCommand {
     SIGN_UP(new SignUpCommand(), CommandName.SIGN_UP),
     LOGIN(new LoginCommand(), CommandName.LOGIN),
     LOGOUT(new LogOutCommand(), CommandName.LOGOUT);
-    /*LOCALIZATION(new LocalizationCommand(), CommandName.LOCALIZATION),
-    CHANGE_PASSWORD(new ChangePasswordCommand(), CommandName.CHANGE_PASSWORD),
+    //LOCALIZATION(new LocalizationCommand(), CommandName.LOCALIZATION),
+    /*CHANGE_PASSWORD(new ChangePasswordCommand(), CommandName.CHANGE_PASSWORD),
     CHANGE_GENERAL_INFO(new ChangeGeneralInfoCommand(), CommandName.CHANGE_GENERAL_INFO),
     //AJAX
     CHECK_EXIST_LOGIN(new CheckExistUsernameCommand(), CommandName.CHECK_EXIST_LOGIN),

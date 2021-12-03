@@ -4,6 +4,7 @@ import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.impl.UserDaoImpl;
 import com.google.protobuf.ServiceException;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +21,13 @@ public class UserService {
     }
 
 
+
+
     public int findUsersAmount() {
         return userDao.findUsersAmount();
+    }
+    public void updatePhotoByUserId(long userId,String fileName) throws SQLException {
+        userDao.updatePhotoByUserId(userId,fileName);
     }
 
 

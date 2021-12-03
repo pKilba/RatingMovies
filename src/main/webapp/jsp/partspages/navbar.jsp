@@ -85,7 +85,7 @@
                          width="40" height="40" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ratingMovies?command=account-settings-page">Настройки</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ratingMovies?command=account-settings-page&id=${sessionScope.get("userId")}">Настройки</a></li>
                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ratingMovies?command=profile-page&id=${sessionScope.get("userId")}">Профиль</a></li>
                     <li><a class="dropdown-item bg-warning" href="${pageContext.request.contextPath}/ratingMovies?command=admin-panel-page">Панель админа</a></li>
                     <li>

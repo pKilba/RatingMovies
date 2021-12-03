@@ -20,16 +20,16 @@ public class MovieDaoImpl implements MovieDao {
     private final RowMapper<Movie> mapper = new MovieRowMapper();
 
     private static final String SQL_SAVE_MOVIE = "INSERT INTO movies(poster,about," +
-            "movie_release_date,amount_like,amount_dislike,genre_id,name)" +
-            " values (?,?,?,?,?,?,?)";
+            "movie_release_date,amount_like,amount_dislike,genre_id,name,producer,duration,background)" +
+            " values (?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_FIND_ALL_MOVIES = "SELECT movie_id, poster, about," +
             "movie_release_date,amount_like,amount_dislike," +
-            "genre_id,name FROM movies";
+            "genre_id,name,producer,duration,background FROM movies";
 
     private static final String SQL_FIND_MOVIE_BY_ID =
             "SELECT movie_id, poster, about," +
                     "movie_release_date,amount_like,amount_dislike," +
-                    "genre_id , name FROM movies WHERE movie_id = ?";
+                    "genre_id , name,producer,duration,background FROM movies WHERE movie_id = ?";
 
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
@@ -47,6 +47,9 @@ public class MovieDaoImpl implements MovieDao {
             preparedStatement.setInt(5, movie.getAmount_dislike());
             preparedStatement.setInt(6, movie.getGenre().getId());
             preparedStatement.setString(7, movie.getName());
+            preparedStatement.setString(8, movie.getProducer());
+            preparedStatement.setInt(9, movie.getDuration());
+            preparedStatement.setString(10, movie.getBackground());
 
             int execute = preparedStatement.executeUpdate();
 

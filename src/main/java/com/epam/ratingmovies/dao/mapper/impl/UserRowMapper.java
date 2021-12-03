@@ -32,7 +32,7 @@ public class UserRowMapper implements RowMapper<User> {
                 .setTelegram (resultSet.getString(USER_TELEGRAM))
                 .setUserStatus(UserStatus.getById(resultSet.getInt(USER_STATUS)))
                 .setCreateTime(resultSet.getTimestamp(USER_CREATE_TIME))
-                .setProfilePicture(resultSet.getInt(USER_PROFILE_PICTURE))
+                .setProfilePicture(resultSet.getString(USER_PROFILE_PICTURE))
                 .build();
     }
 }

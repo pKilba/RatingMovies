@@ -11,6 +11,10 @@ public class GoToAddMoviePageCommand implements Command {
 
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
+
+
+
+
         return CommandResponse.forward(CREATE_MOVIE);
     }
 }

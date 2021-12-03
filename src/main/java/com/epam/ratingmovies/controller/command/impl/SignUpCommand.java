@@ -42,7 +42,8 @@ public class SignUpCommand implements Command {
                     setTelegram(ParameterTaker.takeString(Parameter.TELEGRAM, requestContext)).
                     setUserStatus(UserStatus.ACTIVE).
                     setCreateTime(nowTime).
-                    setProfilePicture(100 - 7).build();
+                    setProfilePicture("https://movieplayer.net-cdn.it/t/" +
+                            "images/2017/12/20/bright_jpg_191x283_crop_q85.jpg").build();
 
             signUpService.signUp(user);
 

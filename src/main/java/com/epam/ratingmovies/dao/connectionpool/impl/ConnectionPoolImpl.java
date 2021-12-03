@@ -18,7 +18,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     private static final String USER = "root";
     private static final String PASS = "jsp1977";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static int INITIAL_PO0L_SIZE = 5;
+    private static int INITIAL_PO0L_SIZE = 50;
     private static final AtomicBoolean IS_POOL_CREATED = new AtomicBoolean(false);
     private static final ReentrantLock INSTANCE_LOCKER = new ReentrantLock();
 

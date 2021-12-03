@@ -27,22 +27,23 @@ public class UserDaoImpl implements UserDAO {
     //todo ctreate suka create!
     private static final String SQL_SAVE_USER = "INSERT INTO users( login, password," +
             " role_id, name, mail, account_telegram, status_id, create_time," +
-            " profile_picture_id)" +
+            " profile_picture)" +
             " values (?,?,?,?,?,?,?,?,?)";
 
 
-    private static final String SQL_FIND_ALL_USERS = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users";
-    private static final String SQL_FIND_USER_BY_LOGIN = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE login = ?";
+    private static final String SQL_FIND_ALL_USERS = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users";
+    private static final String SQL_FIND_USER_BY_LOGIN = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users WHERE login = ?";
     private static final String SQL_FIND_ID_BY_LOGIN = "SELECT user_id FROM users WHERE login = ?";
-    private static final String SQL_FIND_USER_BY_ID = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE user_id = ?";
-    private static final String SQL_FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE login = ? and password = ?";
-    private static final String SQL_FIND_USER_BY_ACCOUNT_TELEGRAM = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE account_telegram = ?";
-    private static final String SQL_FIND_USER_BY_MAIL = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture_id FROM users WHERE mail = ?";
+    private static final String SQL_FIND_USER_BY_ID = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users WHERE user_id = ?";
+    private static final String SQL_FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users WHERE login = ? and password = ?";
+    private static final String SQL_FIND_USER_BY_ACCOUNT_TELEGRAM = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users WHERE account_telegram = ?";
+    private static final String SQL_FIND_USER_BY_MAIL = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users WHERE mail = ?";
 
 
     private static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE user_id = ?";
 
-    private static final String SQL_UPDATE_USER_BY_ID = "UPDATE users SET login = ?, password = ?, role_id = ? ,name =  ?, mail = ? , account_telegram = ? , status_id = ? , create_time = ? , profile_picture_id = ?  WHERE user_id = ?";
+    private static final String SQL_UPDATE_USER_BY_ID = "UPDATE users SET login = ?, password = ?, role_id = ? ,name =  ?, mail = ? , account_telegram = ? , status_id = ? , create_time = ? , profile_picture = ?  WHERE user_id = ?";
+    private static final String SQL_UPDATE_PHOTO_BY_ID = "UPDATE users SET profile_picture  = ? WHERE user_id = ?";
 
 
     public UserDaoImpl() {
@@ -63,7 +64,7 @@ public class UserDaoImpl implements UserDAO {
             preparedStatement.setString(6, user.getTelegramAccount());
             preparedStatement.setInt(7, user.getUserStatus().getId());
             preparedStatement.setTimestamp(8, user.getDate());
-            preparedStatement.setInt(9, user.getProfilePictureId());
+            preparedStatement.setString(9, user.getProfilePicture());
 
 
             int execute = preparedStatement.executeUpdate();
@@ -444,6 +445,17 @@ public class UserDaoImpl implements UserDAO {
     }
 
 
+    public void updatePhotoByUserId(long id, String photo) throws SQLException {
+
+        Connection connection = connectionPool.takeConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PHOTO_BY_ID);
+        preparedStatement.setString(1, photo);
+        preparedStatement.setLong(2, id);
+        preparedStatement.executeUpdate();
+        connectionPool.returnConnection(connection);
+    }
+
+
     //todo мб буду вызывать здесь функцию апдейта юзера по айди а в этой просто получать этот айди
     @Override
     //todo брать возвр ти или сменить его на булеан !!!
@@ -462,7 +474,7 @@ public class UserDaoImpl implements UserDAO {
             preparedStatement.setString(6, user.getTelegramAccount());
             preparedStatement.setInt(7, user.getUserStatus().getId());
             preparedStatement.setTimestamp(8, user.getDate());
-            preparedStatement.setInt(9, user.getProfilePictureId());
+            preparedStatement.setString(9, user.getProfilePicture());
             System.out.println(user.getId());
             preparedStatement.setLong(10, user.getId());
             Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);

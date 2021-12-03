@@ -39,6 +39,9 @@ public class LoginCommand implements Command {
                 request.addSession(Attribute.USER_ID, id);
                 request.addSession(Attribute.ROLE, role);
                 request.addSession(Attribute.LOGIN, user.get().getLogin());
+                //?? а а а а а а? номр?
+                request.addSession(Attribute.PHOTO,user.get().getProfilePicture());
+
                 return CommandResponse.redirect(PROFILE_PAGE_COMMAND + id);
             }
             request.addAttribute(Attribute.ERROR_MESSAGE, FREEZE_USER_KEY);

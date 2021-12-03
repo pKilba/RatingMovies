@@ -1,56 +1,50 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<!DOCTYPE html>
-<fmt:setLocale value="${sessionScope.lang}"/>
-<fmt:setBundle basename="locale"/>
-
-<html lang="">
-
+<html>
 <head>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <link rel="stylesheet" type="text/css" href="../../css/movie.css">
     <c:import url="/jsp/partspages/head.jsp"/>
-    <title>
-        f1
-    </title>
+    <title>Title</title>
 </head>
-
 <body>
+
 <c:import url="/jsp/partspages/navbar.jsp"/>
+<%! private int i = 0; %>
+
 
 <div class="container py-3">
     <div class="table-responsive">
         <div class="table-wrapper">
+            <c:forEach items="${movieList}" varStatus="counter" var="movie">
 
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Название фильма</th>
-                    <th>Дата выхода фильма</th>
-                    <th>Жанр фильма</th>
-                </tr>
-                </thead>
-                <tbody>
-                <%! private int i = 0; %>
-
-                <c:forEach items="${movieList}"  varStatus="counter"  var="movie">
-                    <tr>
-                        <td>${counter.index+1}</td>
-
-                        <td>
-                            <a href="${pageContext.request.contextPath}/ratingMovies?command=movie-page&id=${movie.getId()}">
+                <div class="movie_card">
+                    <div class="info_section">
+                        <div class="movie_header">
+                            <img class="locandina"
+                                 src="${pageContext.request.contextPath}${movie.getPoster()}"/>
+                            <h1> ${movie.getName()}</h1>
+                            <h4>${movie.getReleaseDate()},${movie.getProducer()} </h4>
+                            <span class="minutes">${movie.getDuration()} min</span>
+                            <p class="type">${movie.getGenre()}</p>
+                        </div>
+                        <div class="movie_desc">
+                            <p class="text">
                                     ${movie.getAbout()}
-                            </a>
-                        </td>
-                        <td>${movie.getReleaseDate()}</td>
-                        <td>
-                            <span>${movie.getGenre()}</span>
-                        </td>
-                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                            </p>
+                        </div>
+                        <div class="movie_social">
+                            <ul>
+                                <li><i class="material-icons">share</i></li>
+                                <li><i class="material-icons"></i></li>
+                                <li><i class="material-icons">chat_bubble</i></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="blur_back "style="background-image: url('${pageContext.request.contextPath}${movie.getBackground()}');">
+                    </div>
+                </div>
+            </c:forEach>
 
 
             <c:if test="${movieList.size() != 0}">
@@ -75,9 +69,6 @@
                     </ul>
                 </nav>
             </c:if>
-
-
-
         </div>
     </div>
 </div>
