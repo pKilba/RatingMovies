@@ -7,12 +7,10 @@
 <fmt:setBundle basename="locale"/>
 
 <header class="p-3 bg-dark text-white">
-  <div class="container">
+  <div style="height: 50px" class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <sc:access role="GUEST">
         <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="${pageContext.request.contextPath}/ratingMovies?command=home-page"
-                 class="nav-link px-2 text-white">Домой</a></li>
           <li><a href="${pageContext.request.contextPath}/ratingMovies?command=movies-page"
                  class="nav-link px-2 text-white">Просмотр фильмов</a>
         </ul>
@@ -30,8 +28,7 @@
 
         <sc:access role="USER">
             <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=home-page"
-                       class="nav-link px-2 text-white">Домой</a></li>
+
                 <li><a href="${pageContext.request.contextPath}/ratingMovies?command=movies-page"
                        class="nav-link px-2 text-white">Фильмы</a>
                 </li>
@@ -44,11 +41,11 @@
             <div class="dropdown text-end mr-3">
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="${pageContext.request.contextPath}/images/photo/notAva.jpg" alt="mdo"
+                    <img src="${pageContext.request.contextPath}/images/photo/${sessionScope.photo}" alt="mdo"
                          width="40" height="40" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ratingMovies?command=account-settings-page">Настройка аккаунта</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ratingMovies?command=account-settings-page&id=${sessionScope.get("userId")}">Настройка аккаунта</a></li>
                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ratingMovies?command=profile-page&id=${sessionScope.get("userId")}">Профиль</a></li>
                     <li>
                         <hr class="dropdown-divider">
@@ -63,8 +60,6 @@
 
         <sc:access role="ADMIN">
             <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=home-page"
-                       class="nav-link px-2 text-white">Домой</a></li>
                 <li><a href="${pageContext.request.contextPath}/ratingMovies?command=movies-page"
                        class="nav-link px-2 text-white">Фильмы</a>
                 </li>
@@ -87,7 +82,6 @@
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ratingMovies?command=account-settings-page&id=${sessionScope.get("userId")}">Настройки</a></li>
                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ratingMovies?command=profile-page&id=${sessionScope.get("userId")}">Профиль</a></li>
-                    <li><a class="dropdown-item bg-warning" href="${pageContext.request.contextPath}/ratingMovies?command=admin-panel-page">Панель админа</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>

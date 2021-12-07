@@ -16,7 +16,7 @@ public class ParameterTaker {
     }
     public static long takeIdNow(RequestContext requestContext)
     {
-        String idStr = requestContext.getRequestParameter("");
+        String idStr = requestContext.getRequestParameter("movieId");
         return Long.parseLong(idStr);
 
     }

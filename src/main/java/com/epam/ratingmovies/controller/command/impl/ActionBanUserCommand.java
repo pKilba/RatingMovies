@@ -7,12 +7,11 @@ import com.google.protobuf.ServiceException;
 
 import java.text.ParseException;
 
-public class ChangeGeneralInfoProfile implements Command {
-
-    public static final String HOME = "/jsp/pages/home.jsp";
-
+public class ActionBanUserCommand implements Command {
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException, ParseException {
-        return CommandResponse.forward(HOME);
+        System.out.println();
+
+        return null;
     }
 }

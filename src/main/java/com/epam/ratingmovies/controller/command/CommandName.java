@@ -9,6 +9,7 @@ public class CommandName {
     public static final String ACCOUNT_SETTINGS_PAGE = "account-settings-page";
     public static final String CHANGE_GENERAL_INFO = "change-general-info";
     public static final String LOGOUT = "logout";
+    public static final String REVIEWS_PAGE = "reviews-page";
 
     public static final String MOVIE_PAGE = "movie-page";
     public static final String LEAVE_COMMENT = "leaveComment";
@@ -22,6 +23,9 @@ public class CommandName {
     public static final String ADMIN_PANEL_PAGE = "admin-panel-page";
 
     public static final String CREATE_MOVIE ="createMovie";
+
+    public static final String ACTION_BAN_USER = "action-ban-user";
+    public static final String ACTION_UNBAN_USER = "action-unban-user";
 
 
     public static final String USERS = "users";

@@ -2,6 +2,7 @@ package com.epam.ratingmovies;
 
 public class Attribute {
     public static final String USERS = "users";
+    public static final String MOVIE_ID = "movieId";
     public static final String ROLE = "role";
     public static final String LANGUAGE = "lang";
     public static final String SAVED_LOGIN = "login";
@@ -21,6 +22,7 @@ public class Attribute {
     public static final String MOVIE_LIST = "movieList";
     public static final String MOVIE = "movie";
     public static final String COMMENT_LIST = "commentList";
+    public static final String COMMENT_USER_LIST = "commentUserList";
 
 
     //dto

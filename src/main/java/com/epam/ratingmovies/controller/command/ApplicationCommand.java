@@ -12,29 +12,29 @@ public  enum ApplicationCommand {
     LEAVE_COMMENT(new AddCommentCommand(),CommandName.LEAVE_COMMENT),
 
     GO_TO_ACCOUNT_SETTING_PAGE(new GoToAccountSettingPageCommand(), CommandName.ACCOUNT_SETTINGS_PAGE),
-    CHANGE_GENERAL_INFO(new ChangeGeneralInfoProfile(), CommandName.CHANGE_GENERAL_INFO),
     /*  GO_TO_GAMBLERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
       GO_TO_STATISTIC_GAMES(new GoToStatisticGamesPageCommand(),CommandName.STATISTIC_GAMES_PAGE),
 
       */
     GO_TO_CREATE_MOVIE(new GoToAddMoviePageCommand(),CommandName.CREATE_MOVIE_PAGE),
-    GO_TO_ADMIN_PANEL_PAGE(new GoToAdminPanelPageCommand(), CommandName.ADMIN_PANEL_PAGE),
-    GO_TO_HOME_PAGE(new GoToHomePageCommand(), CommandName.HOME_PAGE),
     CREATE_MOVIE(new CreateMovieCommand(),"createMovie"),
     //todo добавить только для админа ?
     GO_TO_USERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
     GO_TO_MOVIES_PAGE(new GoToMoviesPageCommand(), CommandName.MOVIES_PAGE),
     SIGN_UP(new SignUpCommand(), CommandName.SIGN_UP),
     LOGIN(new LoginCommand(), CommandName.LOGIN),
+    ACTION_BAN_USER(new ActionBanUserCommand(), CommandName.ACTION_BAN_USER),
+    ACTION_UNBAN_USER(new ActionUnbanUserCommand(), CommandName.ACTION_UNBAN_USER),
+    CHANGE_GENERAL_INFO(new ChangeGeneralInfoCommand(), CommandName.CHANGE_GENERAL_INFO),
+    GO_TO_REVIEWS_PAGE(new GoToReviewsPageCommand(),CommandName.REVIEWS_PAGE),
+
     LOGOUT(new LogOutCommand(), CommandName.LOGOUT);
     //LOCALIZATION(new LocalizationCommand(), CommandName.LOCALIZATION),
     /*CHANGE_PASSWORD(new ChangePasswordCommand(), CommandName.CHANGE_PASSWORD),
-    CHANGE_GENERAL_INFO(new ChangeGeneralInfoCommand(), CommandName.CHANGE_GENERAL_INFO),
     //AJAX
     CHECK_EXIST_LOGIN(new CheckExistUsernameCommand(), CommandName.CHECK_EXIST_LOGIN),
     CHECK_EXIST_EMAIL(new CheckExistUsernameCommand(), CommandName.CHECK_EXIST_EMAIL),
-    ACTION_BAN_USER(new ActionBanUserCommand(), CommandName.ACTION_BAN_USER),
-    ACTION_UNBAN_USER(new ActionUnbanUserCommand(), CommandName.ACTION_UNBAN_USER),
+
     ACTION_CHANGE_BALANCE_USER(new ActionChangeBalanceUserCommand(), CommandName.ACTION_CHANGE_BALANCE),
     //game
     TAKE_LOBBY_DATA(new TakeLobbyDataCommand(), CommandName.LOBBY_DATA),

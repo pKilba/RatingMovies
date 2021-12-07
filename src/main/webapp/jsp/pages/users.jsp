@@ -36,7 +36,7 @@
                 <tbody>
                 <%! private int i = 0; %>
 
-                <c:forEach items="${userList}" varStatus="counter" var="user">
+                <c:forEach items="${userList}"  varStatus="counter" var="user">
                     <tr>
                         <td>${counter.index+1}</td>
                         <td>
@@ -50,10 +50,31 @@
                         <td>${user.getCreateTime()}</td>
                         <td>${user.getUserRole()}</td>
                         <td>${user.getUserStatus()}</td>
+                        <td id="status-part">
+                            <span id="status-dot" class="status
+<c:choose>
+<c:when test="${user.getUserStatus() == 'ACTIVE'}">text-success</c:when>
+<c:otherwise>text-danger</c:otherwise>
+</c:choose> mr-2 h2">•</span>
+                            <span class="status-user">${user.getUserStatus()}</span>
+                            <button type="button" class="btn border btn-action-ban
+<c:choose>
+<c:when test="${user.getUserStatus() == 'ACTIVE'}">btn-outline-danger ml-4</c:when>
+<c:otherwise>btn-outline-success ml-2</c:otherwise>
+</c:choose>">
+                                <c:choose>
+                                    <c:when test="${user.getUserStatus() == 'ACTIVE'}">BAN</c:when>
+                                    <c:otherwise>UNBAN</c:otherwise>
+                                </c:choose>
+                            </button>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
+
+
+
 
             <c:if test="${userList.size() != 0}">
                 <nav aria-label="Page navigation example">

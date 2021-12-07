@@ -8,10 +8,10 @@ import com.google.protobuf.ServiceException;
 
 public class LogOutCommand implements Command {
 
-    public static final String HOME = "/jsp/pages/home.jsp";
+    public static final String MOVIES = "/jsp/pages/movies.jsp";
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
         request.addSession(Attribute.INVALIDATE_ATTRIBUTE, true);
-        return CommandResponse.redirect(HOME);
+        return CommandResponse.redirect(MOVIES);
     }
 }

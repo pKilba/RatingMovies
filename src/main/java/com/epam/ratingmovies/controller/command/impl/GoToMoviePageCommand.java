@@ -30,22 +30,13 @@ public class GoToMoviePageCommand implements Command {
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
         long id = ParameterTaker.takeId(request);
-        long idUser = -1;
-        User user;
         List<User> users = new ArrayList<>();
-        List<Comment> comments = commentService.findByMovieId(id);
         Movie movie = movieService.findMovieById(id);
-        for (Comment comment : comments) {
-            user = userService.findUserById(comment.getUserId());
-            users.add(user);
-        }
         request.addAttribute(Attribute.MOVIE, movie);
-        request.addAttribute(Attribute.COMMENT_LIST, comments);
-        request.addAttribute(Attribute.USER_LIST, users);
         request.addAttribute(Attribute.ID, id);
-        if (request.getRequestParameter("idUser") != null) {
+      /*  if (request.getRequestParameter("idUser") != null) {
             return CommandResponse.redirect(RATING_MOVIES_COMMAND + id);
-        }
+        }*/
         return CommandResponse.forward(MOVIE);
     }
 }

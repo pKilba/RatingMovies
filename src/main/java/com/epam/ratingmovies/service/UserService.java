@@ -22,7 +22,9 @@ public class UserService {
 
 
 
-
+public void updateNameEmailTelegramById(String name,String email,String telegram,long id) throws SQLException {
+        userDao.updateNameEmailTelegramById(name,email, telegram, id);
+}
     public int findUsersAmount() {
         return userDao.findUsersAmount();
     }

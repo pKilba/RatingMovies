@@ -56,5 +56,21 @@
         </form>
     </div>
 </div>
+
+
+
+
+<c:forEach var="comment" items="${commentList}">
+    <p>${comment.getMessage()} </p>
+</c:forEach>
+
+<p>Пользователи написавшие комментарии</p>
+<c:forEach var="user" items="${userList}">
+
+    <p>${user.getName()}</p>
+</c:forEach>
+
+
+
 -->
 </html>

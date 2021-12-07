@@ -7,7 +7,7 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<c:redirect url="${pageContext.request.contextPath}/ratingMovies?command=home-page"/>
+<c:redirect url="${pageContext.request.contextPath}/ratingMovies?command=movies-page"/>
 
 </body>
 </html>

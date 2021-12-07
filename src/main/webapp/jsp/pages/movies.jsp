@@ -2,7 +2,7 @@
 <head>
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <link rel="stylesheet" type="text/css" href="../../css/movie.css">
+    <link rel="stylesheet" type="text/css" href="../../css/movies.css">
     <c:import url="/jsp/partspages/head.jsp"/>
     <title>Title</title>
 </head>
@@ -17,33 +17,32 @@
         <div class="table-wrapper">
             <c:forEach items="${movieList}" varStatus="counter" var="movie">
 
-                <div class="movie_card">
-                    <div class="info_section">
-                        <div class="movie_header">
-                            <img class="locandina"
-                                 src="${pageContext.request.contextPath}${movie.getPoster()}"/>
-                            <h1> ${movie.getName()}</h1>
-                            <h4>${movie.getReleaseDate()},${movie.getProducer()} </h4>
-                            <span class="minutes">${movie.getDuration()} min</span>
-                            <p class="type">${movie.getGenre()}</p>
-                        </div>
-                        <div class="movie_desc">
-                            <p class="text">
-                                    ${movie.getAbout()}
-                            </p>
-                        </div>
-                        <div class="movie_social">
-                            <ul>
-                                <li><i class="material-icons">share</i></li>
-                                <li><i class="material-icons"></i></li>
-                                <li><i class="material-icons">chat_bubble</i></li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <div class="blur_back "style="background-image: url('${pageContext.request.contextPath}${movie.getBackground()}');">
+                <a style="text-decoration: none"
+                   href="
+                   ${pageContext.request.contextPath}/ratingMovies?command=movie-page&id=${movie.getId()}">
+                    <div class="movie_card">
+                        <div class="info_section">
+                            <div class="movie_header">
+                                <img class="locandina"
+                                     src="${pageContext.request.contextPath}${movie.getPoster()}"/>
+                                <h1> ${movie.getName()}</h1>
+                                <h4>${movie.getReleaseDate()},${movie.getProducer()} </h4>
+                                <span class="minutes">${movie.getDuration()} min</span>
+                                <p class="type">${movie.getGenre()}</p>
+                            </div>
+                            <div class="movie_desc">
+                                <p class="text">
+                                        ${movie.getAbout()}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="blur_back
+" style="background-image: url('${pageContext.request.contextPath}${movie.getBackground()}');">
+                        </div>
                     </div>
-                </div>
+                </a>
             </c:forEach>
 
 

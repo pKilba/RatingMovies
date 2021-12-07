@@ -12,6 +12,9 @@ import com.fasterxml.jackson.databind.introspect.AnnotationMap;
 import com.google.protobuf.ServiceException;
 
 import java.sql.Timestamp;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class AddCommentCommand implements Command {
     public static final String MOVIE = "/jsp/pages/movie.jsp";
@@ -22,9 +25,9 @@ public class AddCommentCommand implements Command {
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
         long id = ParameterTaker.takeId(request);
-        long idUser = -1;
-        User user;
-        if (request.getRequestParameter("idUser") != null) {
+        long idMovie = ParameterTaker.takeIdNow(request);
+
+        /*if (request.getRequestParameter("idUser") != null) {
             idUser = Long.parseLong(request.getRequestParameter("idUser"));
             user = userService.findUserById(idUser);
             Comment newComment = Comment.builder().
@@ -34,11 +37,23 @@ public class AddCommentCommand implements Command {
                     setCreateTime(new Timestamp(System.currentTimeMillis())).build();
             CommentDaoImpl commentDao = new CommentDaoImpl();
             Comment comment = commentDao.save(newComment);
-        }
-        request.addAttribute(Attribute.ID, id);
+        }*/
+
+     //   idUser = Long.parseLong(request.getRequestParameter("idUser"));
+
+        Comment newComment = Comment.builder().
+                setMessage(request.getRequestParameter("leaveComment"))
+                .setMovie(idMovie).
+                setUser(id).
+                setCreateTime(new Timestamp(System.currentTimeMillis())).build();
+        CommentDaoImpl commentDao = new CommentDaoImpl();
+        Comment comment = commentDao.save(newComment);
 
 
-        return CommandResponse.redirect(RATING_MOVIES_COMMAND + id);
+        request.addAttribute(Attribute.ID, idMovie);
+
+
+        return CommandResponse.forward(RATING_MOVIES_COMMAND);
 
     }
 }

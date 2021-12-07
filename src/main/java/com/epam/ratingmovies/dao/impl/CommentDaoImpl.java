@@ -5,6 +5,7 @@ import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.ratingmovies.dao.entity.Comment;
 import com.epam.ratingmovies.dao.entity.Movie;
+import com.epam.ratingmovies.dao.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.CommentRowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.MovieRowMapper;
@@ -24,6 +25,7 @@ public class CommentDaoImpl implements CommentDao {
             "user_id,create_time)" +
             " values (?,?,?,?)";
     private static final String SQL_FIND_ALL_COMMENTS = "SELECT * FROM comments";
+
     private static final String SQL_FIND_BY_ID_MOVIES = "SELECT * FROM comments WHERE movie_id = ?";
 
 
@@ -57,7 +59,48 @@ public class CommentDaoImpl implements CommentDao {
         return comment;
     }
 
-  public List<Comment>  findCommendByIdMovies(long id){
+    public List<Comment> findCommentsRange(int offset, int amount) throws DaoException {
+        Connection connection = connectionPool.takeConnection();
+        List<Comment> result = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_COMMENTS);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Comment comment = mapper.map(resultSet);
+                if (offset <= comment.getId() && comment.getId() <= offset + amount) {
+                    result.add(comment);
+                }
+            }
+            preparedStatement.close();
+            connectionPool.returnConnection(connection);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    public int findCommentsAmount() throws DaoException {
+        Connection connection = connectionPool.takeConnection();
+        int counter = 0;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_COMMENTS);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                counter++;
+            }
+            preparedStatement.close();
+
+            connectionPool.returnConnection(connection);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return counter;
+    }
+
+
+
+    public List<Comment>  findCommendByIdMovies(long id){
       ResultSet resultSet = null;
       ArrayList result = new ArrayList();
       try (Connection connection = connectionPool.takeConnection();

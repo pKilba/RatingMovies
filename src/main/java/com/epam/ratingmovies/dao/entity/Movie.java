@@ -60,6 +60,9 @@ public class Movie extends AbstractEntity<Long> {
         this.background = background;
     }
 
+
+
+
     public String getPoster() {
         return poster;
     }

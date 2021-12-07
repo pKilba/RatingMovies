@@ -18,6 +18,7 @@ public class SignUpCommand implements Command {
     public static final String SIGN_UP = "/jsp/pages/sign-up.jsp";
     public static final String LOGIN = "/jsp/pages/login.jsp";
     public final SignUpService signUpService = SignUpService.getInstance();
+    private static final String PRE_PHOTO = "notAva.jpg";
 
 
     @Override
@@ -42,8 +43,7 @@ public class SignUpCommand implements Command {
                     setTelegram(ParameterTaker.takeString(Parameter.TELEGRAM, requestContext)).
                     setUserStatus(UserStatus.ACTIVE).
                     setCreateTime(nowTime).
-                    setProfilePicture("https://movieplayer.net-cdn.it/t/" +
-                            "images/2017/12/20/bright_jpg_191x283_crop_q85.jpg").build();
+                    setProfilePicture(PRE_PHOTO).build();
 
             signUpService.signUp(user);
 

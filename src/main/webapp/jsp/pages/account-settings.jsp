@@ -11,7 +11,7 @@
     <c:import url="/jsp/partspages/head.jsp" />
     <title>
     </title>
-    <link rel=" stylesheet" href="/css/account-settings.css">
+    <link rel=" stylesheet href="/css/account-settings.css">
 </head>
 
 <body>
@@ -47,7 +47,7 @@
 
                         <div class="card-body media align-items-center">
                             <img src="${pageContext.request.contextPath}/images/photo/${sessionScope.photo}" alt="mdo"
-                                 width="40" height="40" class="rounded-circle">
+                                 width="40" height="60" class="rounded-circle">
 
 
                             <div class="media-body ml-4">
@@ -64,7 +64,7 @@
                         <hr class="border-light m-0">
                         <div class="card-body">
                             <form id="changeGeneralForm" name="changeGeneralDataUserForm" method="POST"
-                                  action="${pageContext.request.contextPath}/ratingMovies?command=change-general-info"
+                                  action="${pageContext.request.contextPath}/ratingMovies?command=change-general-info&id=${sessionScope.get("userId")}"
                                   class="">
                                 <div class="form-group">
                                     <label class="form-label">
@@ -75,21 +75,25 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">
-                                        Изменить телефон(ичпр на имейл)
+                                        Изменить емейл
                                     </label>
                                     <input type="email"  name="email" minlength="4"
                                            maxlength="16" class="form-control" value="${user.getEmail()}"
                                            required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label ">
-                                        Инфа о себе
+
+                                    <label class="form-label">
+                                        Изменить телеграмм
                                     </label>
-                                    <div class="text-light small float-right mt-1">Изменитть биографию</div>
+                                    <input type="text"  name="telegram" minlength="2"
+                                           maxlength="16" class="form-control" value="${user.getTelegramAccount()}"
+                                           required>
                                 </div>
+
                             </form>
                         </div>
                     </div>
+
+
 
                     <div class="tab-pane fade" id="account-change-password">
                         <div class="card-body pb-2">

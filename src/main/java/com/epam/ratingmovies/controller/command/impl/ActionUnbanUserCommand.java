@@ -5,13 +5,13 @@ import com.epam.ratingmovies.controller.command.CommandResponse;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.google.protobuf.ServiceException;
 
-public class GoToAdminPanelPageCommand implements Command {
+import java.text.ParseException;
 
-    public static final String ADMIN_PANEL = "/jsp/pages/adminPage.jsp";
-
-
+public class ActionUnbanUserCommand implements Command {
     @Override
-    public CommandResponse execute(RequestContext request) throws ServiceException {
-      return   CommandResponse.forward(ADMIN_PANEL);
+    public CommandResponse execute(RequestContext request) throws ServiceException, ParseException {
+        System.out.println();
+
+        return null;
     }
 }

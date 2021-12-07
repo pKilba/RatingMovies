@@ -44,12 +44,23 @@ public class UserDaoImpl implements UserDAO {
 
     private static final String SQL_UPDATE_USER_BY_ID = "UPDATE users SET login = ?, password = ?, role_id = ? ,name =  ?, mail = ? , account_telegram = ? , status_id = ? , create_time = ? , profile_picture = ?  WHERE user_id = ?";
     private static final String SQL_UPDATE_PHOTO_BY_ID = "UPDATE users SET profile_picture  = ? WHERE user_id = ?";
+    private static final String SQL_UPDATE_NAME_EMAIL_TELEGRAM_BY_ID = "UPDATE users SET name = ?, mail = ?, account_telegram = ? WHERE user_id = ?";
 
 
     public UserDaoImpl() {
     }
 
+public void updateNameEmailTelegramById(String name,String email,String telegram ,long id) throws SQLException {
+    Connection connection = connectionPool.takeConnection();
+    PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_NAME_EMAIL_TELEGRAM_BY_ID);
+    preparedStatement.setString(1, name);
+    preparedStatement.setString(2, email);
+    preparedStatement.setString(3, telegram);
+    preparedStatement.setLong(4, id);
+    preparedStatement.executeUpdate();
+    connectionPool.returnConnection(connection);
 
+}
     @Override
     public User save(User user) {
 

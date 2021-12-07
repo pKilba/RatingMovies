@@ -43,6 +43,7 @@ public class GoToMoviesPageCommand implements Command {
         request.addAttribute(Attribute.AMOUNT_OF_PAGE, size);
         request.addAttribute(Attribute.MAX_PAGE, maxPage);
         request.addAttribute(Attribute.MOVIE_LIST, movieList);
+
         return CommandResponse.forward(MOVIES);
     }
 }

@@ -17,7 +17,7 @@ public class UserValidator implements Validator {
     private static final Pattern COMPILED_PATTERN_EMAIL = Pattern.compile(EMAIL_PATTERN);
     private static final int MIN_FIELD_USER_LENGTH = 2;
     private static final int MAX_FIELD_USER_LENGTH = 32;
-    private static final int MIN_LOGIN_LENGTH = 8;
+    private static final int MIN_LOGIN_LENGTH = 4;
     private static final int MAX_EMAIL_LENGTH = 64;
     private static final int MIN_EMAIL_LENGTH = 4;
 
@@ -40,18 +40,18 @@ public class UserValidator implements Validator {
 
     @Override
     public boolean isValid(User user) {
-        if (!isValidGeneralInfo(user)) {
-            return false;
-        }
+        //   if (!isValidGeneralInfo(user)) {
+         //   return false;
+        //}
         String login = user.getLogin();
-        if (login == null || login.length() > MAX_FIELD_USER_LENGTH
+        if (login == null
                 || login.length() < MIN_LOGIN_LENGTH) {
             return false;
         }
         String password = user.getPassword();
-        if (password == null || password.length() != LENGTH_HASH_PASSWORD) {
-            return false;
-        }
+//        if (password == null || password.length() != LENGTH_HASH_PASSWORD) {
+//            return false;
+//        }
         String email = user.getEmail();
         if (email == null || email.isEmpty()
                 || email.length() > MAX_EMAIL_LENGTH
@@ -60,16 +60,16 @@ public class UserValidator implements Validator {
             return false;
         }
         String telegram = user.getTelegramAccount();
-        if (telegram == null || telegram.isEmpty()
-                || telegram.length() > MAX_TELEGRAM_LENGTH
-                || telegram.length() < MIN_TELEGRAM_LENGTH
-                || !isValidTelegram(telegram))
-        {
-            return false;
-        }
+//        if (telegram == null || telegram.isEmpty()
+//                || telegram.length() > MAX_TELEGRAM_LENGTH
+//                || telegram.length() < MIN_TELEGRAM_LENGTH
+//                || !isValidTelegram(telegram))
+//        {
         return true;
+        }
 
-    }
+
+
 
 
     private boolean isValidTelegram(String telegram) {
@@ -85,16 +85,18 @@ public class UserValidator implements Validator {
         return true;
     }
 
-    public boolean isValidGeneralInfo(User user) {
-        if (user.getName() == null
-                || user.getName().length() > MAX_FIELD_USER_LENGTH
-                || user.getName().length() < MIN_FIELD_USER_LENGTH
-                || !isValidName(user.getName())) {
-            return false;
-        }
 
-        return true;
-    }
+    //todo раскоментить и прчекать
+//    public boolean isValidGeneralInfo(User user) {
+//        if (user.getName() == null
+//                || user.getName().length() > MAX_FIELD_USER_LENGTH
+//                || user.getName().length() < MIN_FIELD_USER_LENGTH
+//                || !isValidName(user.getName())) {
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
 
     private boolean isValidName(String name) {
