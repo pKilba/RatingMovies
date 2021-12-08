@@ -51,9 +51,11 @@ public class AddCommentCommand implements Command {
 
 
         request.addAttribute(Attribute.ID, idMovie);
+        //request.addAttribute(Attribute.MOVIE_ID, idMovie);
 
 
-        return CommandResponse.forward(RATING_MOVIES_COMMAND);
+        return //CommandResponse.forward("/jsp/pages/movies.jsp") ;
+        CommandResponse.forward(RATING_MOVIES_COMMAND+idMovie);
 
     }
 }

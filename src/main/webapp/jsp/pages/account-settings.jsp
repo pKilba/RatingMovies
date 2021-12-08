@@ -11,7 +11,8 @@
     <c:import url="/jsp/partspages/head.jsp" />
     <title>
     </title>
-    <link rel=" stylesheet href="/css/account-settings.css">
+
+   <link rel="stylesheet" href="/css/account-settings.css">
 </head>
 
 <body>
@@ -98,7 +99,7 @@
                     <div class="tab-pane fade" id="account-change-password">
                         <div class="card-body pb-2">
                             <form id="changePasForm" name="changePasswordUserForm" method="POST"
-                                  action="${pageContext.request.contextPath}/poker?command=change-pas">
+                                  action="${pageContext.request.contextPath}/ratingMovies?command=change-pas&id=${sessionScope.get("userId")}">
                                 <div class="form-group">
                                     <label class="form-label">
                                         Изменить текущий пароль

@@ -1,13 +1,9 @@
 package com.epam.ratingmovies.dao.impl;
 
-import com.epam.ratingmovies.controller.ParameterTaker;
-import com.epam.ratingmovies.controller.command.Parameter;
 import com.epam.ratingmovies.dao.api.UserDAO;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.ratingmovies.dao.entity.User;
-import com.epam.ratingmovies.dao.entity.UserRole;
-import com.epam.ratingmovies.dao.entity.UserStatus;
 import com.epam.ratingmovies.dao.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.UserRowMapper;
@@ -44,6 +40,7 @@ public class UserDaoImpl implements UserDAO {
 
     private static final String SQL_UPDATE_USER_BY_ID = "UPDATE users SET login = ?, password = ?, role_id = ? ,name =  ?, mail = ? , account_telegram = ? , status_id = ? , create_time = ? , profile_picture = ?  WHERE user_id = ?";
     private static final String SQL_UPDATE_PHOTO_BY_ID = "UPDATE users SET profile_picture  = ? WHERE user_id = ?";
+    private static final String SQL_UPDATE_PASSWORD_BY_ID = "UPDATE users SET password  = ? WHERE user_id = ?";
     private static final String SQL_UPDATE_NAME_EMAIL_TELEGRAM_BY_ID = "UPDATE users SET name = ?, mail = ?, account_telegram = ? WHERE user_id = ?";
 
 
@@ -465,6 +462,16 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
         preparedStatement.executeUpdate();
         connectionPool.returnConnection(connection);
     }
+    public boolean updatePasswordByUserId(long id, String password) throws SQLException {
+
+        Connection connection = connectionPool.takeConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PASSWORD_BY_ID);
+        preparedStatement.setString(1, password);
+        preparedStatement.setLong(2, id);
+        preparedStatement.executeUpdate();
+        connectionPool.returnConnection(connection);
+        return true;
+    }
 
 
     //todo мб буду вызывать здесь функцию апдейта юзера по айди а в этой просто получать этот айди
@@ -506,11 +513,6 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
     @Override
     public long add(User t) throws DaoException {
         return 0;
-    }
-
-    @Override
-    public boolean updatePasswordByUserId(long userId, String password) throws DaoException {
-        return false;
     }
 
     @Override

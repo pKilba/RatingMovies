@@ -31,6 +31,9 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
     public void updatePhotoByUserId(long userId,String fileName) throws SQLException {
         userDao.updatePhotoByUserId(userId,fileName);
     }
+    public void updatePasswordByUserId(long userId,String password) throws SQLException {
+        userDao.updatePasswordByUserId(userId,password);
+    }
 
 
     //todo через isPresent чекать нал или нет

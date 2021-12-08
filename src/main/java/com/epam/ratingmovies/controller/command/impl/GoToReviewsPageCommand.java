@@ -56,7 +56,7 @@ public class GoToReviewsPageCommand implements Command {
 
         */
        // long id = ParameterTaker.takeId(request);
-       long id = ParameterTaker.takeId(request);
+       long id = ParameterTaker.takeIdNow(request);
         request.addAttribute(Attribute.ID, id);
         List<Comment> comments;
         int page = ParameterTaker.takeNumber(Parameter.PAGE, request);

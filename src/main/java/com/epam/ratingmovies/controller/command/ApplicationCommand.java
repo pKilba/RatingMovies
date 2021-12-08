@@ -10,6 +10,7 @@ public  enum ApplicationCommand {
     GO_TO_USER_PAGE(new GoToUserPageCommand(), CommandName.PROFILE_PAGE),
     GO_TO_MOVIE_PAGE(new GoToMoviePageCommand(),CommandName.MOVIE_PAGE),
     LEAVE_COMMENT(new AddCommentCommand(),CommandName.LEAVE_COMMENT),
+    CHANGE_PASSWORD(new ChangePasswordCommand(), CommandName.CHANGE_PASSWORD),
 
     GO_TO_ACCOUNT_SETTING_PAGE(new GoToAccountSettingPageCommand(), CommandName.ACCOUNT_SETTINGS_PAGE),
     /*  GO_TO_GAMBLERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),

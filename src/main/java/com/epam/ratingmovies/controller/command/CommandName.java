@@ -20,7 +20,7 @@ public class CommandName {
 
     public static final String SIGN_UP = "sign-up";
     public static final String USERS_PAGE = "users-page";
-    public static final String ADMIN_PANEL_PAGE = "admin-panel-page";
+    public static final String CHANGE_PASSWORD = "change-pas";
 
     public static final String CREATE_MOVIE ="createMovie";
 

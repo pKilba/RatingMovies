@@ -4,6 +4,7 @@ import com.epam.ratingmovies.dao.api.DAO;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.exception.DaoException;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,7 +89,7 @@ public interface UserDAO extends DAO<User, Long> {
      * @return the boolean
      * @throws DaoException the dao exception
      */
-    boolean updatePasswordByUserId(long userId, String password) throws DaoException;
+    boolean updatePasswordByUserId(long userId, String password) throws DaoException, SQLException;
 
     /**
      * Update general info by user id boolean.

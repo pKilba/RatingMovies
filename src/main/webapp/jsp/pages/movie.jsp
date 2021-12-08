@@ -47,7 +47,7 @@
                     </div>
                     <div class="col1">
                         <a href="${pageContext.request.contextPath}
-                        /ratingMovies?command=reviews-page&p=1&s=10&id=${movie.getId()}">Комментарий</a>
+                        /ratingMovies?command=reviews-page&p=1&s=10&movieId=${movie.getId()}">Комментарий</a>
                     </div>
 
                 </div>
