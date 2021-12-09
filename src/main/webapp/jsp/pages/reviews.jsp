@@ -16,15 +16,20 @@
 
             <c:forEach items="${commentUserList}" var="entry">
                 <div class="col-sm-5 col-md-6 col-12 pb-4">
+                    <a  style="text-decoration: none" href="${pageContext.request.contextPath}
+                /ratingMovies?command=profile-page&id=${entry.value.getId()}">
+
                     <div class="comment mt-4 text-justify float-left">
-                        <img src="${pageContext.request.contextPath}/images/photo/${entry.value.getProfilePicture()}" alt=""
+                        <img src="${pageContext.request.contextPath}
+                        /images/photo/${entry.value.getProfilePicture()}" alt=""
                              class="rounded-circle" width="40"
                              height="40">
                         <h4>${entry.value.getName()}</h4> <span>${entry.key.getCreateTimeComment()}</span> <br>
                         <p>${entry.key.getMessage()}</p>
                     </div>
-                </div>
+                    </a>
 
+                </div>
             </c:forEach>
 
             <c:if test="${commentUserList.size() != 0}">
