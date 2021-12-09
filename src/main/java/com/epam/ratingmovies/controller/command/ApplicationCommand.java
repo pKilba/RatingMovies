@@ -19,6 +19,7 @@ public  enum ApplicationCommand {
       */
     GO_TO_CREATE_MOVIE(new GoToAddMoviePageCommand(),CommandName.CREATE_MOVIE_PAGE),
     CREATE_MOVIE(new CreateMovieCommand(),"createMovie"),
+    GO_TO_SHOW_YOUR_COMMENTS(new GoToShowYourCommentsCommand(),"yourCommentsPage"),
     //todo добавить только для админа ?
     GO_TO_USERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
     GO_TO_MOVIES_PAGE(new GoToMoviesPageCommand(), CommandName.MOVIES_PAGE),

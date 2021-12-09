@@ -66,7 +66,7 @@
                 <li><a href="${pageContext.request.contextPath}/ratingMovies?command=users-page&p=1&s=10" class="nav-link px-2 text-white">
                     Пользователи</a>
                 </li>
-                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=statistic-comments-page&p=1&s=10" class="nav-link px-2 text-white">
+                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=yourCommentsPage&p=1&s=10" class="nav-link px-2 text-white">
                     Статистика комментариев</a>
                 </li>
                 <li><a href="${pageContext.request.contextPath}/ratingMovies?command=createMovies-page&p=1&s=10" class="nav-link px-2 text-white">
