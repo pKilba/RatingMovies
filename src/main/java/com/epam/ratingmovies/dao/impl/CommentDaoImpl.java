@@ -46,15 +46,13 @@ public class CommentDaoImpl implements CommentDao {
                 if (generatedKeys.next()) {
                     comment.setId(generatedKeys.getLong(1));
                 } else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
+                    throw new DaoException("Creating user failed, no ID obtained.");
                 }
                 connectionPool.returnConnection(connection);
             }
 
-            System.out.println(execute);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("что то совсем не так");
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
         return comment;
     }
@@ -67,14 +65,14 @@ public class CommentDaoImpl implements CommentDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Comment comment = mapper.map(resultSet);
-                if (offset <= comment.getId() && comment.getId() <= offset + amount) {
+                if (offset < comment.getId() && comment.getId() <= offset + amount) {
                     result.add(comment);
                 }
             }
             preparedStatement.close();
             connectionPool.returnConnection(connection);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
         return result;
     }
@@ -92,43 +90,42 @@ public class CommentDaoImpl implements CommentDao {
             preparedStatement.close();
 
             connectionPool.returnConnection(connection);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
         return counter;
     }
 
 
+    public List<Comment> findCommendByIdMovies(long id) {
+        ResultSet resultSet = null;
+        ArrayList result = new ArrayList();
+        try (Connection connection = connectionPool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_ID_MOVIES)) {
+            statement.setLong(1, id);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
 
-    public List<Comment>  findCommendByIdMovies(long id){
-      ResultSet resultSet = null;
-      ArrayList result = new ArrayList();
-      try (Connection connection = connectionPool.takeConnection();
-           PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_ID_MOVIES)) {
-          statement.setLong(1, id);
-          resultSet = statement.executeQuery();
-              while (resultSet.next()) {
+                Comment comment = mapper.map(resultSet);
 
-              Comment comment = mapper.map(resultSet);
+                result.add(comment);
+            }
 
-                  result.add(comment);
-          }
+            connectionPool.returnConnection(connection);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                throw new DaoException(e);
+            }
 
-          connectionPool.returnConnection(connection);
-      } catch (SQLException e) {
-          e.printStackTrace();
-      } finally {
-          try {
-              if (resultSet != null) {
-                  resultSet.close();
-              }
-          } catch (SQLException e) {
-              e.printStackTrace();
-          }
-
-      }
-      return result;
-  }
+        }
+        return result;
+    }
 
     @Override
     public Comment update(Comment entity) {
@@ -159,8 +156,8 @@ public class CommentDaoImpl implements CommentDao {
             preparedStatement.close();
             connectionPool.returnConnection(connection);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
         return result;
     }

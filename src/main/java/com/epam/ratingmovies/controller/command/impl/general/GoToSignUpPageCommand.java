@@ -1,14 +1,16 @@
-package com.epam.ratingmovies.controller.command.impl;
+package com.epam.ratingmovies.controller.command.impl.general;
 
 import com.epam.ratingmovies.controller.command.Command;
 import com.epam.ratingmovies.controller.command.CommandResponse;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 
-public class GoToLoginPageCommand implements Command {
-    public static final String LOGIN = "/jsp/pages/login.jsp";
+public class GoToSignUpPageCommand implements Command {
+
+    public static final String SIGN_UP = "/jsp/pages/sign-up.jsp";
 
     @Override
     public CommandResponse execute(RequestContext request) {
-        return CommandResponse.forward(LOGIN);
+
+        return CommandResponse.forward(SIGN_UP);
     }
 }

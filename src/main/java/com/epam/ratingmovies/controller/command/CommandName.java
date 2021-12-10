@@ -22,11 +22,11 @@ public class CommandName {
     public static final String USERS_PAGE = "users-page";
     public static final String CHANGE_PASSWORD = "change-pas";
 
-    public static final String CREATE_MOVIE ="createMovie";
+    public static final String CREATE_MOVIE = "createMovie";
 
     public static final String ACTION_BAN_USER = "action-ban-user";
     public static final String ACTION_UNBAN_USER = "action-unban-user";
-
+    public static final String LOCALIZATION = "localization";
 
     public static final String USERS = "users";
 }

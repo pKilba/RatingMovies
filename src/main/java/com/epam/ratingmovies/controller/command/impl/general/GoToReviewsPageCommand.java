@@ -1,4 +1,4 @@
-package com.epam.ratingmovies.controller.command.impl;
+package com.epam.ratingmovies.controller.command.impl.general;
 
 import com.epam.ratingmovies.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
@@ -81,7 +81,6 @@ public class GoToReviewsPageCommand implements Command {
         }
         request.addAttribute(Attribute.AMOUNT_OF_PAGE, size);
         request.addAttribute(Attribute.MAX_PAGE, maxPage);
-        //request.addAttribute(Attribute.MOVIE_LIST, commenList);
         List<User> users = new ArrayList<>();
         User user = new User();
         for (Comment comment : comments) {

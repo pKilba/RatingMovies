@@ -1,6 +1,7 @@
 package com.epam.ratingmovies.dao.connectionpool.impl;
 
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
+import com.epam.ratingmovies.dao.exception.ConnectionPoolException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -40,15 +41,11 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     public static ConnectionPool getInstance() {
         if (!IS_POOL_CREATED.get()) {
             INSTANCE_LOCKER.lock();
-            try {
-                if (!IS_POOL_CREATED.get()) {
-                    instance = new ConnectionPoolImpl();
-                    IS_POOL_CREATED.set(true);
-                }
-            } finally {
-                INSTANCE_LOCKER.unlock();
+            if (!IS_POOL_CREATED.get()) {
+                instance = new ConnectionPoolImpl();
+                IS_POOL_CREATED.set(true);
             }
-
+            INSTANCE_LOCKER.unlock();
         }
         return instance;
     }
@@ -62,9 +59,10 @@ public final class ConnectionPoolImpl implements ConnectionPool {
             try {
                 Class.forName(DRIVER);
             } catch (ClassNotFoundException e) {
+                throw new ConnectionPoolException(e);
                 //todo impl logger and custom ex
-                e.printStackTrace();
             }
+
             initializeConnections(INITIAL_PO0L_SIZE);
             return true;
         }
@@ -91,10 +89,11 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     private void closeConnection(ProxyConnection connection) {
         try {
             connection.realClose();
-        } catch (SQLException E) {
-            //todo impl log and custom ex
-
+        } catch (SQLException e) {
+            throw new ConnectionPoolException(e);
         }
+        //todo impl log and custom ex
+
     }
 
     private void closeConnections() {
@@ -110,9 +109,10 @@ public final class ConnectionPoolImpl implements ConnectionPool {
             try {
                 wait();
             } catch (InterruptedException e) {
-                //todo implement logger and custom exception
 
                 Thread.currentThread().interrupt();
+                throw new ConnectionPoolException(e);
+                //todo implement logger and custom exception
             }
         }
         ProxyConnection connection = availableConnections.poll();
@@ -127,7 +127,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     @Override
     public synchronized void returnConnection(Connection connection) {
         if (giveAwayConnections.remove(connection)) {
-         //rolback ?
+            //rolback ?
             availableConnections.add((ProxyConnection) connection);
             notifyAll();
         } else {
@@ -146,12 +146,14 @@ public final class ConnectionPoolImpl implements ConnectionPool {
             System.out.printf("vse good");
             return true;
         } catch (SQLException e) {
-            //ubrats return nahui
-            System.out.printf("problem");
-            return false;
-            //dopilits
-            // throw new ConnectionPoolException();
+
+            throw new ConnectionPoolException(e);
+
+            //todo log
         }
+
+        //dopilits
+        // throw new ConnectionPoolException();
     }
 
 }

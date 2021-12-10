@@ -2,8 +2,10 @@
 
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <c:import url="/jsp/partspages/head.jsp"/>
+    <%@ taglib prefix="sc" uri="custom-tags" %>
     <link rel="stylesheet" type="text/css" href="../../css/reviews.css">
 </head>
 <body>
@@ -58,6 +60,9 @@
         </div>
     </div>
 </section>
+
+<sc:access role="USER">
+
 <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
     <form id="algin-form" method="POST"
           action="${pageContext.request.contextPath}/ratingMovies?command=leaveComment&movieId=${id}&id=${sessionScope.get("userId")}">
@@ -75,5 +80,30 @@
         <button type="submit" class="form-button button-l margin-b">Sign In</button>
     </form>
 </div>
+</sc:access>
+
+<sc:access role="ADMIN">
+
+    <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+        <form id="algin-form" method="POST"
+              action="${pageContext.request.contextPath}/ratingMovies?command=leaveComment&movieId=${id}&id=${sessionScope.get("userId")}">
+            <div class="form-group">
+                <h4>Leave a comment</h4>
+                <textarea name="leaveComment" id="" msg cols="30" rows="5"
+                          class="form-control"
+                          style="background-color: black;" required>
+
+            </textarea>
+            </div>
+
+            <div class="form-inline"><input type="checkbox" name="check" id="checkbx" class="mr-1"> Subscribe me
+                to the newlettter </div>
+            <button type="submit" class="form-button button-l margin-b">Sign In</button>
+        </form>
+    </div>
+</sc:access>
+
+
+
 
 </body>

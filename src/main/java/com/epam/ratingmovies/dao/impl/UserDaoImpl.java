@@ -47,17 +47,18 @@ public class UserDaoImpl implements UserDAO {
     public UserDaoImpl() {
     }
 
-public void updateNameEmailTelegramById(String name,String email,String telegram ,long id) throws SQLException {
-    Connection connection = connectionPool.takeConnection();
-    PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_NAME_EMAIL_TELEGRAM_BY_ID);
-    preparedStatement.setString(1, name);
-    preparedStatement.setString(2, email);
-    preparedStatement.setString(3, telegram);
-    preparedStatement.setLong(4, id);
-    preparedStatement.executeUpdate();
-    connectionPool.returnConnection(connection);
+    public void updateNameEmailTelegramById(String name, String email, String telegram, long id) throws SQLException {
+        Connection connection = connectionPool.takeConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_NAME_EMAIL_TELEGRAM_BY_ID);
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, email);
+        preparedStatement.setString(3, telegram);
+        preparedStatement.setLong(4, id);
+        preparedStatement.executeUpdate();
+        connectionPool.returnConnection(connection);
 
-}
+    }
+
     @Override
     public User save(User user) {
 
@@ -81,18 +82,16 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
                 if (generatedKeys.next()) {
                     user.setId(generatedKeys.getLong(1));
                 } else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
+                    throw new DaoException("Creating user failed, no ID obtained.");
                 }
 
                 connectionPool.returnConnection(connection);
             }
 
 
-
             System.out.println(execute);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("что то совсем не так");
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
         return user;
     }
@@ -110,14 +109,14 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException(e);
         } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DaoException(e);
             }
 
         }
@@ -135,8 +134,8 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
             Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
             preparedStatement.close();
             System.out.println(result);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
 
         connectionPool.returnConnection(connection);
@@ -162,14 +161,14 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException(e);
         } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DaoException(e);
             }
 
         }
@@ -192,8 +191,8 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
             preparedStatement.close();
 
             connectionPool.returnConnection(connection);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
         return result;
     }
@@ -217,18 +216,17 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = mapper.map(resultSet);
-               if (offset < user.getId() && user.getId() < offset + amount) {
-                   result.add(user);
-               }
+                if (offset < user.getId() && user.getId() < offset + amount) {
+                    result.add(user);
+                }
             }
             preparedStatement.close();
             connectionPool.returnConnection(connection);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
         return result;
     }
-
 
 
     //todo мб поменять логику
@@ -245,8 +243,8 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
             preparedStatement.close();
             connectionPool.returnConnection(connection);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
         return counter;
     }
@@ -276,7 +274,7 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DaoException(e);
             }
 
         }
@@ -298,14 +296,15 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException(e);
         } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+
+                throw new DaoException(e);
             }
 
         }
@@ -328,14 +327,14 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException(e);
         } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DaoException(e);
             }
 
         }
@@ -353,7 +352,7 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
             connectionPool.returnConnection(connection);
             return resultSet.next();
         } catch (SQLException e) {
-            e.printStackTrace();
+
         } finally {
             try {
                 if (resultSet != null) {
@@ -379,7 +378,8 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
             connectionPool.returnConnection(connection);
             return resultSet.next();
         } catch (SQLException e) {
-            e.printStackTrace();
+
+
         } finally {
             try {
                 if (resultSet != null) {
@@ -453,23 +453,34 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
     }
 
 
-    public void updatePhotoByUserId(long id, String photo) throws SQLException {
-
-        Connection connection = connectionPool.takeConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PHOTO_BY_ID);
-        preparedStatement.setString(1, photo);
-        preparedStatement.setLong(2, id);
-        preparedStatement.executeUpdate();
-        connectionPool.returnConnection(connection);
+    public void updatePhotoByUserId(long id, String photo) {
+        try {
+            Connection connection = connectionPool.takeConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PHOTO_BY_ID);
+            preparedStatement.setString(1, photo);
+            preparedStatement.setLong(2, id);
+            preparedStatement.executeUpdate();
+            connectionPool.returnConnection(connection);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
-    public boolean updatePasswordByUserId(long id, String password) throws SQLException {
 
-        Connection connection = connectionPool.takeConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PASSWORD_BY_ID);
-        preparedStatement.setString(1, password);
-        preparedStatement.setLong(2, id);
-        preparedStatement.executeUpdate();
-        connectionPool.returnConnection(connection);
+    public boolean updatePasswordByUserId(long id, String password) {
+
+        try {
+
+
+            Connection connection = connectionPool.takeConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PASSWORD_BY_ID);
+            preparedStatement.setString(1, password);
+            preparedStatement.setLong(2, id);
+            preparedStatement.executeUpdate();
+            connectionPool.returnConnection(connection);
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
         return true;
     }
 
@@ -477,7 +488,7 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
     //todo мб буду вызывать здесь функцию апдейта юзера по айди а в этой просто получать этот айди
     @Override
     //todo брать возвр ти или сменить его на булеан !!!
-    public User update(User user) throws DaoException {
+    public User update(User user)  {
         Connection connection = connectionPool.takeConnection();
         try {
 
@@ -499,8 +510,8 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
             preparedStatement.close();
 
             connectionPool.returnConnection(connection);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
         return user;
 

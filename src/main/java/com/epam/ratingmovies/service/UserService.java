@@ -1,6 +1,8 @@
 package com.epam.ratingmovies.service;
 
 import com.epam.ratingmovies.dao.entity.User;
+import com.epam.ratingmovies.dao.entity.UserStatus;
+import com.epam.ratingmovies.dao.exception.DaoException;
 import com.epam.ratingmovies.dao.impl.UserDaoImpl;
 import com.google.protobuf.ServiceException;
 
@@ -21,18 +23,20 @@ public class UserService {
     }
 
 
+    public void updateNameEmailTelegramById(String name, String email, String telegram, long id) throws SQLException {
+        userDao.updateNameEmailTelegramById(name, email, telegram, id);
+    }
 
-public void updateNameEmailTelegramById(String name,String email,String telegram,long id) throws SQLException {
-        userDao.updateNameEmailTelegramById(name,email, telegram, id);
-}
     public int findUsersAmount() {
         return userDao.findUsersAmount();
     }
-    public void updatePhotoByUserId(long userId,String fileName) throws SQLException {
-        userDao.updatePhotoByUserId(userId,fileName);
+
+    public void updatePhotoByUserId(long userId, String fileName) throws SQLException {
+        userDao.updatePhotoByUserId(userId, fileName);
     }
-    public void updatePasswordByUserId(long userId,String password) throws SQLException {
-        userDao.updatePasswordByUserId(userId,password);
+
+    public void updatePasswordByUserId(long userId, String password) throws SQLException {
+        userDao.updatePasswordByUserId(userId, password);
     }
 
 
@@ -49,6 +53,17 @@ public void updateNameEmailTelegramById(String name,String email,String telegram
         return userDao.findUsersRange(amountQuery, size);
     }
 
+
+    public boolean isBlockedById(long id) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
+        Optional<User> user = userDao.findUserById(id);
+        if (user.isPresent()) {
+            return user.get().getUserStatus() == UserStatus.BANNED;
+
+        }
+
+        return false;
+    }
 
     //todo optional return
     public User findUserByLogin(String login) {

@@ -76,6 +76,7 @@
 
 
 
+
             <c:if test="${userList.size() != 0}">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
@@ -102,6 +103,8 @@
         </div>
     </div>
 </div>
+
+<script src="/js/admin-panel.js"></script>
 
 </body>
 </html>

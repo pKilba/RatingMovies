@@ -57,15 +57,14 @@ public class MovieDaoImpl implements MovieDao {
                 if (generatedKeys.next()) {
                     movie.setId(generatedKeys.getLong(1));
                 } else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
+                    throw new DaoException("Creating user failed, no ID obtained.");
                 }
                 connectionPool.returnConnection(connection);
             }
 
-            System.out.println(execute);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("что то совсем не так");
+        } catch (SQLException e) {
+       throw new DaoException(e);
+
         }
         return movie;
     }
@@ -101,8 +100,8 @@ public class MovieDaoImpl implements MovieDao {
             preparedStatement.close();
 connectionPool.returnConnection(connection);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
         return result;
     }
@@ -124,14 +123,14 @@ connectionPool.returnConnection(connection);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Movie movie = mapper.map(resultSet);
-                if (offset <= movie.getId() && movie.getId() <= offset + amount) {
+                if (offset < movie.getId() && movie.getId() <= offset + amount) {
                     result.add(movie);
                 }
             }
             preparedStatement.close();
             connectionPool.returnConnection(connection);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
         return result;
     }
@@ -148,8 +147,8 @@ connectionPool.returnConnection(connection);
             preparedStatement.close();
 
             connectionPool.returnConnection(connection);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
         return counter;
     }
@@ -171,14 +170,14 @@ connectionPool.returnConnection(connection);
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException(e);
         } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DaoException(e);
             }
 
         }

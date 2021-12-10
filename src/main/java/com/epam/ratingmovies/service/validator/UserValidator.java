@@ -41,7 +41,7 @@ public class UserValidator implements Validator {
     @Override
     public boolean isValid(User user) {
         //   if (!isValidGeneralInfo(user)) {
-         //   return false;
+        //   return false;
         //}
         String login = user.getLogin();
         if (login == null
@@ -49,9 +49,9 @@ public class UserValidator implements Validator {
             return false;
         }
         String password = user.getPassword();
-//        if (password == null || password.length() != LENGTH_HASH_PASSWORD) {
-//            return false;
-//        }
+        //  if (password == null || password.length() != LENGTH_HASH_PASSWORD) {
+        //   return false;
+        //}
         String email = user.getEmail();
         if (email == null || email.isEmpty()
                 || email.length() > MAX_EMAIL_LENGTH
@@ -60,22 +60,32 @@ public class UserValidator implements Validator {
             return false;
         }
         String telegram = user.getTelegramAccount();
-//        if (telegram == null || telegram.isEmpty()
-//                || telegram.length() > MAX_TELEGRAM_LENGTH
-//                || telegram.length() < MIN_TELEGRAM_LENGTH
-//                || !isValidTelegram(telegram))
-//        {
-        return true;
+        if (telegram == null || telegram.isEmpty()
+                || telegram.length() > MAX_TELEGRAM_LENGTH
+                || telegram.length() < MIN_TELEGRAM_LENGTH
+                || !isValidTelegram(telegram)) {
+            return false;
         }
 
+return true;
+    }
 
 
 
-
-    private boolean isValidTelegram(String telegram) {
+    public boolean isValidTelegram(String telegram) {
         Matcher matcher = COMPILED_PATTERN_TELEGRAM.matcher(telegram);
         return matcher.matches();
     }
+
+//    public boolean isValidName(String name) {
+//        if (name == null || name.length() > MAX_PASSWORD_LENGTH
+//                || name.length() < MIN_PASSWORD_LENGTH) {
+//            return false;
+//        }
+//return true;
+
+
+
 
     public boolean isValidPassword(String line) {
         if (line == null || line.length() > MAX_PASSWORD_LENGTH
@@ -99,14 +109,15 @@ public class UserValidator implements Validator {
 //    }
 
 
-    private boolean isValidName(String name) {
+    public boolean isValidName(String name) {
         Matcher matcher = COMPILED_PATTERN_NAME.matcher(name);
         return matcher.matches();
     }
 
 
-    private boolean isValidEmail(String email) {
+    public boolean isValidEmail(String email) {
         Matcher matcher = COMPILED_PATTERN_EMAIL.matcher(email);
         return matcher.matches();
     }
+
 }

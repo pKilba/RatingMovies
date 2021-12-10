@@ -1,4 +1,4 @@
-package com.epam.ratingmovies.controller.command.impl;
+package com.epam.ratingmovies.controller.command.impl.admin;
 
 import com.epam.ratingmovies.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;

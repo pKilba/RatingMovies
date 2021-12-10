@@ -6,7 +6,7 @@
     <c:import url="/jsp/partspages/head.jsp"/>
     <title>Title</title>
 </head>
-<body>
+<body style="background: white" >
 
 <c:import url="/jsp/partspages/navbar.jsp"/>
 <%! private int i = 0; %>

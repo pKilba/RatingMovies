@@ -34,14 +34,14 @@
 
         <div class="mb-3">
             <span class="form-label">Введите ссылку на постер</span>
-            <input type="text" class="form-control" name="img" minlength="4" maxlength="32"
+            <input type="text" class="form-control" name="img" minlength="4" maxlength="128"
                    required>
         </div>
 
 
         <div class="mb-3">
             <span class="form-label">Введите ссылку на задний фон фильма</span>
-            <input type="text" class="form-control" name="img" minlength="4" maxlength="32"
+            <input type="text" class="form-control" name="img" minlength="4" maxlength="128"
                    required>
         </div>
 
@@ -85,7 +85,6 @@
                 <option>Не выбирать</option>
                 <option>Не выбирать</option>
             </select>
-
         </div>
 
 

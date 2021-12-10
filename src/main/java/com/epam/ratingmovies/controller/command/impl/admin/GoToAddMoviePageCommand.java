@@ -1,17 +1,20 @@
-package com.epam.ratingmovies.controller.command.impl;
+package com.epam.ratingmovies.controller.command.impl.admin;
 
-import com.epam.ratingmovies.Attribute;
 import com.epam.ratingmovies.controller.command.Command;
 import com.epam.ratingmovies.controller.command.CommandResponse;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.google.protobuf.ServiceException;
 
-public class LogOutCommand implements Command {
+public class GoToAddMoviePageCommand implements Command {
+    public static final String CREATE_MOVIE = "/jsp/pages/createMovie.jsp";
 
-    public static final String MOVIES = "/jsp/pages/movies.jsp";
+
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
-        request.addSession(Attribute.INVALIDATE_ATTRIBUTE, true);
-        return CommandResponse.redirect(MOVIES);
+
+
+
+
+        return CommandResponse.forward(CREATE_MOVIE);
     }
 }

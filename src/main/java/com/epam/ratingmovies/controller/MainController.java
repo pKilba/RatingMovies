@@ -2,6 +2,7 @@ package com.epam.ratingmovies.controller;
 
 import java.io.*;
 
+import com.epam.ratingmovies.Attribute;
 import com.epam.ratingmovies.controller.command.Command;
 import com.epam.ratingmovies.controller.command.CommandName;
 import com.epam.ratingmovies.controller.command.CommandResponse;
@@ -16,7 +17,9 @@ import jakarta.servlet.annotation.*;
 @WebServlet(urlPatterns = {"/ratingMovies"}, name = "mainServlet")
 
 public class MainController extends HttpServlet {
-
+    public static final String ERROR = "/jsp/pages/error/error.jsp";
+    private static final String UTF_EIGHT = "UTF-8";
+    private static final String JSON_CONTENT_TYPE = "application/json";
 
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -41,7 +44,7 @@ public class MainController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             //    LOGGER.error(e);
-            //  handleException(request, response, e.getMessage());
+              handleException(request, response, e.getMessage());
         }
     }
 
@@ -86,6 +89,21 @@ public class MainController extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher(page);
             dispatcher.forward(request, response);
         }*/
+
+
+    private void handleException(HttpServletRequest req, HttpServletResponse resp, String errorMessage)
+            throws IOException {
+        req.setAttribute(Attribute.ERROR_MESSAGE, errorMessage);
+        RequestDispatcher dispatcher = req.getRequestDispatcher(ERROR);
+        try {
+            dispatcher.forward(req, resp);
+        } catch (ServletException e) {
+            //LOGGER.error(e);
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
     public void destroy() {
         ConnectionPool pool = ConnectionPoolImpl.getInstance();

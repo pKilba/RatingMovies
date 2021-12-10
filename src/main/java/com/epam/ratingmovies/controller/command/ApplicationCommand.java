@@ -1,6 +1,8 @@
 package com.epam.ratingmovies.controller.command;
 
-import com.epam.ratingmovies.controller.command.impl.*;
+import com.epam.ratingmovies.controller.command.impl.admin.*;
+import com.epam.ratingmovies.controller.command.impl.general.*;
+import com.epam.ratingmovies.controller.command.impl.user.*;
 
 import java.util.Arrays;
 
@@ -30,8 +32,8 @@ public  enum ApplicationCommand {
     CHANGE_GENERAL_INFO(new ChangeGeneralInfoCommand(), CommandName.CHANGE_GENERAL_INFO),
     GO_TO_REVIEWS_PAGE(new GoToReviewsPageCommand(),CommandName.REVIEWS_PAGE),
 
-    LOGOUT(new LogOutCommand(), CommandName.LOGOUT);
-    //LOCALIZATION(new LocalizationCommand(), CommandName.LOCALIZATION),
+    LOGOUT(new LogOutCommand(), CommandName.LOGOUT),
+    LOCALIZATION(new LocalizationCommand(), CommandName.LOCALIZATION);
     /*CHANGE_PASSWORD(new ChangePasswordCommand(), CommandName.CHANGE_PASSWORD),
     //AJAX
     CHECK_EXIST_LOGIN(new CheckExistUsernameCommand(), CommandName.CHECK_EXIST_LOGIN),
