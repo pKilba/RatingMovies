@@ -53,16 +53,22 @@ public class MainController extends HttpServlet {
                           HttpServletResponse response)
             throws ServletException, IOException {
         // if (!commandResult.isTypeResponseJson()) {
-        String page = commandResult.getPage();
-        if (page == null) {
-            System.out.println("123748uurhfrfrf38");
-                    response.sendRedirect("?command=" + CommandName.HOME_PAGE);
+        if (commandResult.getPage().equals("json")) {
+            response.setContentType(JSON_CONTENT_TYPE);
+            response.setCharacterEncoding(UTF_EIGHT);
+            response.getWriter().write(commandResult.getLine());
         } else {
-            if (commandResult.isRedirect()) {
-                response.sendRedirect(page);
+            String page = commandResult.getPage();
+            if (page == null) {
+                System.out.println("123748uurhfrfrf38");
+                response.sendRedirect("?command=" + CommandName.HOME_PAGE);
             } else {
-                RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-                dispatcher.forward(request, response);
+                if (commandResult.isRedirect()) {
+                    response.sendRedirect(page);
+                } else {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+                    dispatcher.forward(request, response);
+                }
             }
         }
         /*} else {

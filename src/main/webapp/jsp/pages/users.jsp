@@ -33,9 +33,7 @@
                     <th>Статус пользователя</th>
                 </tr>
                 </thead>
-                <tbody>
-                <%! private int i = 0; %>
-
+                <tbody class="table-of-users">
                 <c:forEach items="${userList}"  varStatus="counter" var="user">
                     <tr>
                         <td>${counter.index+1}</td>

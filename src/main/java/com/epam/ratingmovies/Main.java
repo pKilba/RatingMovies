@@ -18,7 +18,7 @@ public class Main {
         MovieDao movieDaoTest = new MovieDaoImpl();
 
      List lsit =  movieDaoTest.findAll();
-        System.out.println(lsit);
+        System.out.println("ПИДОР");
 
 
     }
