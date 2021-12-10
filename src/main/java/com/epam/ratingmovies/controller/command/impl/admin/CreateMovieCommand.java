@@ -10,8 +10,10 @@ import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.service.MovieService;
 import com.google.protobuf.ServiceException;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -31,10 +33,8 @@ public class CreateMovieCommand implements Command {
 
         String str =ParameterTaker.takeString("data", request);
 
-        // you can change format of date
-
-        LocalDateTime dateTime = LocalDate.parse(str).atStartOfDay();
-        Timestamp timestamp = Timestamp.valueOf(dateTime);
+        // you can change format of dateSi
+        Timestamp timestamp = Timestamp.valueOf(str);
         int like = ParameterTaker.takeNumber("like", request);
         int dislike = ParameterTaker.takeNumber("dislike", request);
         String name = ParameterTaker.takeString("name", request);

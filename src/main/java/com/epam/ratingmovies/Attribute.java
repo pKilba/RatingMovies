@@ -25,6 +25,8 @@ public class Attribute {
     public static final String COMMENT_USER_LIST = "commentUserList";
 
 
+
+    public static final String MESSAGE = "message";
     //dto
     public static final String USER_LIST = "userList";
     public static final String CURRENT_PAGE = "currentPage";

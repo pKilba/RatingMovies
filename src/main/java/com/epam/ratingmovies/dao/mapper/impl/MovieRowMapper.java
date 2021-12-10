@@ -3,8 +3,11 @@ package com.epam.ratingmovies.dao.mapper.impl;
 import com.epam.ratingmovies.dao.entity.*;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import static com.epam.ratingmovies.dao.entity.ColumnName.*;
 import static com.epam.ratingmovies.dao.entity.ColumnName.USER_PROFILE_PICTURE;

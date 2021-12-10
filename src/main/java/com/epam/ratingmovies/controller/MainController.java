@@ -60,7 +60,6 @@ public class MainController extends HttpServlet {
         } else {
             String page = commandResult.getPage();
             if (page == null) {
-                System.out.println("123748uurhfrfrf38");
                 response.sendRedirect("?command=" + CommandName.HOME_PAGE);
             } else {
                 if (commandResult.isRedirect()) {

@@ -53,16 +53,21 @@ public class UserService {
         return userDao.findUsersRange(amountQuery, size);
     }
 
+    public boolean blockedById(long id){
+        return userDao.blockById(id);
+    }
 
-    public boolean isBlockedById(long id) throws ServiceException {
-        UserDaoImpl userDao = new UserDaoImpl();
-        Optional<User> user = userDao.findUserById(id);
-        if (user.isPresent()) {
-            return user.get().getUserStatus() == UserStatus.BANNED;
+    public boolean unblockById(long id){
+        return userDao.unblockById(id);
+    }
 
-        }
 
-        return false;
+    public boolean isBlockedById(long id){
+        return userDao.isBlockedById(id);
+    }
+
+    public boolean isUnblockedById(long id){
+        return userDao.isUnblockedById(id);
     }
 
     //todo optional return

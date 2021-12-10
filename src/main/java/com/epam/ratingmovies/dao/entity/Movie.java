@@ -1,5 +1,6 @@
 package com.epam.ratingmovies.dao.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Movie extends AbstractEntity<Long> {
@@ -46,7 +47,7 @@ public class Movie extends AbstractEntity<Long> {
         this.name = name;
     }
 
-    public Movie(String name, String poster, String about, Timestamp releaseDate, int amount_like, int amount_dislike, Genre genre,String producer,int duration,String background)
+    public Movie(String name, String poster, String about, Timestamp releaseDate, int amount_like, int amount_dislike, Genre genre, String producer, int duration, String background)
     {
         this.name = name;
         this.poster = poster;

@@ -41,6 +41,7 @@ public class UserDaoImpl implements UserDAO {
     private static final String SQL_UPDATE_USER_BY_ID = "UPDATE users SET login = ?, password = ?, role_id = ? ,name =  ?, mail = ? , account_telegram = ? , status_id = ? , create_time = ? , profile_picture = ?  WHERE user_id = ?";
     private static final String SQL_UPDATE_PHOTO_BY_ID = "UPDATE users SET profile_picture  = ? WHERE user_id = ?";
     private static final String SQL_UPDATE_PASSWORD_BY_ID = "UPDATE users SET password  = ? WHERE user_id = ?";
+    private static final String SQL_UPDATE_STATUS_BY_ID = "UPDATE users SET status_id  = ? WHERE user_id = ?";
     private static final String SQL_UPDATE_NAME_EMAIL_TELEGRAM_BY_ID = "UPDATE users SET name = ?, mail = ?, account_telegram = ? WHERE user_id = ?";
 
 
@@ -202,6 +203,60 @@ public class UserDaoImpl implements UserDAO {
 
         return Optional.empty();
     }
+
+    public boolean blockById(Long id) {
+        try {
+            Connection connection = connectionPool.takeConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_STATUS_BY_ID);
+            preparedStatement.setInt(1, 2);
+            preparedStatement.setLong(2, id);
+            preparedStatement.executeUpdate();
+            connectionPool.returnConnection(connection);
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+
+        }
+        return true;
+    }
+
+
+    public boolean isUnblockedById(long id){
+        User user = findUserById(id).get();
+        if (user.getUserStatus().getId()==1){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean isBlockedById(long id){
+       User user = findUserById(id).get();
+       if (user.getUserStatus().getId()==2){
+           return true;
+       }
+       else {
+           return false;
+       }
+    }
+
+    public boolean unblockById(Long id) {
+        try {
+            Connection connection = connectionPool.takeConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_STATUS_BY_ID);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setLong(2, id);
+            preparedStatement.executeUpdate();
+            connectionPool.returnConnection(connection);
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+
+        }
+        return true;
+    }
+
 
 
     //todo изменить логику крч я сравниваю по айди а например в моей бд
@@ -469,8 +524,6 @@ public class UserDaoImpl implements UserDAO {
     public boolean updatePasswordByUserId(long id, String password) {
 
         try {
-
-
             Connection connection = connectionPool.takeConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PASSWORD_BY_ID);
             preparedStatement.setString(1, password);
@@ -488,7 +541,7 @@ public class UserDaoImpl implements UserDAO {
     //todo мб буду вызывать здесь функцию апдейта юзера по айди а в этой просто получать этот айди
     @Override
     //todo брать возвр ти или сменить его на булеан !!!
-    public User update(User user)  {
+    public User update(User user) {
         Connection connection = connectionPool.takeConnection();
         try {
 
