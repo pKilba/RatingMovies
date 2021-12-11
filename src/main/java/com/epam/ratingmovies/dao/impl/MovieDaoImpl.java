@@ -9,6 +9,9 @@ import com.epam.ratingmovies.dao.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.MovieRowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.UserRowMapper;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ public class MovieDaoImpl implements MovieDao {
 
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
+    private static final Logger logger = LogManager.getLogger(MovieDaoImpl.class);
     private long idMovie;
 
     @Override
@@ -57,13 +61,15 @@ public class MovieDaoImpl implements MovieDao {
                 if (generatedKeys.next()) {
                     movie.setId(generatedKeys.getLong(1));
                 } else {
+                    logger.warn("No id obtained");
                     throw new DaoException("Creating user failed, no ID obtained.");
                 }
                 connectionPool.returnConnection(connection);
             }
 
         } catch (SQLException e) {
-       throw new DaoException(e);
+            logger.throwing(Level.WARN, e);
+            throw new DaoException(e);
 
         }
         return movie;
@@ -74,10 +80,7 @@ public class MovieDaoImpl implements MovieDao {
         return null;
     }
 
-    @Override
-    public void delete(Movie movie) {
 
-    }
 
     @Override
     public void delete(Long id) {
@@ -98,18 +101,15 @@ public class MovieDaoImpl implements MovieDao {
                 result.add(movie);
             }
             preparedStatement.close();
-connectionPool.returnConnection(connection);
+            connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
         return result;
     }
 
-    @Override
-    public Optional<Movie> findById(Long idEntity) {
-        return Optional.empty();
-    }
 
 
     //todo изменить логику крч я сравниваю по айди а например в моей бд
@@ -130,6 +130,7 @@ connectionPool.returnConnection(connection);
             preparedStatement.close();
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
         return result;
@@ -148,6 +149,7 @@ connectionPool.returnConnection(connection);
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
         return counter;
@@ -155,7 +157,7 @@ connectionPool.returnConnection(connection);
 
 
     @Override
-    public Optional<Movie> findMovieById(long idMovie) {
+    public Optional<Movie> findById(Long idMovie) {
         this.idMovie = idMovie;
         ResultSet resultSet = null;
         Optional<Movie> movieOptional = null;
@@ -164,12 +166,12 @@ connectionPool.returnConnection(connection);
             statement.setLong(1, idMovie);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-
                 movieOptional = Optional.of(mapper.map(resultSet));
             }
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         } finally {
             try {
@@ -177,6 +179,7 @@ connectionPool.returnConnection(connection);
                     resultSet.close();
                 }
             } catch (SQLException e) {
+                logger.throwing(Level.WARN, e);
                 throw new DaoException(e);
             }
 

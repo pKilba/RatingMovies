@@ -1,12 +1,12 @@
 package com.epam.ratingmovies.controller.command.impl.general;
 
-import com.epam.ratingmovies.Attribute;
-import com.epam.ratingmovies.LineHasher;
+import com.epam.ratingmovies.util.Attribute;
+import com.epam.ratingmovies.util.LineHasher;
 import com.epam.ratingmovies.controller.ParameterTaker;
-import com.epam.ratingmovies.controller.command.Command;
+import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandName;
 import com.epam.ratingmovies.controller.command.CommandResponse;
-import com.epam.ratingmovies.controller.command.Parameter;
+import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.entity.UserRole;
@@ -28,10 +28,8 @@ public class LoginCommand implements Command {
         String login = ParameterTaker.takeString(Parameter.LOGIN, request);
         String pass = ParameterTaker.takeString(Parameter.PASSWORD, request);
         LineHasher lineHasher = new LineHasher();
-
-        //todo пароль не солирую хуйня праоль
         String hashPass = lineHasher.hashingLine(pass);
-        Optional<User> user = service.findUserByLoginAndPassword(login,pass);
+        Optional<User> user = service.findUserByLoginAndPassword(login,hashPass);
         if (user.isPresent()) {
             if (user.get().getUserStatus() != UserStatus.BANNED) {
                 long id = user.get().getId();
@@ -39,9 +37,7 @@ public class LoginCommand implements Command {
                 request.addSession(Attribute.USER_ID, id);
                 request.addSession(Attribute.ROLE, role);
                 request.addSession(Attribute.LOGIN, user.get().getLogin());
-                //?? а а а а а а? номр?
                 request.addSession(Attribute.PHOTO,user.get().getProfilePicture());
-
                 return CommandResponse.redirect(PROFILE_PAGE_COMMAND + id);
             }
             request.addAttribute(Attribute.ERROR_MESSAGE, FREEZE_USER_KEY);

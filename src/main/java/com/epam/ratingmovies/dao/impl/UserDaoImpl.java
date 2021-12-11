@@ -7,6 +7,9 @@ import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.UserRowMapper;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.*;
@@ -17,10 +20,7 @@ public class UserDaoImpl implements UserDAO {
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
 
-    //todo мб закинуть в абстрактную штуку какуюнибудь маппер везде будет прст во всех энтити
     private final RowMapper<User> mapper = new UserRowMapper();
-
-    //todo ctreate suka create!
     private static final String SQL_SAVE_USER = "INSERT INTO users( login, password," +
             " role_id, name, mail, account_telegram, status_id, create_time," +
             " profile_picture)" +
@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDAO {
     private static final String SQL_UPDATE_PASSWORD_BY_ID = "UPDATE users SET password  = ? WHERE user_id = ?";
     private static final String SQL_UPDATE_STATUS_BY_ID = "UPDATE users SET status_id  = ? WHERE user_id = ?";
     private static final String SQL_UPDATE_NAME_EMAIL_TELEGRAM_BY_ID = "UPDATE users SET name = ?, mail = ?, account_telegram = ? WHERE user_id = ?";
-
+    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
     public UserDaoImpl() {
     }
@@ -68,7 +68,7 @@ public class UserDaoImpl implements UserDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_USER, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setInt(3, user.getUserRole().getId());
+            preparedStatement.setInt(3, user.getUserRole().ordinal());
             preparedStatement.setString(4, user.getName());
             preparedStatement.setString(5, user.getEmail());
             preparedStatement.setString(6, user.getTelegramAccount());
@@ -89,9 +89,8 @@ public class UserDaoImpl implements UserDAO {
                 connectionPool.returnConnection(connection);
             }
 
-
-            System.out.println(execute);
         } catch (SQLException e) {
+
             throw new DaoException(e);
         }
         return user;
@@ -141,11 +140,6 @@ public class UserDaoImpl implements UserDAO {
 
         connectionPool.returnConnection(connection);
         // return result;
-    }
-
-    @Override
-    public void delete(User entity) {
-
     }
 
     public Optional<User> findUserById(long id) {
@@ -214,6 +208,7 @@ public class UserDaoImpl implements UserDAO {
             connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
 
         }
@@ -221,24 +216,22 @@ public class UserDaoImpl implements UserDAO {
     }
 
 
-    public boolean isUnblockedById(long id){
+    public boolean isUnblockedById(long id) {
         User user = findUserById(id).get();
-        if (user.getUserStatus().getId()==1){
+        if (user.getUserStatus().getId() == 1) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    public boolean isBlockedById(long id){
-       User user = findUserById(id).get();
-       if (user.getUserStatus().getId()==2){
-           return true;
-       }
-       else {
-           return false;
-       }
+    public boolean isBlockedById(long id) {
+        User user = findUserById(id).get();
+        if (user.getUserStatus().getId() == 2) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean unblockById(Long id) {
@@ -251,12 +244,12 @@ public class UserDaoImpl implements UserDAO {
             connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
 
         }
         return true;
     }
-
 
 
     //todo изменить логику крч я сравниваю по айди а например в моей бд
@@ -278,6 +271,7 @@ public class UserDaoImpl implements UserDAO {
             preparedStatement.close();
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
         return result;
@@ -299,6 +293,7 @@ public class UserDaoImpl implements UserDAO {
             connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
         return counter;
@@ -315,12 +310,12 @@ public class UserDaoImpl implements UserDAO {
             statement.setString(2, password);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-
                 userOptional = Optional.of(mapper.map(resultSet));
             }
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
             e.printStackTrace();
 
         } finally {
@@ -329,6 +324,7 @@ public class UserDaoImpl implements UserDAO {
                     resultSet.close();
                 }
             } catch (SQLException e) {
+                logger.throwing(Level.WARN, e);
                 throw new DaoException(e);
             }
 
@@ -358,6 +354,7 @@ public class UserDaoImpl implements UserDAO {
                     resultSet.close();
                 }
             } catch (SQLException e) {
+                logger.throwing(Level.WARN, e);
 
                 throw new DaoException(e);
             }
@@ -414,7 +411,7 @@ public class UserDaoImpl implements UserDAO {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                //    logger.error("ResultSet wasn't closed");
+                logger.throwing(Level.WARN, e);
 
             }
         }
@@ -433,6 +430,7 @@ public class UserDaoImpl implements UserDAO {
             connectionPool.returnConnection(connection);
             return resultSet.next();
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
 
 
         } finally {
@@ -441,7 +439,7 @@ public class UserDaoImpl implements UserDAO {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                //    logger.error("ResultSet wasn't closed");
+                logger.throwing(Level.WARN, e);
 
             }
         }
@@ -465,7 +463,7 @@ public class UserDaoImpl implements UserDAO {
                 userOptional = Optional.of(mapper.map(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.throwing(Level.WARN, e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -499,7 +497,7 @@ public class UserDaoImpl implements UserDAO {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                //    logger.error("ResultSet wasn't closed");
+                logger.throwing(Level.WARN, e);
 
             }
         }
@@ -517,6 +515,8 @@ public class UserDaoImpl implements UserDAO {
             preparedStatement.executeUpdate();
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
+
             throw new DaoException(e);
         }
     }
@@ -532,6 +532,8 @@ public class UserDaoImpl implements UserDAO {
             connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
+
             throw new DaoException(e);
         }
         return true;
@@ -550,7 +552,7 @@ public class UserDaoImpl implements UserDAO {
             //todo что за конченый цвет подсвечивает
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setInt(3, user.getUserRole().getId());
+            preparedStatement.setInt(3, user.getUserRole().ordinal());
             preparedStatement.setString(4, user.getName());
             preparedStatement.setString(5, user.getEmail());
             preparedStatement.setString(6, user.getTelegramAccount());
@@ -564,6 +566,7 @@ public class UserDaoImpl implements UserDAO {
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
         return user;

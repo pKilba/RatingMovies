@@ -1,4 +1,4 @@
-package com.epam.ratingmovies;
+package com.epam.ratingmovies.util;
 
 public class Attribute {
     public static final String USERS = "users";

@@ -2,7 +2,11 @@ package com.epam.ratingmovies.dao.connectionpool.impl;
 
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.exception.ConnectionPoolException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -22,10 +26,12 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     private static int INITIAL_PO0L_SIZE = 50;
     private static final AtomicBoolean IS_POOL_CREATED = new AtomicBoolean(false);
     private static final ReentrantLock INSTANCE_LOCKER = new ReentrantLock();
-
     //мб слева простая очередь и простой лист справа уже это реализация
     private final BlockingQueue<ProxyConnection> availableConnections;
     private final BlockingQueue<ProxyConnection> giveAwayConnections;
+
+    private static final Logger logger = LogManager.getLogger(ConnectionPoolImpl.class);
+
 
     //мой синглтон потокобезопасный точно ?
 
@@ -59,11 +65,12 @@ public final class ConnectionPoolImpl implements ConnectionPool {
             try {
                 Class.forName(DRIVER);
             } catch (ClassNotFoundException e) {
+                logger.throwing(Level.WARN, e);
                 throw new ConnectionPoolException(e);
-                //todo impl logger and custom ex
             }
 
             initializeConnections(INITIAL_PO0L_SIZE);
+            logger.traceExit("pool initialized by amount:" + availableConnections.size());
             return true;
         }
         return false;
@@ -90,9 +97,9 @@ public final class ConnectionPoolImpl implements ConnectionPool {
         try {
             connection.realClose();
         } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
             throw new ConnectionPoolException(e);
         }
-        //todo impl log and custom ex
 
     }
 
@@ -104,15 +111,15 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     @Override
     public synchronized Connection takeConnection() {
 
-        //todo мб сделать чтобы колво конекшенелов было динамическим а не статическим
         while (availableConnections.isEmpty()) {
             try {
                 wait();
             } catch (InterruptedException e) {
 
                 Thread.currentThread().interrupt();
+                logger.throwing(Level.WARN, e);
                 throw new ConnectionPoolException(e);
-                //todo implement logger and custom exception
+
             }
         }
         ProxyConnection connection = availableConnections.poll();
@@ -127,11 +134,10 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     @Override
     public synchronized void returnConnection(Connection connection) {
         if (giveAwayConnections.remove(connection)) {
-            //rolback ?
             availableConnections.add((ProxyConnection) connection);
             notifyAll();
         } else {
-            //log
+            logger.warn("Failed to get the connection back ");
         }
     }
 
@@ -143,17 +149,10 @@ public final class ConnectionPoolImpl implements ConnectionPool {
                 ProxyConnection proxyConnection = new ProxyConnection(connection, this);
                 availableConnections.add(proxyConnection);
             }
-            System.out.printf("vse good");
             return true;
         } catch (SQLException e) {
-
+            logger.throwing(Level.WARN, e);
             throw new ConnectionPoolException(e);
-
-            //todo log
         }
-
-        //dopilits
-        // throw new ConnectionPoolException();
     }
-
 }

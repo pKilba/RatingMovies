@@ -13,6 +13,10 @@ import java.util.List;
 
 public class Main {
 
+    enum UserRole {
+        USER,
+        ADMIN
+    }
     public static void main(String[] args) {
         ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
         MovieDao movieDaoTest = new MovieDaoImpl();

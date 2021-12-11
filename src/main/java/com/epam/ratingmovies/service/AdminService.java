@@ -1,6 +1,6 @@
 package com.epam.ratingmovies.service;
 
-import com.epam.ratingmovies.Attribute;
+import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.User;
@@ -9,12 +9,14 @@ import com.epam.ratingmovies.dao.impl.UserDaoImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.protobuf.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
 public class AdminService {
 
-//    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
     private static AdminService instance = new AdminService();
     private static final ObjectMapper mapper = new ObjectMapper();
     private static UserService userService = UserService.getInstance();
@@ -33,6 +35,7 @@ public class AdminService {
         UserDaoImpl userDao = new UserDaoImpl();
         Optional<User> user = userDao.findUserById(id);
         if (user.isPresent()) {
+
             return user.get().getUserStatus() == UserStatus.BANNED;
 
         }
@@ -48,15 +51,16 @@ public class AdminService {
         try {
             userId = ParameterTaker.takeId(requestContext);
         } catch (Exception e) {
-            //LOGGER.error("Action ban user, id not found. " + e);
+         logger.error("Action ban user, id not found. " + e);
             objectNode.put(Attribute.SUCCESS, false);
             response = String.valueOf(objectNode);
         }
         if (response == null) {
             if (!userService.blockedById(userId)) {
                 objectNode.put(Attribute.SUCCESS, false);
-                //LOGGER.warn("User id=" + userId + " not found.");
+                logger.warn("User id=" + userId + " not found.");
                throw new ServiceException("User id=" + userId + " not found.");
+
             } else {
                 objectNode.put(Attribute.SUCCESS, true);
                      objectNode.put(Attribute.MESSAGE, String.valueOf(UserStatus.BANNED));
@@ -75,14 +79,14 @@ public class AdminService {
         try {
             userId = ParameterTaker.takeId(requestContext);
         } catch (Exception e) {
-//            LOGGER.error("Action ban user, id not found. " + e);
+            logger.error("Action ban user, id not found. " + e);
             objectNode.put(Attribute.SUCCESS, false);
             response = String.valueOf(objectNode);
         }
         if (response == null) {
             if (!userService.unblockById(userId)) {
                 objectNode.put(Attribute.SUCCESS, false);
-                //LOGGER.warn("User id=" + userId + " not found.");
+                logger.warn("User id=" + userId + " not found.");
                 throw new ServiceException("User id=" + userId + " not found.");
             } else {
                 objectNode.put(Attribute.SUCCESS, true);

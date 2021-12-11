@@ -1,7 +1,6 @@
 package com.epam.ratingmovies.controller;
 
-import com.epam.ratingmovies.Attribute;
-import com.epam.ratingmovies.service.MovieService;
+import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.service.UserService;
 import com.google.protobuf.ServiceException;
 import jakarta.servlet.ServletException;

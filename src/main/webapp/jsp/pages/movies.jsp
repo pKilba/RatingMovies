@@ -9,7 +9,7 @@
 <body style="background: white" >
 
 <c:import url="/jsp/partspages/navbar.jsp"/>
-<%! private int i = 0; %>
+
 
 
 <div class="container py-3">

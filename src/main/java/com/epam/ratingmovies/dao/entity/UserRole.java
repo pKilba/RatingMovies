@@ -7,26 +7,40 @@ import java.util.Set;
 import com.epam.ratingmovies.controller.command.CommandName.*;
 
 
+import static com.epam.ratingmovies.controller.command.CommandName.*;
 
 public enum UserRole {
-    USER(0),
-    ADMIN(1);
+    USER(),
+    ADMIN(ACCOUNT_SETTINGS_PAGE),
+    GUEST();
 
-    private int id;
 
-    UserRole(int id){
-        this.id = id;
+    private final Set<String> commandsName = new HashSet<>();
+
+
+    UserRole(String... commandsName) {
+        this.commandsName.addAll(Set.of(commandsName));
     }
 
-
-
-    public int getId() {
-        return id;
+    public boolean isExistCommandName(String command) {
+        return this.commandsName.contains(command);
     }
 
-    public static UserRole getById(int id){
-        return Arrays.stream(UserRole.values())
-                .filter(role ->role.getId() == id)
-                .findFirst().orElse(null);
-    }
+//    private int id;
+//
+//    UserRole(int id){
+//        this.id = id;
+//    }
+//
+//
+//
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public static UserRole getById(int id){
+//        return Arrays.stream(UserRole.values())
+//                .filter(role ->role.getId() == id)
+//                .findFirst().orElse(null);
+//    }
 }

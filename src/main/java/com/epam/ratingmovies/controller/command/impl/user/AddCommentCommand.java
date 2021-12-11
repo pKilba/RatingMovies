@@ -1,20 +1,16 @@
 package com.epam.ratingmovies.controller.command.impl.user;
 
-import com.epam.ratingmovies.Attribute;
+import com.epam.ratingmovies.controller.command.api.Command;
+import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.*;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.Comment;
-import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.impl.CommentDaoImpl;
 import com.epam.ratingmovies.service.UserService;
-import com.fasterxml.jackson.databind.introspect.AnnotationMap;
 import com.google.protobuf.ServiceException;
 
 import java.sql.Timestamp;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class AddCommentCommand implements Command {
     public static final String MOVIE = "/jsp/pages/movie.jsp";

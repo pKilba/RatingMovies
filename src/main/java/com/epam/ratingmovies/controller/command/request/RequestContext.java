@@ -1,6 +1,6 @@
 package com.epam.ratingmovies.controller.command.request;
 
-import com.epam.ratingmovies.Attribute;
+import com.epam.ratingmovies.util.Attribute;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

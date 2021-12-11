@@ -16,9 +16,9 @@ public class AccountInfoChangeService {
 
 
     public boolean isValidInfoAccount(String email, String telegram, String name) {
-      boolean isCorrect =  isValidTelegram(telegram);
-       isCorrect = isValidName(name);
-      isCorrect =  isValidEmail(email);
+        boolean isCorrect = isValidTelegram(telegram);
+        isCorrect = isValidName(name);
+        isCorrect = isValidEmail(email);
         return isCorrect;
     }
 
@@ -29,7 +29,7 @@ public class AccountInfoChangeService {
     }
 
     public boolean isValidName(String name) {
-        return  userValidator.isValidName(name);
+        return userValidator.isValidName(name);
     }
 
 

@@ -10,7 +10,5 @@ import java.util.Optional;
 public interface MovieDao extends DAO<Movie,Long>{
 
 
-
-    Optional<Movie> findMovieById(long id) throws DaoException;
     List<Movie> findMoviesByGenre(String genre) throws DaoException;
 }

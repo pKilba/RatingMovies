@@ -1,4 +1,4 @@
-package com.epam.ratingmovies;
+package com.epam.ratingmovies.util;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

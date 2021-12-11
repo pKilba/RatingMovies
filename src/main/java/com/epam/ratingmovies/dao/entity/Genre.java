@@ -5,13 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public enum Genre {
-    THRILLER(0),
-    COMEDY(1),
-    ADVENTURE(2),
-    DRAMA(3),
-    CRIME(4),
-    HORROR(5),
-    FANTASY(6);
+    THRILLER(1),
+    COMEDY(2),
+    ACTION(3),
+    HORROR(4);
 
 
     private int id;

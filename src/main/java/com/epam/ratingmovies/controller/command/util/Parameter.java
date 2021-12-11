@@ -1,4 +1,4 @@
-package com.epam.ratingmovies.controller.command;
+package com.epam.ratingmovies.controller.command.util;
 
 public class Parameter {
     public static final String LOGIN = "login";

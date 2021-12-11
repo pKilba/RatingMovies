@@ -1,10 +1,11 @@
 package com.epam.ratingmovies.controller.command.impl.general;
 
-import com.epam.ratingmovies.Attribute;
+import com.epam.ratingmovies.util.Attribute;
+import com.epam.ratingmovies.util.LineHasher;
 import com.epam.ratingmovies.controller.ParameterTaker;
-import com.epam.ratingmovies.controller.command.Command;
+import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandResponse;
-import com.epam.ratingmovies.controller.command.Parameter;
+import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.entity.UserRole;
@@ -33,10 +34,10 @@ public class SignUpCommand implements Command {
             requestContext.addAttribute(Attribute.SAVED_EMAIL, email);
             Timestamp nowTime = new Timestamp(System.currentTimeMillis());
             String password = ParameterTaker.takeString(Parameter.PASSWORD, requestContext);
-
+            LineHasher lineHasher = new LineHasher();
             User user = User.builder().
                     setLogin(login).
-                    setPassword(password).
+                    setPassword(lineHasher.hashingLine(password)).
                     setUserRole(UserRole.USER).
                     setName(ParameterTaker.takeString(Parameter.NAME, requestContext)).
                     setEmail(ParameterTaker.takeString(Parameter.EMAIL, requestContext)).

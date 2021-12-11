@@ -1,5 +1,6 @@
 package com.epam.ratingmovies.controller.command;
 
+import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.impl.admin.*;
 import com.epam.ratingmovies.controller.command.impl.general.*;
 import com.epam.ratingmovies.controller.command.impl.user.*;
@@ -15,13 +16,9 @@ public  enum ApplicationCommand {
     CHANGE_PASSWORD(new ChangePasswordCommand(), CommandName.CHANGE_PASSWORD),
 
     GO_TO_ACCOUNT_SETTING_PAGE(new GoToAccountSettingPageCommand(), CommandName.ACCOUNT_SETTINGS_PAGE),
-    /*  GO_TO_GAMBLERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
-      GO_TO_STATISTIC_GAMES(new GoToStatisticGamesPageCommand(),CommandName.STATISTIC_GAMES_PAGE),
 
-      */
     GO_TO_CREATE_MOVIE(new GoToAddMoviePageCommand(),CommandName.CREATE_MOVIE_PAGE),
     CREATE_MOVIE(new CreateMovieCommand(),"createMovie"),
-    GO_TO_SHOW_YOUR_COMMENTS(new GoToShowYourCommentsCommand(),"yourCommentsPage"),
     //todo добавить только для админа ?
     GO_TO_USERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
     GO_TO_MOVIES_PAGE(new GoToMoviesPageCommand(), CommandName.MOVIES_PAGE),
@@ -34,16 +31,6 @@ public  enum ApplicationCommand {
 
     LOGOUT(new LogOutCommand(), CommandName.LOGOUT),
     LOCALIZATION(new LocalizationCommand(), CommandName.LOCALIZATION);
-    /*CHANGE_PASSWORD(new ChangePasswordCommand(), CommandName.CHANGE_PASSWORD),
-    //AJAX
-    CHECK_EXIST_LOGIN(new CheckExistUsernameCommand(), CommandName.CHECK_EXIST_LOGIN),
-    CHECK_EXIST_EMAIL(new CheckExistUsernameCommand(), CommandName.CHECK_EXIST_EMAIL),
-
-    ACTION_CHANGE_BALANCE_USER(new ActionChangeBalanceUserCommand(), CommandName.ACTION_CHANGE_BALANCE),
-    //game
-    TAKE_LOBBY_DATA(new TakeLobbyDataCommand(), CommandName.LOBBY_DATA),
-    TAKE_TABLE_DATA(new TakeTableDataCommand(), CommandName.TABLE_DATA);
-*/
     private final Command command;
     private final String commandName;
 
@@ -61,7 +48,6 @@ public  enum ApplicationCommand {
                 .filter(command -> command.toString()
                         .equalsIgnoreCase(commandString))
                 .findFirst()
-                //.orElse(DEFAULT);
                 .orElse(null);
     }
 

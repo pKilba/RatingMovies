@@ -1,21 +1,18 @@
 package com.epam.ratingmovies.controller.command.impl.general;
 
-import com.epam.ratingmovies.Attribute;
+import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
-import com.epam.ratingmovies.controller.command.Command;
+import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandName;
 import com.epam.ratingmovies.controller.command.CommandResponse;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
-import com.epam.ratingmovies.dao.entity.Comment;
 import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.dao.entity.User;
-import com.epam.ratingmovies.dao.impl.CommentDaoImpl;
 import com.epam.ratingmovies.service.CommentService;
 import com.epam.ratingmovies.service.MovieService;
 import com.epam.ratingmovies.service.UserService;
 import com.google.protobuf.ServiceException;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 

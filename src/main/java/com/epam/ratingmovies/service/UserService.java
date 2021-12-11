@@ -53,20 +53,20 @@ public class UserService {
         return userDao.findUsersRange(amountQuery, size);
     }
 
-    public boolean blockedById(long id){
+    public boolean blockedById(long id) {
         return userDao.blockById(id);
     }
 
-    public boolean unblockById(long id){
+    public boolean unblockById(long id) {
         return userDao.unblockById(id);
     }
 
 
-    public boolean isBlockedById(long id){
+    public boolean isBlockedById(long id) {
         return userDao.isBlockedById(id);
     }
 
-    public boolean isUnblockedById(long id){
+    public boolean isUnblockedById(long id) {
         return userDao.isUnblockedById(id);
     }
 

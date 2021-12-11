@@ -4,7 +4,7 @@ package com.epam.ratingmovies.service;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.impl.UserDaoImpl;
 import com.epam.ratingmovies.service.converter.Converter;
-import com.epam.ratingmovies.service.converter.UserConverter;
+//import com.epam.ratingmovies.service.converter.UserConverter;
 import com.epam.ratingmovies.service.dto.UserDto;
 import com.epam.ratingmovies.service.validator.UserValidator;
 import com.epam.ratingmovies.service.validator.Validator;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class SignUpService {
     //  private static final Validator<User> userValidator = UserValidator.getInstance();
-    private final Converter<UserDto, User> converter = new UserConverter();
+  //  private final Converter<UserDto, User> converter = new UserConverter();
     private static SignUpService instance;
     private final UserDaoImpl userDao = new UserDaoImpl();
     private final Validator<User> userValidator= UserValidator.getInstance();

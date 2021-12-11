@@ -1,6 +1,6 @@
 package com.epam.ratingmovies.controller;
 
-import com.epam.ratingmovies.controller.command.Parameter;
+import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 
 public class ParameterTaker {

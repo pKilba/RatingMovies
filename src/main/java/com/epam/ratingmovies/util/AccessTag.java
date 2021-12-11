@@ -1,14 +1,10 @@
 package com.epam.ratingmovies.util;
 
-import com.epam.ratingmovies.Attribute;
 import com.epam.ratingmovies.dao.entity.UserRole;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.tagext.TagSupport;
 
-import static jakarta.servlet.jsp.tagext.Tag.EVAL_BODY_INCLUDE;
-import static jakarta.servlet.jsp.tagext.Tag.SKIP_BODY;
-
-    public class AccessTag extends TagSupport {
+public class AccessTag extends TagSupport {
         private static final String GUEST = "GUEST";
         private static final String NOT_GUEST = "NOT_GUEST";
         private String role;

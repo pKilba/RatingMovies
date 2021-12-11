@@ -15,6 +15,7 @@ public class UserValidator implements Validator {
     private static final Pattern COMPILED_PATTERN_NAME = Pattern.compile(NAME_PATTERN);
     private static final Pattern COMPILED_PATTERN_TELEGRAM = Pattern.compile(TELEGRAM_PATTERN);
     private static final Pattern COMPILED_PATTERN_EMAIL = Pattern.compile(EMAIL_PATTERN);
+
     private static final int MIN_FIELD_USER_LENGTH = 2;
     private static final int MAX_FIELD_USER_LENGTH = 32;
     private static final int MIN_LOGIN_LENGTH = 4;
@@ -88,8 +89,7 @@ return true;
 
 
     public boolean isValidPassword(String line) {
-        if (line == null || line.length() > MAX_PASSWORD_LENGTH
-                || line.length() < MIN_PASSWORD_LENGTH) {
+        if (line == null || line.length() !=LENGTH_HASH_PASSWORD) {
             return false;
         }
         return true;

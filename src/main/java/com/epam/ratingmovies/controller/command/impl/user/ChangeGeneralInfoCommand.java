@@ -1,11 +1,10 @@
 package com.epam.ratingmovies.controller.command.impl.user;
 
-import com.epam.ratingmovies.Attribute;
+import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
-import com.epam.ratingmovies.controller.command.Command;
-import com.epam.ratingmovies.controller.command.CommandName;
+import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandResponse;
-import com.epam.ratingmovies.controller.command.Parameter;
+import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.service.AccountInfoChangeService;

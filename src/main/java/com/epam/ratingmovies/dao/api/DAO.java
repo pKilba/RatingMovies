@@ -11,8 +11,7 @@ public interface DAO <T extends AbstractEntity<K>, K> {
 
     public  T update(T entity);
 
-    //todo tut mb K peredavats tipi id or entity
-    public  void delete(T entity);
+
 
     public void delete (K id);
 

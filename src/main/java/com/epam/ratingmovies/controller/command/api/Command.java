@@ -1,9 +1,9 @@
-package com.epam.ratingmovies.controller.command;
+package com.epam.ratingmovies.controller.command.api;
 
+import com.epam.ratingmovies.controller.command.ApplicationCommand;
+import com.epam.ratingmovies.controller.command.CommandResponse;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.google.protobuf.ServiceException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.sql.SQLException;
 import java.text.ParseException;

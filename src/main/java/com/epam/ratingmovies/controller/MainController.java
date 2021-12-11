@@ -2,11 +2,11 @@ package com.epam.ratingmovies.controller;
 
 import java.io.*;
 
-import com.epam.ratingmovies.Attribute;
-import com.epam.ratingmovies.controller.command.Command;
+import com.epam.ratingmovies.util.Attribute;
+import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandName;
 import com.epam.ratingmovies.controller.command.CommandResponse;
-import com.epam.ratingmovies.controller.command.Parameter;
+import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
@@ -52,7 +52,6 @@ public class MainController extends HttpServlet {
                           HttpServletRequest request,
                           HttpServletResponse response)
             throws ServletException, IOException {
-        // if (!commandResult.isTypeResponseJson()) {
         if (commandResult.getPage().equals("json")) {
             response.setContentType(JSON_CONTENT_TYPE);
             response.setCharacterEncoding(UTF_EIGHT);
@@ -60,7 +59,7 @@ public class MainController extends HttpServlet {
         } else {
             String page = commandResult.getPage();
             if (page == null) {
-                response.sendRedirect("?command=" + CommandName.HOME_PAGE);
+                response.sendRedirect("?command=" + CommandName.MOVIE_PAGE);
             } else {
                 if (commandResult.isRedirect()) {
                     response.sendRedirect(page);
@@ -70,30 +69,9 @@ public class MainController extends HttpServlet {
                 }
             }
         }
-        /*} else {
-            response.setContentType(JSON_CONTENT_TYPE);
-            response.setCharacterEncoding(UTF_EIGHT);
-            response.getWriter().write(commandResult.getJsonResponse());
-        }*/
+
     }
 
-      /*  CommandResponse commandResult;
-        RequestContext requestContext = requestContextCreator.create(request);
-        String requestParameter = request.getParameter(Parameter.COMMAND);
-        Command command = Command.withName(requestParameter);
-        commandResult = command.execute(requestContext);
-        String page = commandResult.getPath();
-        requestFiller.fillData(request, requestContext);
-        if (page == null) {
-            page = PagePath.ERROR;
-            response.sendRedirect(request.getContextPath() + page);
-        }
-        if (commandResult.isRedirect()) {
-            response.sendRedirect(request.getContextPath() + page);
-        } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-            dispatcher.forward(request, response);
-        }*/
 
 
     private void handleException(HttpServletRequest req, HttpServletResponse resp, String errorMessage)
@@ -114,29 +92,4 @@ public class MainController extends HttpServlet {
         ConnectionPool pool = ConnectionPoolImpl.getInstance();
         pool.shutDown();
     }
-    /*public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-
-        Date date = new Date();
-        ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
-        UserDaoImpl userDaoTest = new UserDaoImpl();
-        User user = new User("PolKilbas", "jsp123", "jsp", UserRole.USER,
-                123, "aaa", "f",
-                UserStatus.Active, new Timestamp(System.currentTimeMillis()));
-        userDaoTest.save(user);
-        userDaoTest.delete(9L);
-
-        userDaoTest.findAll();
-
-
-        //todo не работает апдейт
-        userDaoTest.update(user);
-        // Hello
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + message + "</h1>");
-        out.println("</body></html>");
-        throw new IOException("fdsfsd");
-    }
-*/
 }
