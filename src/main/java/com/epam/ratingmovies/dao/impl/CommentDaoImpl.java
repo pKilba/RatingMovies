@@ -31,6 +31,7 @@ public class CommentDaoImpl implements CommentDao {
 
     private static final String SQL_FIND_BY_ID_MOVIES = "SELECT * FROM comments WHERE movie_id = ?";
 
+
     private static final Logger logger = LogManager.getLogger(CommentDaoImpl.class);
 
     @Override
@@ -84,6 +85,36 @@ public class CommentDaoImpl implements CommentDao {
     }
 
 
+    public int findCommentsAmountByMovieId(long id) {
+        ResultSet resultSet = null;
+        int result = 0;
+        try (Connection connection = connectionPool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_ID_MOVIES)) {
+            statement.setLong(1, id);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+
+                result++;
+            }
+
+            connectionPool.returnConnection(connection);
+        } catch (SQLException e) {
+            logger.throwing(Level.WARN, e);
+            throw new DaoException(e);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                logger.throwing(Level.WARN, e);
+                throw new DaoException(e);
+            }
+
+        }
+        return result;
+    }
+
     public int findCommentsAmount() throws DaoException {
         Connection connection = connectionPool.takeConnection();
         int counter = 0;
@@ -104,7 +135,7 @@ public class CommentDaoImpl implements CommentDao {
     }
 
 
-    public List<Comment> findCommendByIdMovies(long id) {
+    public List<Comment> findCommentByIdMovies(long id) {
         ResultSet resultSet = null;
         ArrayList result = new ArrayList();
         try (Connection connection = connectionPool.takeConnection();

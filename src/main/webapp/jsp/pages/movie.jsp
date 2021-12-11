@@ -4,6 +4,8 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <c:import url="/jsp/partspages/head.jsp"/>
+    <fmt:setLocale value="${sessionScope.lang}"/>
+    <fmt:setBundle basename="locale"/>
 </head>
 <body style="background-image:
         url(${pageContext.request.contextPath}${movie.getBackground()})">

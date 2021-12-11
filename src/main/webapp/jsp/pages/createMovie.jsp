@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="locale"/>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
@@ -18,7 +19,7 @@
 
     <form name="signupForm" method="POST" action="${pageContext.request.contextPath}/ratingMovies?command=createMovie"
           class="flex-box col-md-6">
-        <h1> <fmt:message key="create.film" /></h1>
+        <h1><fmt:message key="create.film"/></h1>
 
         <div class="mb-3">
             <span class="form-label"><fmt:message key="create.film.link.poster"/> </span>
@@ -41,13 +42,11 @@
         </div>
 
 
-
         <div class="mb-3">
             <span class="form-label"><fmt:message key="create.film.about"/></span>
             <input type="text" class="form-control" name="about" minlength="8" maxlength="256"
                    required>
         </div>
-
 
 
         <div>
@@ -77,17 +76,15 @@
             <span class="form-label"><fmt:message key="create.film.genre"/></span>
 
             <select name="genre">
-                <option value="1"><fmt:message key="genre.comedy"/> </option>
-                <option value="2"><fmt:message key="genre.thriller"/> </option>
-                <option value="3"><fmt:message key="genre.action"/> </option>
-                <option value="4" ><fmt:message key="genre.horror"/> </option>
+                <option value="1"><fmt:message key="genre.comedy"/></option>
+                <option value="2"><fmt:message key="genre.thriller"/></option>
+                <option value="3"><fmt:message key="genre.action"/></option>
+                <option value="4"><fmt:message key="genre.horror"/></option>
             </select>
         </div>
 
 
-
-
-        <button type="submit" class="btn btn-primary"><fmt:message key="create.film.button"/> </button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="create.film.button"/></button>
     </form>
 </div>
 

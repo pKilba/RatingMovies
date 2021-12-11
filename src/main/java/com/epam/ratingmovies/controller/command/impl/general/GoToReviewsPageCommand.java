@@ -54,25 +54,28 @@ public class GoToReviewsPageCommand implements Command {
         request.addAttribute("commentUserList", commentUserMap);
 
         */
-       // long id = ParameterTaker.takeId(request);
-       long id = ParameterTaker.takeIdNow(request);
+        // long id = ParameterTaker.takeId(request);
+      long id = ParameterTaker.takeIdNow(request);
         request.addAttribute(Attribute.ID, id);
         List<Comment> comments;
         int page = ParameterTaker.takeNumber(Parameter.PAGE, request);
         //todo разобраться с page and size wtf отрицательное
-        if (page < 0 )
-            page = 1 ;
+        if (page < 0)
+            page = 1;
         int size = ParameterTaker.takeNumber(Parameter.SIZE, request);
-        if (size <0 )
+        if (size < 0)
             size = 10;
-        int amount = commentService.findCommentsAmount();
+
+        int amount = commentService.findCommentsAmountByMovieId(id);
         int amountQuery = (page - 1) * size;
         if (amountQuery > amount) {
         }
         if (amount < size) {
             size = (int) amount;
         }
-        comments= commentService.findCommentsRange(amountQuery, size);
+        List commentsById = commentService.findByMovieId(id);
+        // comments= commentService.findCommentsRange(amountQuery, size);
+        comments = commentService.findCommentByRange(amountQuery, size,commentsById);
         request.addAttribute(Attribute.CURRENT_PAGE, page);
         int maxPage = (int) (amount / size);
         if (amount % size != 0) {
@@ -88,7 +91,7 @@ public class GoToReviewsPageCommand implements Command {
         }
 
 
-        Map<Comment,User > commentUserMap = IntStream.range(0, Math.min(comments.size(), users.size()))
+        Map<Comment, User> commentUserMap = IntStream.range(0, Math.min(comments.size(), users.size()))
                 .boxed()
                 .collect(Collectors.toMap(comments::get, users::get));
 
