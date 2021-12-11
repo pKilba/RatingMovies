@@ -34,7 +34,8 @@ public class GoToMoviesPageCommand implements Command {
         if (amount < size) {
             size = (int) amount;
         }
-        movieList= movieService.findMoviesRange(amountQuery, size);
+        movieList = movieService.findMovies();
+       List movieListByRange= movieService.findMoviesRange(amount - amountQuery, size,movieList);
         request.addAttribute(Attribute.CURRENT_PAGE, page);
         int maxPage = (int) (amount / size);
         if (amount % size != 0) {
@@ -42,7 +43,7 @@ public class GoToMoviesPageCommand implements Command {
         }
         request.addAttribute(Attribute.AMOUNT_OF_PAGE, size);
         request.addAttribute(Attribute.MAX_PAGE, maxPage);
-        request.addAttribute(Attribute.MOVIE_LIST, movieList);
+        request.addAttribute(Attribute.MOVIE_LIST, movieListByRange);
 
         return CommandResponse.forward(MOVIES);
     }

@@ -36,9 +36,13 @@
                 <tbody class="table-of-users">
                 <c:forEach items="${userList}"  varStatus="counter" var="user">
                     <tr>
-                        <td>${counter.index+1}</td>
+                        <td>${user.getId()}</td>
                         <td>
-                                ${user.getName()}
+                            <a href="${pageContext.request.contextPath}/ratingMovies?command=profile-page&id=${user.getId()}">
+                                <img src="${pageContext.request.contextPath}/images/photo/${user.getProfilePicture()}"
+                                     class="avatar rounded-circle mr-4" height="50px" width="50px"
+                                     alt="Avatar">
+                            </a>
                         </td>
                         <td>
                             <a href="${pageContext.request.contextPath}/ratingMovies?command=profile-page&id=${user.getId()}">

@@ -36,7 +36,7 @@ public class CommentService {
         List<Comment> result = new ArrayList<>();
 
                for (Comment comment :comments){
-                   if (offset < count && comment.getId() <= offset + amount) {
+                   if (offset < count && count <= offset + amount) {
                        result.add(comment);
                    }
                    count++;

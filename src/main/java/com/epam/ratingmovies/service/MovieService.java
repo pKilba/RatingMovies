@@ -1,5 +1,6 @@
 package com.epam.ratingmovies.service;
 
+import com.epam.ratingmovies.dao.entity.Comment;
 import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.dao.impl.MovieDaoImpl;
 import com.epam.ratingmovies.dao.impl.UserDaoImpl;
@@ -7,6 +8,7 @@ import com.epam.ratingmovies.service.exeption.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +36,27 @@ public class MovieService {
         movieDao.save(movie);
     }
 
-    public List<Movie> findMoviesRange(int amountQuery, int size) {
+    public List findMovies(){
+        return movieDao.findAll();
+    }
 
-        return movieDao.findMoviesRange(amountQuery, size);
+    public List<Movie> findMoviesRange(int amountQuery, int size,List<Movie> movies) {
+        int count = 0;
+
+        //todo проверить правильно или не!!!!
+
+        List<Movie> result = new ArrayList<>();
+
+        for (Movie movie :movies){
+            if (amountQuery < count && count <= amountQuery + size) {
+                result.add(movie);
+            }
+            count++;
+        }
+
+        return result;
+
+
+
     }
 }

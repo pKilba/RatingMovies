@@ -2,13 +2,17 @@ package com.epam.ratingmovies.controller.filter;
 
 
 
+import com.epam.ratingmovies.controller.command.util.Parameter;
+import com.epam.ratingmovies.dao.entity.UserRole;
+import com.epam.ratingmovies.util.Attribute;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 public class AccessFilter implements Filter {
     private static final Logger logger = LogManager.getLogger();
@@ -53,7 +57,7 @@ public class AccessFilter implements Filter {
         try {
             return UserRole.valueOf(roleLine).isExistCommandName(commandName);
         } catch (IllegalArgumentException e) {
-            logger.warn(WARN_MESSAGE + roleLine);
+            //  LOGGER.warn(WARN_MESSAGE + roleLine);
             return false;
 
         }

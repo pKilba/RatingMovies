@@ -139,7 +139,6 @@ public class UserDaoImpl implements UserDAO {
         }
 
         connectionPool.returnConnection(connection);
-        // return result;
     }
 
     public Optional<User> findUserById(long id) {

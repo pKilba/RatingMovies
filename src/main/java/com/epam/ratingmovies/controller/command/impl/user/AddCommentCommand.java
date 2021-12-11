@@ -51,7 +51,7 @@ public class AddCommentCommand implements Command {
 
 
         return //CommandResponse.forward("/jsp/pages/movies.jsp") ;
-        CommandResponse.forward(RATING_MOVIES_COMMAND+idMovie);
+        CommandResponse.redirect(RATING_MOVIES_COMMAND+idMovie);
 
     }
 }

@@ -25,8 +25,8 @@ tableOfUsers.onclick = function (event) {
 
 async function actionBanUser(btnElement) {
   let parentElement = btnElement.closest("tr");
-  let spanDot = parentElement.children[4].children[0];
-  let spanStatusUser = parentElement.children[4].children[1];
+  let spanDot = parentElement.children[5].children[0];
+  let spanStatusUser = parentElement.children[5].children[1];
   let idElement = parentElement.firstElementChild;
   let idUser = idElement.innerHTML;
   let response;

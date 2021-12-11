@@ -92,7 +92,6 @@
                 <textarea name="leaveComment" id="" msg cols="30" rows="5"
                           class="form-control"
                           style="background-color: black;" required>
-
             </textarea>
             </div>
 

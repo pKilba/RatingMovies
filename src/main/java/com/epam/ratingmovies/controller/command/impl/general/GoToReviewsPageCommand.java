@@ -67,6 +67,9 @@ public class GoToReviewsPageCommand implements Command {
             size = 10;
 
         int amount = commentService.findCommentsAmountByMovieId(id);
+
+
+
         int amountQuery = (page - 1) * size;
         if (amountQuery > amount) {
         }
@@ -74,7 +77,6 @@ public class GoToReviewsPageCommand implements Command {
             size = (int) amount;
         }
         List commentsById = commentService.findByMovieId(id);
-        // comments= commentService.findCommentsRange(amountQuery, size);
         comments = commentService.findCommentByRange(amountQuery, size,commentsById);
         request.addAttribute(Attribute.CURRENT_PAGE, page);
         int maxPage = (int) (amount / size);
@@ -89,11 +91,10 @@ public class GoToReviewsPageCommand implements Command {
             user = userService.findUserById(comment.getUserId());
             users.add(user);
         }
-
-
         Map<Comment, User> commentUserMap = IntStream.range(0, Math.min(comments.size(), users.size()))
                 .boxed()
                 .collect(Collectors.toMap(comments::get, users::get));
+
 
         request.addAttribute("commentUserList", commentUserMap);
 
