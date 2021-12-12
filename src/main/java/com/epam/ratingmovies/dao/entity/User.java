@@ -15,13 +15,9 @@ public class User extends AbstractEntity<Long> {
     private String telegramAccount;
     private UserStatus userStatus;
 
-    //todo add yourself and change tip profile picture mb na string
-
-    //todo test удалить потом
-    public User(String login, String password) {
+     public User(String login, String password) {
         this.login = login;
         this.password = password;
-        System.out.println(login + " --login ; password -- " + password);
     }
 
 
@@ -188,6 +184,43 @@ public class User extends AbstractEntity<Long> {
             return newUser;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        if (getCreateTime() != null ? !getCreateTime().equals(user.getCreateTime()) : user.getCreateTime() != null)
+            return false;
+        if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
+        if (getLogin() != null ? !getLogin().equals(user.getLogin()) : user.getLogin() != null) return false;
+        if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
+            return false;
+        if (getUserRole() != user.getUserRole()) return false;
+        if (getProfilePicture() != null ? !getProfilePicture().equals(user.getProfilePicture()) : user.getProfilePicture() != null)
+            return false;
+        if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
+        if (getTelegramAccount() != null ? !getTelegramAccount().equals(user.getTelegramAccount()) : user.getTelegramAccount() != null)
+            return false;
+        return getUserStatus() == user.getUserStatus();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getCreateTime() != null ? getCreateTime().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
+        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+        result = 31 * result + (getUserRole() != null ? getUserRole().hashCode() : 0);
+        result = 31 * result + (getProfilePicture() != null ? getProfilePicture().hashCode() : 0);
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+        result = 31 * result + (getTelegramAccount() != null ? getTelegramAccount().hashCode() : 0);
+        result = 31 * result + (getUserStatus() != null ? getUserStatus().hashCode() : 0);
+        return result;
+    }
+
 
 
 }

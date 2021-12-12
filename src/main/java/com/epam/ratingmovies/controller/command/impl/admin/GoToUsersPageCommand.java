@@ -23,13 +23,16 @@ public class GoToUsersPageCommand implements Command {
         int page = ParameterTaker.takeNumber(Parameter.PAGE, request);
         int size = ParameterTaker.takeNumber(Parameter.SIZE, request);
         int amount = userService.findUsersAmount();
-        int amountQuery = (page - 1) * size;
+        int amountQuery = (page) * size;
         if (amountQuery > amount) {
         }
         if (amount < size) {
             size = (int) amount;
         }
-        List<User> userList = userService.findUsersRange(amountQuery, size);
+        List<User> userList = userService.findUsers();
+        if (userList.size() > 10) {
+            userList = userService.findUsersRange(amount - amountQuery + 1, size,userList);
+        }
         int maxPage = (int) (amount / size);
         if (amount % size != 0) {
             ++maxPage;

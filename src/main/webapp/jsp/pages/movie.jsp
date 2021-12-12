@@ -10,26 +10,23 @@
 <body style="background-image:
         url(${pageContext.request.contextPath}${movie.getBackground()})">
 <c:import url="/jsp/partspages/navbar.jsp"/>
-<div class="container">
+<div class="container" style="height: 500px">
     <div class="cellphone-container">
-        <div class="movie">
+        <div class="movie" style="height: 900px">
             <div style=" background-image:
                     url(${pageContext.request.contextPath}${movie.getPoster()})
                     " class="movie-img"></div>
-            <div class="text-movie-cont">
-                <div class="mr-grid">
+            <div class="text-movie-cont" >
                     <div class="col1">
-                        <h1>${movie.getName()}</h1>
+                        <h1 style="color: white">${movie.getName()}</h1>
                         <ul class="movie-gen">
-
                             <li>${movie.getDuration()}min /</li>
-                            <li>${movie.getGenre()}</li>
+                            <li style="padding-bottom: 10px"> ${movie.getGenre()}</li>
                         </ul>
                     </div>
-                </div>
                 <div class="mr-grid summary-row">
                     <div class="col2">
-                        <h5>SUMMARY</h5>
+                        <h5>${movie.getProducer()}</h5>
                     </div>
                     <div class="col2">
                         <ul class="movie-likes">
@@ -43,16 +40,11 @@
                         <p class="movie-description">${movie.getAbout()} </p>
                     </div>
                 </div>
-                <div class="mr-grid actors-row">
-                    <div class="col1">
-                        <p class="movie-actors">${movie.getProducer()}</p>
-                    </div>
                     <div class="col1">
                         <a href="${pageContext.request.contextPath}
                         /ratingMovies?command=reviews-page&p=1&s=10&movieId=${movie.getId()}">Комментарий</a>
                     </div>
 
-                </div>
             </div>
         </div>
     </div>

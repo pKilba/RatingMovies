@@ -4,7 +4,8 @@ public class Parameter {
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
     public static final String CURRENT_PASSWORD = "currPas";
-    public static final String NEW_PASSWORD = "newPas";
+    public static final String NEW_PASSWORD_FIRST = "newPas1";
+    public static final String NEW_PASSWORD_SECOND = "newPas2";
     public static final String EMAIL = "email";
     public static final String NAME = "name";
     public static final String TELEGRAM = "telegram";

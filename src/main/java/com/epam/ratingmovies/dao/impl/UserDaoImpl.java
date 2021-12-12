@@ -3,6 +3,7 @@ package com.epam.ratingmovies.dao.impl;
 import com.epam.ratingmovies.dao.api.UserDAO;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
+import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
@@ -255,24 +256,20 @@ public class UserDaoImpl implements UserDAO {
     //были удалены юзеры с некоторыми айди поэтому не ровно выводит
     //todo!!!! obezatelno
     @Override
-    public List<User> findUsersRange(int offset, int amount) throws DaoException {
-        Connection connection = connectionPool.takeConnection();
+    public List<User> findUsersRange(int offset, int amount,List<User> users) throws DaoException {
+        int count = 0;
+
+        //todo проверить правильно или не!!!!
+
         List<User> result = new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USERS);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                User user = mapper.map(resultSet);
-                if (offset < user.getId() && user.getId() < offset + amount) {
-                    result.add(user);
-                }
+
+        for (User user :users){
+            if (offset < count && count <= offset + amount) {
+                result.add(user);
             }
-            preparedStatement.close();
-            connectionPool.returnConnection(connection);
-        } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
-            throw new DaoException(e);
+            count++;
         }
+
         return result;
     }
 

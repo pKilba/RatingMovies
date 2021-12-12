@@ -25,9 +25,7 @@ public class MovieDaoImpl implements MovieDao {
     private static final String SQL_SAVE_MOVIE = "INSERT INTO movies(poster,about," +
             "movie_release_date,amount_like,amount_dislike,genre_id,name,producer,duration,background)" +
             " values (?,?,?,?,?,?,?,?,?,?)";
-    private static final String SQL_FIND_ALL_MOVIES = "SELECT movie_id, poster, about," +
-            "movie_release_date,amount_like,amount_dislike," +
-            "genre_id,name,producer,duration,background FROM movies";
+    private static final String SQL_FIND_ALL_MOVIES = "SELECT movie_id, poster, about,movie_release_date,amount_like,amount_dislike, genre_id,name,producer,duration,background FROM movies";
 
     private static final String SQL_FIND_MOVIE_BY_ID =
             "SELECT movie_id, poster, about," +

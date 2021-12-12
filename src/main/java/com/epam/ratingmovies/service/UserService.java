@@ -22,6 +22,10 @@ public class UserService {
         return instance;
     }
 
+    public List findUsers(){
+        return userDao.findAll();
+    }
+
 
     public void updateNameEmailTelegramById(String name, String email, String telegram, long id) throws SQLException {
         userDao.updateNameEmailTelegramById(name, email, telegram, id);
@@ -48,9 +52,9 @@ public class UserService {
         } else throw new ServiceException("Error Service");
     }
 
-    public List<User> findUsersRange(int amountQuery, int size) {
+    public List<User> findUsersRange(int amountQuery, int size,List<User> users) {
 
-        return userDao.findUsersRange(amountQuery, size);
+        return userDao.findUsersRange(amountQuery, size,users);
     }
 
     public boolean blockedById(long id) {

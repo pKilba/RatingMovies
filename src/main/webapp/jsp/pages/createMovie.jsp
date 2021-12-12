@@ -16,7 +16,7 @@
 <body>
 <c:import url="/jsp/partspages/navbar.jsp"/>
 
-<div class="row flex-column">
+<div class="row flex-column" style="padding-left: 10px">
 
     <form name="signupForm" method="POST" action="${pageContext.request.contextPath}/ratingMovies?command=createMovie"
           class="flex-box col-md-6">

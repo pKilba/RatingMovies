@@ -51,7 +51,6 @@
                         </td>
                         <td>${user.getCreateTime()}</td>
                         <td>${user.getUserRole()}</td>
-                        <td>${user.getUserStatus()}</td>
                         <td id="status-part">
                             <span id="status-dot" class="status
 <c:choose>

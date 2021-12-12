@@ -35,8 +35,14 @@ public class GoToMoviesPageCommand implements Command {
             size = (int) amount;
         }
         movieList = movieService.findMovies();
-       List movieListByRange= movieService.findMoviesRange(amount - amountQuery, size,movieList);
-        request.addAttribute(Attribute.CURRENT_PAGE, page);
+
+        //convert movie
+        List movieListByRange;
+if (movieList.size() > 10) {
+     movieListByRange = movieService.findMoviesRange(amount - amountQuery, size, movieList);
+}
+movieListByRange = movieList;
+       request.addAttribute(Attribute.CURRENT_PAGE, page);
         int maxPage = (int) (amount / size);
         if (amount % size != 0) {
             ++maxPage;

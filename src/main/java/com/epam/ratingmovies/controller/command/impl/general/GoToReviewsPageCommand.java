@@ -91,7 +91,8 @@ public class GoToReviewsPageCommand implements Command {
             user = userService.findUserById(comment.getUserId());
             users.add(user);
         }
-        Map<Comment, User> commentUserMap = IntStream.range(0, Math.min(comments.size(), users.size()))
+        Map<Comment, User> commentUserMap
+                = IntStream.range(0, Math.min(comments.size(), users.size()))
                 .boxed()
                 .collect(Collectors.toMap(comments::get, users::get));
 

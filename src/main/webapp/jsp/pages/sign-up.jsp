@@ -1,42 +1,67 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: Asus
+  Date: 23.11.2021
+  Time: 01:06
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="locale"/>
 <html>
 <head>
-    <title>sign up really</title>
+    <c:import url="/jsp/partspages/head.jsp"/>
+    <c:import url="/jsp/partspages/navbar.jsp"/>
+    <link rel="stylesheet" type="text/css" href="../../css/login.css">
+    <title>Title</title>
 </head>
-<body>
 
-<h1>ЧЕЛ РЕГАЙСЯ ДАВАЙ </h1>
+<body class="main-bg">
+<div class="login-container text-c animated flipInX">
+    <div>
+        <h1 class="logo-badge text-whitesmoke"><span class="fa fa-user-circle"></span></h1>
+    </div>
+    <p class="text-whitesmoke">Регистрация</p>
+    <div class="container-content">
+        <form name="signupForm" method="POST" action="${pageContext.request.contextPath}/ratingMovies?command=sign-up">
+            <div class="form-group">
+                <input type="text" class="form-control" minlength="8" maxlength="32" name="login" value="${login}"
+                       required>
+            </div>
 
-<div class="row flex-column">
-    <form name="signupForm" method="POST" action="${pageContext.request.contextPath}/ratingMovies?command=sign-up"
-          class="flex-box col-md-6">
-        <h1>"Окно регистрации"</h1>
-        <div class="mb-3">
-            <span class="form-label">введите логин</span>
-            <input type="text" class="form-control" name="login" id="loginRegForm" minlength="8" maxlength="32"
-                   required>
-        </div>
-        <div class="mb-3">
-            <span class="form-label">введите пароль</span>
-            <input type="password" name="password" id="currentPass" minlength="8" maxlength="32" class="form-control password"
-                   required>
-        </div>
-        <div class="mb-3">
-            <span class="form-label">Введите имя</span>
-            <input type="text" name="name" minlength="4" maxlength="32" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <span class="form-label">Введите аккаунт телеграм</span>
-            <input type="text" name="telegram" minlength="2" maxlength="32" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <span class="form-label">Введите емейл</span>
-            <input type="email" name="email" id="emailRegForm" minlength="5" maxlength="64" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Регайся брат</button>
-    </form>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="name" minlength="8" maxlength="32" name="name"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="email" minlength="2" maxlength="32" name="email"
+
+                       required>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="telegram" minlength="2" maxlength="32"
+                       name="telegram" value="${login}"
+                       required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="*****" name="password" minlength="8"
+                       maxlength="32" required="">
+            </div>
+            <button type="submit" class="form-button button-l margin-b"><fmt:message
+                    key="login.signin.button"/></button>
+            <a class="text-darkyellow"
+               href="${pageContext.request.contextPath}/ratingMovies?command=sign-up-page"><small><fmt:message
+                    key="login.signup.button"/></small></a>
+        </form>
+        <h3 class="text-danger error-message">
+            <fmt:message key="login.error.${errorMessage}"/>
+        </h3>
+    </div>
 </div>
 </body>
 </html>

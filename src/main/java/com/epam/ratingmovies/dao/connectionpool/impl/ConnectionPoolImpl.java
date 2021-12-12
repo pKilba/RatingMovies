@@ -19,11 +19,11 @@ import java.util.concurrent.locks.ReentrantLock;
 //final ubrats?
 public final class ConnectionPoolImpl implements ConnectionPool {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/mydb";
-    private static final String USER = "root";
-    private static final String PASS = "jsp1977";
+    private static final String DB_URL = "jdbc:mysql://c8u4r7fp8i8qaniw.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/cnrandw4tw0rd9pd?autoReconnect=true";
+    private static final String USER = "nfjpip0zodjdbk23";
+    private static final String PASS = "m0tm1u4yb9jefy5z";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static int INITIAL_PO0L_SIZE = 50;
+    private static int INITIAL_PO0L_SIZE = 3;
     private static final AtomicBoolean IS_POOL_CREATED = new AtomicBoolean(false);
     private static final ReentrantLock INSTANCE_LOCKER = new ReentrantLock();
     //мб слева простая очередь и простой лист справа уже это реализация

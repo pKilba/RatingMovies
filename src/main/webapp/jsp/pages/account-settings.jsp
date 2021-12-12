@@ -76,7 +76,7 @@
                                         <fmt:message key="settings.change.email"/>
                                     </label>
                                     <input type="email"  name="email" minlength="4"
-                                           maxlength="16" class="form-control" value="${user.getEmail()}"
+                                           maxlength="32" class="form-control" value="${user.getEmail()}"
                                            required>
 
                                     <label class="form-label">
@@ -108,7 +108,7 @@
                                     <label class="form-label">
                                         <fmt:message key="settings.new.password" />
                                     </label>
-                                    <input type="password" name="newPas" minlength="8" maxlength="32"
+                                    <input type="password" name="newPas1" minlength="8" maxlength="32"
                                            class="form-control password" required>
                                 </div>
                                 <div class="form-group">
@@ -116,7 +116,7 @@
                                         <fmt:message key="settings.repeat.new.password" />
 
                                     </label>
-                                    <input type="password" class="form-control password" minlength="8" maxlength="32"
+                                    <input type="password" name = "newPas2" class="form-control password" minlength="8" maxlength="32"
                                            required>
                                 </div>
                             </form>
@@ -128,6 +128,13 @@
         </div>
     </div>
 
+    <h3 class="text-danger error-message text-centr">
+        <fmt:message key="settings.error.${errorMessage}" />
+    </h3>
+
+    <h3  style="color: green">
+        <fmt:message key="settings.success.${successMessage}" />
+    </h3>
 
     <div class="text-right mt-3">
         <button type="submit" form="changeGeneralForm" class="btn btn-primary" id="btnSubmit">
@@ -141,7 +148,6 @@
 
 </div>
 <script src="/js/account-settings.js"></script>
-<script src="/js/checker-repeat-pas.js"></script>
 </body>
 
 </html>

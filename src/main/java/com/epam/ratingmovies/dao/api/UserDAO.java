@@ -17,7 +17,7 @@ public interface UserDAO extends DAO<User, Long> {
      * @return a received list of users.
      * @throws DaoException if database errors occurs.
      */
-    List<User> findUsersRange(int offset, int amount) throws DaoException;
+    List<User> findUsersRange(int offset, int amount,List<User> users) throws DaoException;
 
     /**
      * Gets users amount in database.

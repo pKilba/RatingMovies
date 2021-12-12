@@ -14,6 +14,9 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @WebServlet(urlPatterns = {"/ratingMovies"}, name = "mainServlet")
 
 public class MainController extends HttpServlet {
@@ -21,9 +24,12 @@ public class MainController extends HttpServlet {
     private static final String UTF_EIGHT = "UTF-8";
     private static final String JSON_CONTENT_TYPE = "application/json";
 
+Logger logger = LogManager.getLogger();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        System.out.println("ffff");
+
+        logger.warn("oops");
+        logger.info("no oops");
         processRequest(request, response);
     }
 
