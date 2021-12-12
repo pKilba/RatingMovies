@@ -1,6 +1,7 @@
 package com.epam.ratingmovies.controller.command.impl.user;
 
 import com.epam.ratingmovies.exception.DaoException;
+import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.api.Command;
@@ -10,7 +11,6 @@ import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.service.AccountInfoChangeService;
 import com.epam.ratingmovies.service.UserService;
-import com.google.protobuf.ServiceException;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -26,7 +26,7 @@ public class ChangeGeneralInfoCommand implements Command {
     private final AccountInfoChangeService accountInfoChangeService = new AccountInfoChangeService();
 
     @Override
-    public CommandResponse execute(RequestContext request) throws ServiceException, ParseException, SQLException, DaoException {
+    public CommandResponse execute(RequestContext request) throws ServiceException {
 
 
         //todo доделать чекер чтбы проверять на корректность

@@ -1,6 +1,7 @@
 package com.epam.ratingmovies.controller.command.impl.user;
 
 import com.epam.ratingmovies.exception.DaoException;
+import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.api.Command;
@@ -13,9 +14,7 @@ import com.epam.ratingmovies.service.AccountChangePassword;
 import com.epam.ratingmovies.service.UserService;
 import com.epam.ratingmovies.service.validator.UserValidator;
 import com.epam.ratingmovies.util.LineHasher;
-import com.google.protobuf.ServiceException;
 
-import java.sql.SQLException;
 
 public class ChangePasswordCommand implements Command {
     private static final String PROFILE_PAGE_COMMAND = "ratingMovies?command=" + CommandName.PROFILE_PAGE + "&id=";
@@ -33,7 +32,7 @@ public class ChangePasswordCommand implements Command {
 
     @Override
     public CommandResponse execute(RequestContext requestContext)
-            throws ServiceException, SQLException, DaoException {
+            throws ServiceException {
         long id = ParameterTaker.takeId(requestContext);
         User user = userService.findUserById(id);
         requestContext.addAttribute(Attribute.USER, user);

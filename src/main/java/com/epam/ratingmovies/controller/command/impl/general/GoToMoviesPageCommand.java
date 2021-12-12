@@ -1,5 +1,7 @@
 package com.epam.ratingmovies.controller.command.impl.general;
 
+import com.epam.ratingmovies.exception.DaoException;
+import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.api.Command;
@@ -8,7 +10,6 @@ import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.service.MovieService;
-import com.google.protobuf.ServiceException;
 
 import java.util.List;
 
@@ -25,10 +26,10 @@ public class GoToMoviesPageCommand implements Command {
         if (page < 0 )
             page = 1 ;
         int size = ParameterTaker.takeNumber(Parameter.SIZE, request);
-        if (size <0 )
+        if (size <1 )
             size = 10;
         int amount = movieService.findMoviesAmount();
-        int amountQuery = (page - 1) * size;
+        int amountQuery = (page ) * size;
         if (amountQuery > amount) {
         }
         if (amount < size) {

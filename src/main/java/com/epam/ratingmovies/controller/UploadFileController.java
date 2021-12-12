@@ -1,9 +1,9 @@
 package com.epam.ratingmovies.controller;
 
 import com.epam.ratingmovies.exception.DaoException;
+import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.service.UserService;
-import com.google.protobuf.ServiceException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -26,14 +25,14 @@ import java.util.UUID;
         maxFileSize = 1024 * 1024 * 10,
         maxRequestSize = 1024 * 1024 * 11)
 public class UploadFileController extends HttpServlet {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static final String UPLOAD_FOLDER = "images/photo";
     private static final List<String> NAME_EXTENSIONS = List.of(".jpeg", ".jpg", ".png", ".gif");
     private static final String FILE = "file";
     private static final String SUCCESS_RESPONSE = "{\"success\": true}";
     private static final String WRONG_RESPONSE = "{\"success\": false}";
     private static final String DEFAULT_PHOTO = "notAva.jpg";
-private static final UserService userService = new UserService();
+    private static final UserService userService = new UserService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -58,28 +57,26 @@ private static final UserService userService = new UserService();
             for (Part part : request.getParts()) {
                 part.write(uploadFileDir + fileName);
             }
-            try {
 
+            try {
                 String oldFileName = userService.findUserById(userId).getProfilePicture();
-                File file = new File(uploadFileDir + oldFileName)
-                        ;
+                File file = new File(uploadFileDir + oldFileName);
                 if (!oldFileName.equals(DEFAULT_PHOTO)) {
-                    file.delete()
-                    ;
+                    file.delete();
                 }
 
                 userService.updatePhotoByUserId(userId, fileName);
-                System.out.println(fileName);
-                System.out.println(request.getSession());
-                request.getSession().setAttribute(Attribute.PHOTO, fileName);
-                responseLine = SUCCESS_RESPONSE;
-            } catch (ServiceException | DaoException | SQLException e) {
-                responseLine = WRONG_RESPONSE;
-                LOGGER.warn("Upload photo error. User id= " + userId + " try upload.");
+            } catch (ServiceException e) {
+                logger.warn("Upload photo error");
+                throw new ServletException(e);
             }
+            request.getSession().setAttribute(Attribute.PHOTO, fileName);
+            responseLine = WRONG_RESPONSE;
+            logger.warn("Upload photo error. User id= " + userId + " try upload.");
+
         } else {
             responseLine = WRONG_RESPONSE;
-            LOGGER.warn("Upload photo wrong extension!");
+            logger.warn("Upload photo wrong extension!");
         }
         response.getWriter().write(responseLine);
     }

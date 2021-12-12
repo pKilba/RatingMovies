@@ -30,7 +30,6 @@ public class CommentDaoImpl implements CommentDao {
     private static final String SQL_FIND_BY_ID_MOVIES = "SELECT * FROM comments WHERE movie_id = ?";
 
 
-    private static final Logger logger = LogManager.getLogger(CommentDaoImpl.class);
 
     @Override
     public Comment save(Comment comment) throws DaoException {
@@ -54,8 +53,7 @@ public class CommentDaoImpl implements CommentDao {
                 connectionPool.returnConnection(connection);
             }
 
-        } catch (SQLException | DaoException e) {
-            logger.throwing(Level.WARN, e);
+        } catch (SQLException e ) {
             throw new DaoException(e);
         }
         return comment;
@@ -76,7 +74,6 @@ public class CommentDaoImpl implements CommentDao {
             preparedStatement.close();
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
         return result;
@@ -97,7 +94,6 @@ public class CommentDaoImpl implements CommentDao {
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         } finally {
             try {
@@ -105,7 +101,6 @@ public class CommentDaoImpl implements CommentDao {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                logger.throwing(Level.WARN, e);
                 throw new DaoException(e);
             }
 
@@ -126,7 +121,6 @@ public class CommentDaoImpl implements CommentDao {
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
         return counter;
@@ -149,7 +143,6 @@ public class CommentDaoImpl implements CommentDao {
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         } finally {
             try {
@@ -157,7 +150,6 @@ public class CommentDaoImpl implements CommentDao {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                logger.throwing(Level.WARN, e);
                 throw new DaoException(e);
             }
 
@@ -191,7 +183,6 @@ public class CommentDaoImpl implements CommentDao {
             connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
         return result;

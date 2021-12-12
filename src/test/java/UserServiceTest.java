@@ -26,7 +26,7 @@ public class UserServiceTest {
 
             user = userService.findUserByLoginAndPassword(TEST_USER_LOGIN, hashPass);
 
-        } catch (DaoException e) {
+        } catch (ServiceException e) {
             e.printStackTrace();
         }
         assertTrue(user.isPresent());

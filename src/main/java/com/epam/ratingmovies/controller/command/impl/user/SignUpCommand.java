@@ -12,6 +12,7 @@ import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.entity.UserRole;
 import com.epam.ratingmovies.dao.entity.UserStatus;
 import com.epam.ratingmovies.service.SignUpService;
+import com.google.protobuf.ServiceException;
 
 import java.sql.Timestamp;
 
@@ -26,12 +27,15 @@ public class SignUpCommand implements Command {
 
 
     @Override
-    public CommandResponse execute(RequestContext requestContext) throws DaoException {
+    public CommandResponse execute(RequestContext requestContext) throws ServiceException {
         String login = ParameterTaker.takeString(Parameter.LOGIN, requestContext);
         String email = ParameterTaker.takeString(Parameter.EMAIL, requestContext);
         String telegram = ParameterTaker.takeString(Parameter.TELEGRAM, requestContext);
         boolean isLoginOrMailOrTelegramExist = false;
-        isLoginOrMailOrTelegramExist = signUpService.isUserLoginExist(login) || signUpService.isUserEmailExist(email) || signUpService.isUserTelegramExist(telegram);
+        isLoginOrMailOrTelegramExist =
+                signUpService.isUserLoginExist(login) ||
+                        signUpService.isUserEmailExist(email) ||
+                        signUpService.isUserTelegramExist(telegram);
         if (!isLoginOrMailOrTelegramExist) {
             requestContext.addAttribute(Attribute.SAVED_LOGIN, login);
             requestContext.addAttribute(Attribute.SAVED_EMAIL, email);

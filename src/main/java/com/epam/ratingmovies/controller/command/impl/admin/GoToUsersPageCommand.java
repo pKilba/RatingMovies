@@ -1,6 +1,7 @@
 package com.epam.ratingmovies.controller.command.impl.admin;
 
 import com.epam.ratingmovies.exception.DaoException;
+import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.api.Command;
@@ -9,7 +10,6 @@ import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.service.UserService;
-import com.google.protobuf.ServiceException;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class GoToUsersPageCommand implements Command {
 
     //todo мб вынести в отдельный класс
     @Override
-    public CommandResponse execute(RequestContext request) throws ServiceException, DaoException {
+    public CommandResponse execute(RequestContext request) throws ServiceException {
         int page = ParameterTaker.takeNumber(Parameter.PAGE, request);
         int size = ParameterTaker.takeNumber(Parameter.SIZE, request);
         int amount = userService.findUsersAmount();

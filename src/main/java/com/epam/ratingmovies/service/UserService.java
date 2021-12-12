@@ -3,9 +3,10 @@ package com.epam.ratingmovies.service;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.impl.UserDaoImpl;
 import com.epam.ratingmovies.exception.DaoException;
-import com.google.protobuf.ServiceException;
+import com.epam.ratingmovies.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,12 @@ public class UserService {
     //todo мб надо синглтон на юзердао
     private static final UserDaoImpl userDao = new UserDaoImpl();
 
+    private static final String UPDATE_PROBLEM = "Update exception  ";
+    private static final String FIND_PROBLEM = "Find exception  ";
+    private static final String BLOCKED_PROBLEM = "Blocked exception  ";
+
+    private static final Logger logger = LogManager.getLogger();
+
     public static UserService getInstance() {
         if (instance == null) {
             instance = new UserService();
@@ -21,66 +28,129 @@ public class UserService {
         return instance;
     }
 
-    public List findUsers() throws DaoException {
-        return userDao.findAll();
+    public List findUsers() throws ServiceException {
+        try {
+            return userDao.findAll();
+        } catch (DaoException e) {
+            logger.error(FIND_PROBLEM + e);
+            throw new ServiceException(FIND_PROBLEM + e);
+        }
     }
 
 
-    public void updateNameEmailTelegramById(String name, String email, String telegram, long id) throws SQLException {
-        userDao.updateNameEmailTelegramById(name, email, telegram, id);
+    public void updateNameEmailTelegramById(String name, String email, String telegram, long id) throws ServiceException {
+        try {
+            userDao.updateNameEmailTelegramById(name, email, telegram, id);
+        } catch (DaoException e) {
+            logger.error(UPDATE_PROBLEM + e);
+            throw new ServiceException(UPDATE_PROBLEM + e);
+        }
     }
 
-    public int findUsersAmount() throws DaoException {
-        return userDao.findUsersAmount();
+    public int findUsersAmount() throws ServiceException {
+        try {
+            return userDao.findUsersAmount();
+        } catch (DaoException e) {
+            logger.error(FIND_PROBLEM + e);
+            throw new ServiceException(FIND_PROBLEM + e);
+        }
     }
 
-    public void updatePhotoByUserId(long userId, String fileName) throws SQLException, DaoException {
-        userDao.updatePhotoByUserId(userId, fileName);
+    public void updatePhotoByUserId(long userId, String fileName) throws ServiceException {
+        try {
+            userDao.updatePhotoByUserId(userId, fileName);
+        } catch (DaoException e) {
+            logger.error(UPDATE_PROBLEM + e);
+            throw new ServiceException(UPDATE_PROBLEM + e);
+        }
     }
 
-    public void updatePasswordByUserId(long userId, String password) throws SQLException, DaoException {
-        userDao.updatePasswordByUserId(userId, password);
+    public void updatePasswordByUserId(long userId, String password) throws ServiceException {
+        try {
+            userDao.updatePasswordByUserId(userId, password);
+        } catch (DaoException e) {
+            logger.error(UPDATE_PROBLEM + e);
+            throw new ServiceException(UPDATE_PROBLEM + e);
+        }
     }
 
 
     //todo через isPresent чекать нал или нет
-    public User findUserById(long id) throws ServiceException, DaoException {
-        Optional<User> user = userDao.findUserById(id);
-        if (user.isPresent()) {
-            return user.get();
-        } else throw new ServiceException("Error Service");
+    public User findUserById(long id) throws ServiceException {
+        try {
+            Optional<User> user = userDao.findUserById(id);
+            if (user.isPresent()) {
+                return user.get();
+            } else throw new ServiceException("Error Service");
+        } catch (DaoException e) {
+            logger.error(FIND_PROBLEM + e);
+            throw new ServiceException(FIND_PROBLEM + e);
+        }
     }
 
-    public List<User> findUsersRange(int amountQuery, int size,List<User> users) throws DaoException {
+    public List<User> findUsersRange(int amountQuery, int size, List<User> users) throws ServiceException {
 
-        return userDao.findUsersRange(amountQuery, size,users);
+        try {
+            return userDao.findUsersRange(amountQuery, size, users);
+        } catch (DaoException e) {
+            logger.error(FIND_PROBLEM + e);
+            throw new ServiceException(FIND_PROBLEM + e);
+        }
     }
 
-    public boolean blockedById(long id) throws DaoException {
-        return userDao.blockById(id);
+    public boolean blockedById(long id) throws ServiceException {
+        try {
+            return userDao.blockById(id);
+        } catch (DaoException e) {
+        }
+        try {
+            return userDao.unblockById(id);
+        } catch (DaoException e) {
+            logger.error(FIND_PROBLEM + e);
+            throw new ServiceException(UPDATE_PROBLEM + e);
+        }
+
     }
 
-    public boolean unblockById(long id) throws DaoException {
-        return userDao.unblockById(id);
+
+    public boolean isBlockedById(long id) throws ServiceException {
+        try {
+            return userDao.isBlockedById(id);
+        } catch (DaoException e) {
+            logger.error(BLOCKED_PROBLEM + e);
+            throw new ServiceException(BLOCKED_PROBLEM + e);
+        }
     }
 
-
-    public boolean isBlockedById(long id) throws DaoException {
-        return userDao.isBlockedById(id);
-    }
-
-    public boolean isUnblockedById(long id) throws DaoException {
-        return userDao.isUnblockedById(id);
+    public boolean isUnblockedById(long id) throws ServiceException {
+        try {
+            return userDao.isUnblockedById(id);
+        } catch (DaoException e) {
+            logger.error(BLOCKED_PROBLEM + e);
+            throw new ServiceException(BLOCKED_PROBLEM + e);
+        }
     }
 
     //todo optional return
-    public User findUserByLogin(String login) throws DaoException {
-        Optional<User> user = userDao.findUserByLogin(login);
+    public User findUserByLogin(String login) throws ServiceException {
+        Optional<User> user = null;
+        try {
+            user = userDao.findUserByLogin(login);
+        } catch (DaoException e) {
+            logger.error(FIND_PROBLEM + e);
+            throw new ServiceException(FIND_PROBLEM + e);
+        }
         return user.get();
     }
 
-    public Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
-        Optional<User> user = userDao.findUserByLoginPassword(login, password);
+    public Optional<User> findUserByLoginAndPassword(String login, String password) throws ServiceException {
+        Optional<User> user = null;
+        try {
+            user = userDao.findUserByLoginPassword(login, password);
+        } catch (DaoException e) {
+            logger.error(FIND_PROBLEM + e);
+            throw new ServiceException(UPDATE_PROBLEM + e);
+        }
         return user;
     }
 

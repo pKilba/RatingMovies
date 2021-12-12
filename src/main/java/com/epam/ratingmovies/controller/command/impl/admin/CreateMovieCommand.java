@@ -6,12 +6,10 @@ import com.epam.ratingmovies.controller.command.CommandResponse;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.Genre;
 import com.epam.ratingmovies.dao.entity.Movie;
-import com.epam.ratingmovies.exception.DaoException;
+import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.service.MovieService;
-import com.google.protobuf.ServiceException;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -22,7 +20,7 @@ public class CreateMovieCommand implements Command {
     public static final String MOVIE = "/jsp/pages/createMovie.jsp";
 
     @Override
-    public CommandResponse execute(RequestContext request) throws ServiceException, ParseException, DaoException {
+    public CommandResponse execute(RequestContext request) throws ServiceException {
 
         String about = ParameterTaker.takeString("about", request);
 

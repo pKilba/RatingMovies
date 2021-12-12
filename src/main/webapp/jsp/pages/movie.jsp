@@ -4,6 +4,7 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <c:import url="/jsp/partspages/head.jsp"/>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="locale"/>
 </head>
@@ -12,7 +13,7 @@
 <c:import url="/jsp/partspages/navbar.jsp"/>
 <div class="container" style="height: 500px">
     <div class="cellphone-container">
-        <div class="movie" style="height: 900px">
+        <div class="movie" >
             <div style=" background-image:
                     url(${pageContext.request.contextPath}${movie.getPoster()})
                     " class="movie-img"></div>
@@ -42,7 +43,7 @@
                 </div>
                     <div class="col1">
                         <a href="${pageContext.request.contextPath}
-                        /ratingMovies?command=reviews-page&p=1&s=10&movieId=${movie.getId()}">Комментарий</a>
+                        /ratingMovies?command=reviews-page&p=1&s=10&movieId=${movie.getId()}">Комментарии</a>
                     </div>
 
             </div>

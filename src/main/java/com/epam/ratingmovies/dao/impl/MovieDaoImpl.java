@@ -32,7 +32,6 @@ public class MovieDaoImpl implements MovieDao {
 
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
-    private static final Logger logger = LogManager.getLogger(MovieDaoImpl.class);
     private long idMovie;
 
     @Override
@@ -57,16 +56,13 @@ public class MovieDaoImpl implements MovieDao {
                 if (generatedKeys.next()) {
                     movie.setId(generatedKeys.getLong(1));
                 } else {
-                    logger.warn("No id obtained");
                     throw new DaoException("Creating user failed, no ID obtained.");
                 }
                 connectionPool.returnConnection(connection);
             }
 
-        } catch (SQLException | DaoException e) {
-            logger.throwing(Level.WARN, e);
+        } catch (SQLException e) {
             throw new DaoException(e);
-
         }
         return movie;
     }
@@ -100,7 +96,6 @@ public class MovieDaoImpl implements MovieDao {
             connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
         return result;
@@ -126,7 +121,6 @@ public class MovieDaoImpl implements MovieDao {
             preparedStatement.close();
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
         return result;
@@ -145,7 +139,6 @@ public class MovieDaoImpl implements MovieDao {
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
         return counter;
@@ -167,7 +160,6 @@ public class MovieDaoImpl implements MovieDao {
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         } finally {
             try {
@@ -175,7 +167,6 @@ public class MovieDaoImpl implements MovieDao {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                logger.throwing(Level.WARN, e);
                 throw new DaoException(e);
             }
 

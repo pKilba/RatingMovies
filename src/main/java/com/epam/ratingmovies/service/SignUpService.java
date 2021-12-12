@@ -9,16 +9,22 @@ import com.epam.ratingmovies.service.converter.Converter;
 import com.epam.ratingmovies.service.dto.UserDto;
 import com.epam.ratingmovies.service.validator.UserValidator;
 import com.epam.ratingmovies.service.validator.Validator;
+import com.google.protobuf.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
 public class SignUpService {
-    //  private static final Validator<User> userValidator = UserValidator.getInstance();
-  //  private final Converter<UserDto, User> converter = new UserConverter();
+
+    private static final String SIGN_UP_PROBLEM ="Error sign-up";
+    private static final String EXIST_PROBLEM_LOGIN ="Login exist";
+    private static final String EXIST_PROBLEM_EMAIL ="Email exist";
+    private static final String EXIST_PROBLEM_TELEGRAM ="Telegram exist";
     private static SignUpService instance;
     private final UserDaoImpl userDao = new UserDaoImpl();
-    private final Validator<User> userValidator= UserValidator.getInstance();
-
+    private final Validator<User> userValidator = UserValidator.getInstance();
+    private static final Logger logger = LogManager.getLogger();
     private SignUpService() {
     }
 
@@ -31,33 +37,39 @@ public class SignUpService {
 
     //todo нужен ли тут вообще юзердто??!
     //todo userDto ВМЕСТО ЮЗЕР В ПАРАМЕТРАХ
-    public long signUp(User user) throws DaoException {
+    public long signUp(User user) throws ServiceException {
         if (!userValidator.isValid(user)) {
-            System.out.println("что то плохо заполнили");
+            logger.warn("Incorrect date ");
             return -1;
         }
 
         long userId = 1;
-        // final String encryptedPassword = passwordToMd5(userDto);
-        //user.setPassword(encryptedPassword);
-        userDao.save(user);
-        //userDao.save(converter.convert(user));
-        //return converter.convert(user);  } catch (Exception e) {
-        System.out.println("12");
-        System.out.println("12");
-        System.out.println("12");
+        try {
+            userDao.save(user);
+        } catch (DaoException e) {
+            logger.error(SIGN_UP_PROBLEM + e);
+            throw new ServiceException(SIGN_UP_PROBLEM + e);
+
+        }
 
         return userId;
     }
 
 
     //todo isPresent ёт не работатет
-    public boolean isUserLoginExist(String login) throws DaoException {
-        Optional<User> user = userDao.findUserByLogin(login);
-        if (user!=null){
-            return true;
+    public boolean isUserLoginExist(String login) throws ServiceException {
+        Optional<User> user = null;
+        try {
+            user = userDao.findUserByLogin(login);
+        } catch (DaoException e) {
+            logger.warn(EXIST_PROBLEM_LOGIN);
+            throw new ServiceException(EXIST_PROBLEM_LOGIN + e);
+
         }
-        else {
+        if (user.isPresent()) {
+            logger.warn(EXIST_PROBLEM_LOGIN);
+            return true;
+        } else {
             return false;
         }
 
@@ -69,22 +81,35 @@ public class SignUpService {
 
 
     //todo проверить сущ емейла и телеги не проверял
-    public boolean isUserEmailExist(String email) throws DaoException {
-        Optional<User> user = userDao.findUserByEmail(email);
-        if (user!=null){
-            return true;
+    public boolean isUserEmailExist(String email) throws ServiceException {
+        Optional<User> user = null;
+        try {
+            user = userDao.findUserByEmail(email);
+        } catch (DaoException e) {
+            logger.warn(EXIST_PROBLEM_EMAIL);
+            throw new ServiceException(EXIST_PROBLEM_EMAIL + e);
         }
-        else {
+        if (user.isPresent()) {
+            logger.warn(EXIST_PROBLEM_EMAIL);
+            return true;
+        } else {
             return false;
         }
 
     }
-    public boolean isUserTelegramExist(String telegram) throws DaoException {
-        Optional<User> user = userDao.findUserByTelegram(telegram);
-        if (user!=null){
-            return true;
+
+    public boolean isUserTelegramExist(String telegram) throws ServiceException {
+        Optional<User> user = null;
+        try {
+            user = userDao.findUserByTelegram(telegram);
+        } catch (DaoException e) {
+            logger.warn(EXIST_PROBLEM_TELEGRAM);
+            throw new ServiceException(EXIST_PROBLEM_TELEGRAM + e);
         }
-        else {
+        if (user.isPresent()) {
+            logger.warn(EXIST_PROBLEM_TELEGRAM);
+            return true;
+        } else {
             return false;
         }
 

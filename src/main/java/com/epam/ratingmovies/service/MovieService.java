@@ -15,39 +15,63 @@ import java.util.Optional;
 public class MovieService {
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
+    private static final String FIND_MOVIE_PROBLEM = "Exception find movie  ";
+    private static final String SAVE_MOVIE_PROBLEM = "Exception save movie  ";
     MovieDaoImpl movieDao = new MovieDaoImpl();
 
-    public int findMoviesAmount() throws DaoException {
-        return movieDao.findMoviesAmount();
+    public int findMoviesAmount() throws ServiceException {
+        try {
+            return movieDao.findMoviesAmount();
+        } catch (DaoException e) {
+            logger.error(FIND_MOVIE_PROBLEM + e );
+            throw new ServiceException(FIND_MOVIE_PROBLEM + e);
+        }
     }
 
-    public Movie findMovieById(long id) throws DaoException, ServiceException {
-        Optional<Movie> movie = movieDao.findById(id);
+    public Movie findMovieById(long id) throws ServiceException {
+        Optional<Movie> movie = null;
+        try {
+            movie = movieDao.findById(id);
+        } catch (DaoException e) {
+            logger.error(FIND_MOVIE_PROBLEM + e);
+            throw new ServiceException(FIND_MOVIE_PROBLEM + e);
+        }
         if (movie.isPresent()) {
             return movie.get();
         } else {
-            logger.error("movie not found.") ;
-            throw new ServiceException("Error Service");
+            logger.error(FIND_MOVIE_PROBLEM );
+            throw new ServiceException(FIND_MOVIE_PROBLEM );
         }
     }
 
 
-    public void save(Movie movie) throws DaoException {
-        movieDao.save(movie);
+    public void save(Movie movie) throws ServiceException {
+        try {
+            movieDao.save(movie);
+        } catch (DaoException e) {
+            logger.error(SAVE_MOVIE_PROBLEM + e);
+            throw new ServiceException(SAVE_MOVIE_PROBLEM + e);
+
+        }
     }
 
-    public List findMovies() throws DaoException {
-        return movieDao.findAll();
+    public List findMovies() throws ServiceException {
+        try {
+            return movieDao.findAll();
+        } catch (DaoException e) {
+            logger.error(SAVE_MOVIE_PROBLEM +e );
+            throw new ServiceException(SAVE_MOVIE_PROBLEM + e);
+        }
     }
 
-    public List<Movie> findMoviesRange(int amountQuery, int size,List<Movie> movies) {
+    public List<Movie> findMoviesRange(int amountQuery, int size, List<Movie> movies) {
         int count = 0;
 
         //todo проверить правильно или не!!!!
 
         List<Movie> result = new ArrayList<>();
 
-        for (Movie movie :movies){
+        for (Movie movie : movies) {
             if (amountQuery < count && count <= amountQuery + size) {
                 result.add(movie);
             }
@@ -55,7 +79,6 @@ public class MovieService {
         }
 
         return result;
-
 
 
     }
