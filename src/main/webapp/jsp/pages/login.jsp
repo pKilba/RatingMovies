@@ -39,6 +39,9 @@
                    href="${pageContext.request.contextPath}/ratingMovies?command=sign-up-page"><small><fmt:message
                         key="login.signup.button"/></small></a>
             </form>
+            <h3 class="text-danger error-message">
+                <fmt:message key="login.error.${errorMessage}"/>
+            </h3>
         </div>
     </div>
 </form>

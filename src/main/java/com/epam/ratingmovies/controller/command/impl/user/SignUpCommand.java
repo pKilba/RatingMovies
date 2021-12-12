@@ -1,4 +1,4 @@
-package com.epam.ratingmovies.controller.command.impl.general;
+package com.epam.ratingmovies.controller.command.impl.user;
 
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.util.LineHasher;
