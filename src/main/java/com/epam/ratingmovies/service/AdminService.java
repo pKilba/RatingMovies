@@ -1,5 +1,6 @@
 package com.epam.ratingmovies.service;
 
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
@@ -31,7 +32,7 @@ public class AdminService {
 
 
 
-    public boolean isBlockedById(long id) throws ServiceException {
+    public boolean isBlockedById(long id) throws ServiceException, DaoException {
         UserDaoImpl userDao = new UserDaoImpl();
         Optional<User> user = userDao.findUserById(id);
         if (user.isPresent()) {
@@ -44,7 +45,7 @@ public class AdminService {
     }
 
 
-    public String banUserById(RequestContext requestContext) throws ServiceException {
+    public String banUserById(RequestContext requestContext) throws ServiceException, DaoException {
         long userId = -1;
         String response = null;
         ObjectNode objectNode = mapper.createObjectNode();
@@ -72,7 +73,7 @@ public class AdminService {
         return response;
     }
 
-    public String unbanUserById(RequestContext requestContext) throws ServiceException {
+    public String unbanUserById(RequestContext requestContext) throws ServiceException, DaoException {
         long userId = -1;
         String response = null;
         ObjectNode objectNode = mapper.createObjectNode();

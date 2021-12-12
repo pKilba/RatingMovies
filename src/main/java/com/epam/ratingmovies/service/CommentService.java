@@ -1,15 +1,9 @@
 package com.epam.ratingmovies.service;
 
-import com.epam.ratingmovies.dao.api.CommentDao;
 import com.epam.ratingmovies.dao.entity.Comment;
-import com.epam.ratingmovies.dao.entity.Movie;
-import com.epam.ratingmovies.dao.exception.DaoException;
 import com.epam.ratingmovies.dao.impl.CommentDaoImpl;
-import org.apache.logging.log4j.Level;
+import com.epam.ratingmovies.exception.DaoException;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +11,14 @@ public class CommentService {
 
    CommentDaoImpl commentDao = new CommentDaoImpl();
 
-    public List findAll() {
+    public List findAll() throws DaoException {
         return commentDao.findAll();
     }
-    public List findByMovieId( long id){
+    public List findByMovieId( long id) throws DaoException {
         return commentDao.findCommentByIdMovies(id);
     }
 
-    public int findCommentsAmountByMovieId(long id){
+    public int findCommentsAmountByMovieId(long id) throws DaoException {
         return commentDao.findCommentsAmountByMovieId( id);
     }
 
@@ -47,10 +41,10 @@ public class CommentService {
     }
 
 
-    public int findCommentsAmount() {
+    public int findCommentsAmount() throws DaoException {
         return commentDao.findCommentsAmount();
     }
-    public List<Comment> findCommentsRange(int amountQuery, int size) {
+    public List<Comment> findCommentsRange(int amountQuery, int size) throws DaoException {
 
         return commentDao.findCommentsRange(amountQuery, size);
     }

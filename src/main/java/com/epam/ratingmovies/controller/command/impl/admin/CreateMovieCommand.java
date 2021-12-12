@@ -6,6 +6,7 @@ import com.epam.ratingmovies.controller.command.CommandResponse;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.Genre;
 import com.epam.ratingmovies.dao.entity.Movie;
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.service.MovieService;
 import com.google.protobuf.ServiceException;
 
@@ -21,7 +22,7 @@ public class CreateMovieCommand implements Command {
     public static final String MOVIE = "/jsp/pages/createMovie.jsp";
 
     @Override
-    public CommandResponse execute(RequestContext request) throws ServiceException, ParseException {
+    public CommandResponse execute(RequestContext request) throws ServiceException, ParseException, DaoException {
 
         String about = ParameterTaker.takeString("about", request);
 

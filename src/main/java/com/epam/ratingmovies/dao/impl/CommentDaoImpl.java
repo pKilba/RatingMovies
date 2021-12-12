@@ -4,11 +4,9 @@ import com.epam.ratingmovies.dao.api.CommentDao;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.ratingmovies.dao.entity.Comment;
-import com.epam.ratingmovies.dao.entity.Movie;
-import com.epam.ratingmovies.dao.exception.DaoException;
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.CommentRowMapper;
-import com.epam.ratingmovies.dao.mapper.impl.MovieRowMapper;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,7 +33,7 @@ public class CommentDaoImpl implements CommentDao {
     private static final Logger logger = LogManager.getLogger(CommentDaoImpl.class);
 
     @Override
-    public Comment save(Comment comment) {
+    public Comment save(Comment comment) throws DaoException {
         Connection connection = connectionPool.takeConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_COMMENT, Statement.RETURN_GENERATED_KEYS);
@@ -56,7 +54,7 @@ public class CommentDaoImpl implements CommentDao {
                 connectionPool.returnConnection(connection);
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | DaoException e) {
             logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         }
@@ -85,7 +83,7 @@ public class CommentDaoImpl implements CommentDao {
     }
 
 
-    public int findCommentsAmountByMovieId(long id) {
+    public int findCommentsAmountByMovieId(long id) throws DaoException {
         ResultSet resultSet = null;
         int result = 0;
         try (Connection connection = connectionPool.takeConnection();
@@ -135,7 +133,7 @@ public class CommentDaoImpl implements CommentDao {
     }
 
 
-    public List<Comment> findCommentByIdMovies(long id) {
+    public List<Comment> findCommentByIdMovies(long id) throws DaoException {
         ResultSet resultSet = null;
         ArrayList result = new ArrayList();
         try (Connection connection = connectionPool.takeConnection();
@@ -179,7 +177,7 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public List<Comment> findAll() {
+    public List<Comment> findAll() throws DaoException {
         Connection connection = connectionPool.takeConnection();
         List<Comment> result = new ArrayList<>();
         try {

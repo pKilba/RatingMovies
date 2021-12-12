@@ -1,4 +1,4 @@
-package com.epam.ratingmovies.dao.exception;
+package com.epam.ratingmovies.exception;
 
 public class ConnectionPoolException extends RuntimeException{
     public ConnectionPoolException() {

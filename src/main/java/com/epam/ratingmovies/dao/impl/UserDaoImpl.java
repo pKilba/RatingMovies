@@ -3,9 +3,8 @@ package com.epam.ratingmovies.dao.impl;
 import com.epam.ratingmovies.dao.api.UserDAO;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
-import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.dao.entity.User;
-import com.epam.ratingmovies.dao.exception.DaoException;
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.UserRowMapper;
 import org.apache.logging.log4j.Level;
@@ -62,7 +61,7 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public User save(User user) {
+    public User save(User user) throws DaoException {
 
         Connection connection = connectionPool.takeConnection();
         try {
@@ -97,7 +96,7 @@ public class UserDaoImpl implements UserDAO {
         return user;
     }
 
-    public long findIdByLogin(String login) {
+    public long findIdByLogin(String login) throws DaoException {
         ResultSet resultSet = null;
         long id = 0;
         try (Connection connection = connectionPool.takeConnection();
@@ -125,7 +124,7 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws DaoException {
 
         Connection connection = connectionPool.takeConnection();
         try {
@@ -142,7 +141,7 @@ public class UserDaoImpl implements UserDAO {
         connectionPool.returnConnection(connection);
     }
 
-    public Optional<User> findUserById(long id) {
+    public Optional<User> findUserById(long id) throws DaoException {
         ResultSet resultSet = null;
         Optional<User> userOptional = null;
         try (Connection connection = connectionPool.takeConnection();
@@ -173,7 +172,7 @@ public class UserDaoImpl implements UserDAO {
 
 
     @Override
-    public List<User> findAll() {
+    public List<User> findAll() throws DaoException {
         Connection connection = connectionPool.takeConnection();
         List<User> result = new ArrayList<>();
         try {
@@ -198,7 +197,7 @@ public class UserDaoImpl implements UserDAO {
         return Optional.empty();
     }
 
-    public boolean blockById(Long id) {
+    public boolean blockById(Long id) throws DaoException {
         try {
             Connection connection = connectionPool.takeConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_STATUS_BY_ID);
@@ -216,7 +215,7 @@ public class UserDaoImpl implements UserDAO {
     }
 
 
-    public boolean isUnblockedById(long id) {
+    public boolean isUnblockedById(long id) throws DaoException {
         User user = findUserById(id).get();
         if (user.getUserStatus().getId() == 1) {
             return true;
@@ -225,7 +224,7 @@ public class UserDaoImpl implements UserDAO {
         }
     }
 
-    public boolean isBlockedById(long id) {
+    public boolean isBlockedById(long id) throws DaoException {
         User user = findUserById(id).get();
         if (user.getUserStatus().getId() == 2) {
             return true;
@@ -234,7 +233,7 @@ public class UserDaoImpl implements UserDAO {
         }
     }
 
-    public boolean unblockById(Long id) {
+    public boolean unblockById(Long id) throws DaoException {
         try {
             Connection connection = connectionPool.takeConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_STATUS_BY_ID);
@@ -502,7 +501,7 @@ public class UserDaoImpl implements UserDAO {
     }
 
 
-    public void updatePhotoByUserId(long id, String photo) {
+    public void updatePhotoByUserId(long id, String photo) throws DaoException {
         try {
             Connection connection = connectionPool.takeConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PHOTO_BY_ID);
@@ -517,7 +516,7 @@ public class UserDaoImpl implements UserDAO {
         }
     }
 
-    public boolean updatePasswordByUserId(long id, String password) {
+    public boolean updatePasswordByUserId(long id, String password) throws DaoException {
 
         try {
             Connection connection = connectionPool.takeConnection();
@@ -539,7 +538,7 @@ public class UserDaoImpl implements UserDAO {
     //todo мб буду вызывать здесь функцию апдейта юзера по айди а в этой просто получать этот айди
     @Override
     //todo брать возвр ти или сменить его на булеан !!!
-    public User update(User user) {
+    public User update(User user) throws DaoException {
         Connection connection = connectionPool.takeConnection();
         try {
 

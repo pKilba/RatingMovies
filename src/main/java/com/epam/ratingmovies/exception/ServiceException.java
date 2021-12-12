@@ -1,6 +1,6 @@
-package com.epam.ratingmovies.service.exeption;
+package com.epam.ratingmovies.exception;
 
-public class ServiceException extends RuntimeException {
+public class ServiceException extends Exception {
 
     public ServiceException() {
         super();

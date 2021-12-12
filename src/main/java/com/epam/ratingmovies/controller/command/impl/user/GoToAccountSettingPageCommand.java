@@ -1,5 +1,6 @@
 package com.epam.ratingmovies.controller.command.impl.user;
 
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.api.Command;
@@ -17,7 +18,7 @@ public class GoToAccountSettingPageCommand implements Command {
 
 
     @Override
-    public CommandResponse execute(RequestContext requestContext) throws ServiceException {
+    public CommandResponse execute(RequestContext requestContext) throws ServiceException, DaoException {
 
         long id = ParameterTaker.takeId(requestContext);
         User user = userService.findUserById(id);

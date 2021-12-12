@@ -4,11 +4,9 @@ import com.epam.ratingmovies.dao.api.MovieDao;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.ratingmovies.dao.entity.Movie;
-import com.epam.ratingmovies.dao.entity.User;
-import com.epam.ratingmovies.dao.exception.DaoException;
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.MovieRowMapper;
-import com.epam.ratingmovies.dao.mapper.impl.UserRowMapper;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,7 +36,7 @@ public class MovieDaoImpl implements MovieDao {
     private long idMovie;
 
     @Override
-    public Movie save(Movie movie) {
+    public Movie save(Movie movie) throws DaoException {
         Connection connection = connectionPool.takeConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_MOVIE, Statement.RETURN_GENERATED_KEYS);
@@ -65,7 +63,7 @@ public class MovieDaoImpl implements MovieDao {
                 connectionPool.returnConnection(connection);
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | DaoException e) {
             logger.throwing(Level.WARN, e);
             throw new DaoException(e);
 
@@ -87,7 +85,7 @@ public class MovieDaoImpl implements MovieDao {
 
 
     @Override
-    public List<Movie> findAll() {
+    public List<Movie> findAll() throws DaoException {
 
         Connection connection = connectionPool.takeConnection();
         List<Movie> result = new ArrayList<>();
@@ -155,7 +153,7 @@ public class MovieDaoImpl implements MovieDao {
 
 
     @Override
-    public Optional<Movie> findById(Long idMovie) {
+    public Optional<Movie> findById(Long idMovie) throws DaoException {
         this.idMovie = idMovie;
         ResultSet resultSet = null;
         Optional<Movie> movieOptional = null;

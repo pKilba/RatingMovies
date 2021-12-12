@@ -1,6 +1,7 @@
 package com.epam.ratingmovies.controller.command.impl.user;
 
 import com.epam.ratingmovies.controller.command.api.Command;
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.*;
@@ -19,24 +20,9 @@ public class AddCommentCommand implements Command {
     private static final String RATING_MOVIES_COMMAND = "ratingMovies?command=" + CommandName.MOVIE_PAGE + "&id=";
 
     @Override
-    public CommandResponse execute(RequestContext request) throws ServiceException {
+    public CommandResponse execute(RequestContext request) throws ServiceException, DaoException {
         long id = ParameterTaker.takeId(request);
         long idMovie = ParameterTaker.takeIdNow(request);
-
-        /*if (request.getRequestParameter("idUser") != null) {
-            idUser = Long.parseLong(request.getRequestParameter("idUser"));
-            user = userService.findUserById(idUser);
-            Comment newComment = Comment.builder().
-                    setMessage(request.getRequestParameter("leaveComment"))
-                    .setMovie(id).
-                    setUser(idUser).
-                    setCreateTime(new Timestamp(System.currentTimeMillis())).build();
-            CommentDaoImpl commentDao = new CommentDaoImpl();
-            Comment comment = commentDao.save(newComment);
-        }*/
-
-     //   idUser = Long.parseLong(request.getRequestParameter("idUser"));
-
         Comment newComment = Comment.builder().
                 setMessage(request.getRequestParameter("leaveComment"))
                 .setMovie(idMovie).
@@ -47,11 +33,7 @@ public class AddCommentCommand implements Command {
 
 
         request.addAttribute(Attribute.ID, idMovie);
-        //request.addAttribute(Attribute.MOVIE_ID, idMovie);
-
-
-        return //CommandResponse.forward("/jsp/pages/movies.jsp") ;
-        CommandResponse.redirect(RATING_MOVIES_COMMAND+idMovie);
+        return CommandResponse.redirect(RATING_MOVIES_COMMAND + idMovie);
 
     }
 }

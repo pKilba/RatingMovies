@@ -1,9 +1,8 @@
 package com.epam.ratingmovies.service;
 
 import com.epam.ratingmovies.dao.entity.User;
-import com.epam.ratingmovies.dao.entity.UserStatus;
-import com.epam.ratingmovies.dao.exception.DaoException;
 import com.epam.ratingmovies.dao.impl.UserDaoImpl;
+import com.epam.ratingmovies.exception.DaoException;
 import com.google.protobuf.ServiceException;
 
 import java.sql.SQLException;
@@ -22,7 +21,7 @@ public class UserService {
         return instance;
     }
 
-    public List findUsers(){
+    public List findUsers() throws DaoException {
         return userDao.findAll();
     }
 
@@ -31,56 +30,56 @@ public class UserService {
         userDao.updateNameEmailTelegramById(name, email, telegram, id);
     }
 
-    public int findUsersAmount() {
+    public int findUsersAmount() throws DaoException {
         return userDao.findUsersAmount();
     }
 
-    public void updatePhotoByUserId(long userId, String fileName) throws SQLException {
+    public void updatePhotoByUserId(long userId, String fileName) throws SQLException, DaoException {
         userDao.updatePhotoByUserId(userId, fileName);
     }
 
-    public void updatePasswordByUserId(long userId, String password) throws SQLException {
+    public void updatePasswordByUserId(long userId, String password) throws SQLException, DaoException {
         userDao.updatePasswordByUserId(userId, password);
     }
 
 
     //todo через isPresent чекать нал или нет
-    public User findUserById(long id) throws ServiceException {
+    public User findUserById(long id) throws ServiceException, DaoException {
         Optional<User> user = userDao.findUserById(id);
         if (user.isPresent()) {
             return user.get();
         } else throw new ServiceException("Error Service");
     }
 
-    public List<User> findUsersRange(int amountQuery, int size,List<User> users) {
+    public List<User> findUsersRange(int amountQuery, int size,List<User> users) throws DaoException {
 
         return userDao.findUsersRange(amountQuery, size,users);
     }
 
-    public boolean blockedById(long id) {
+    public boolean blockedById(long id) throws DaoException {
         return userDao.blockById(id);
     }
 
-    public boolean unblockById(long id) {
+    public boolean unblockById(long id) throws DaoException {
         return userDao.unblockById(id);
     }
 
 
-    public boolean isBlockedById(long id) {
+    public boolean isBlockedById(long id) throws DaoException {
         return userDao.isBlockedById(id);
     }
 
-    public boolean isUnblockedById(long id) {
+    public boolean isUnblockedById(long id) throws DaoException {
         return userDao.isUnblockedById(id);
     }
 
     //todo optional return
-    public User findUserByLogin(String login) {
+    public User findUserByLogin(String login) throws DaoException {
         Optional<User> user = userDao.findUserByLogin(login);
         return user.get();
     }
 
-    public Optional<User> findUserByLoginAndPassword(String login, String password) {
+    public Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
         Optional<User> user = userDao.findUserByLoginPassword(login, password);
         return user;
     }

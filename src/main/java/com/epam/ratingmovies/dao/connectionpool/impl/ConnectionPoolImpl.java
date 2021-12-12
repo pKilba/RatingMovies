@@ -1,12 +1,11 @@
 package com.epam.ratingmovies.dao.connectionpool.impl;
 
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
-import com.epam.ratingmovies.dao.exception.ConnectionPoolException;
+import com.epam.ratingmovies.exception.ConnectionPoolException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

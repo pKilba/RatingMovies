@@ -1,6 +1,6 @@
 package com.epam.ratingmovies.dao.connectionpool.api;
 
-import com.epam.ratingmovies.dao.exception.ConnectionPoolException;
+import com.epam.ratingmovies.exception.ConnectionPoolException;
 
 import java.sql.Connection;
 

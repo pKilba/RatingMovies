@@ -1,6 +1,7 @@
 import com.epam.ratingmovies.dao.entity.User;
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.service.UserService;
-import com.epam.ratingmovies.service.exeption.ServiceException;
+import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.LineHasher;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ public class UserServiceTest {
 
             user = userService.findUserByLoginAndPassword(TEST_USER_LOGIN, hashPass);
 
-        } catch (ServiceException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
         assertTrue(user.isPresent());

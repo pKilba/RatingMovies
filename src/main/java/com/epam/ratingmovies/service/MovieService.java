@@ -1,10 +1,10 @@
 package com.epam.ratingmovies.service;
 
-import com.epam.ratingmovies.dao.entity.Comment;
 import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.dao.impl.MovieDaoImpl;
 import com.epam.ratingmovies.dao.impl.UserDaoImpl;
-import com.epam.ratingmovies.service.exeption.ServiceException;
+import com.epam.ratingmovies.exception.DaoException;
+import com.epam.ratingmovies.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,11 +17,11 @@ public class MovieService {
 
     MovieDaoImpl movieDao = new MovieDaoImpl();
 
-    public int findMoviesAmount() {
+    public int findMoviesAmount() throws DaoException {
         return movieDao.findMoviesAmount();
     }
 
-    public Movie findMovieById(long id) {
+    public Movie findMovieById(long id) throws DaoException, ServiceException {
         Optional<Movie> movie = movieDao.findById(id);
         if (movie.isPresent()) {
             return movie.get();
@@ -32,11 +32,11 @@ public class MovieService {
     }
 
 
-    public void save(Movie movie) {
+    public void save(Movie movie) throws DaoException {
         movieDao.save(movie);
     }
 
-    public List findMovies(){
+    public List findMovies() throws DaoException {
         return movieDao.findAll();
     }
 

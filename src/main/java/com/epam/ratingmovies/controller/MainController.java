@@ -27,9 +27,6 @@ public class MainController extends HttpServlet {
 Logger logger = LogManager.getLogger();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        logger.warn("oops");
-        logger.info("no oops");
         processRequest(request, response);
     }
 

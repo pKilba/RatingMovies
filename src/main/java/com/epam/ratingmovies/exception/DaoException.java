@@ -1,6 +1,6 @@
-package com.epam.ratingmovies.dao.exception;
+package com.epam.ratingmovies.exception;
 
-public class DaoException extends RuntimeException{
+public class DaoException extends Exception{
     public DaoException() {
     }
 

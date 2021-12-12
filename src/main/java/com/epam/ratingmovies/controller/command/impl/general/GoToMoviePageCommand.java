@@ -1,5 +1,6 @@
 package com.epam.ratingmovies.controller.command.impl.general;
 
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.api.Command;
@@ -25,15 +26,12 @@ public class GoToMoviePageCommand implements Command {
 
 
     @Override
-    public CommandResponse execute(RequestContext request) throws ServiceException {
+    public CommandResponse execute(RequestContext request) throws ServiceException, com.epam.ratingmovies.exception.ServiceException, DaoException {
         long id = ParameterTaker.takeId(request);
         List<User> users = new ArrayList<>();
         Movie movie = movieService.findMovieById(id);
         request.addAttribute(Attribute.MOVIE, movie);
         request.addAttribute(Attribute.ID, id);
-      /*  if (request.getRequestParameter("idUser") != null) {
-            return CommandResponse.redirect(RATING_MOVIES_COMMAND + id);
-        }*/
         return CommandResponse.forward(MOVIE);
     }
 }

@@ -3,6 +3,7 @@ package com.epam.ratingmovies.service;
 
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.impl.UserDaoImpl;
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.service.converter.Converter;
 //import com.epam.ratingmovies.service.converter.UserConverter;
 import com.epam.ratingmovies.service.dto.UserDto;
@@ -30,7 +31,7 @@ public class SignUpService {
 
     //todo нужен ли тут вообще юзердто??!
     //todo userDto ВМЕСТО ЮЗЕР В ПАРАМЕТРАХ
-    public long signUp(User user) {
+    public long signUp(User user) throws DaoException {
         if (!userValidator.isValid(user)) {
             System.out.println("что то плохо заполнили");
             return -1;
@@ -51,7 +52,7 @@ public class SignUpService {
 
 
     //todo isPresent ёт не работатет
-    public boolean isUserLoginExist(String login) {
+    public boolean isUserLoginExist(String login) throws DaoException {
         Optional<User> user = userDao.findUserByLogin(login);
         if (user!=null){
             return true;
@@ -68,7 +69,7 @@ public class SignUpService {
 
 
     //todo проверить сущ емейла и телеги не проверял
-    public boolean isUserEmailExist(String email) {
+    public boolean isUserEmailExist(String email) throws DaoException {
         Optional<User> user = userDao.findUserByEmail(email);
         if (user!=null){
             return true;
@@ -78,7 +79,7 @@ public class SignUpService {
         }
 
     }
-    public boolean isUserTelegramExist(String telegram) {
+    public boolean isUserTelegramExist(String telegram) throws DaoException {
         Optional<User> user = userDao.findUserByTelegram(telegram);
         if (user!=null){
             return true;

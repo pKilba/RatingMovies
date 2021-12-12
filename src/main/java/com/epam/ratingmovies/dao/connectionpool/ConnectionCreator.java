@@ -1,6 +1,6 @@
 package com.epam.ratingmovies.dao.connectionpool;
 
-import com.epam.ratingmovies.dao.exception.ConnectionPoolException;
+import com.epam.ratingmovies.exception.ConnectionPoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

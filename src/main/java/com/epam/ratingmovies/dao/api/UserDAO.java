@@ -1,8 +1,7 @@
 package com.epam.ratingmovies.dao.api;
 
-import com.epam.ratingmovies.dao.api.DAO;
 import com.epam.ratingmovies.dao.entity.User;
-import com.epam.ratingmovies.dao.exception.DaoException;
+import com.epam.ratingmovies.exception.DaoException;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -1,5 +1,6 @@
 package com.epam.ratingmovies.controller.command.impl.user;
 
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.util.LineHasher;
 import com.epam.ratingmovies.controller.ParameterTaker;
@@ -24,7 +25,7 @@ public class LoginCommand implements Command {
 
 
     @Override
-    public CommandResponse execute(RequestContext request) {
+    public CommandResponse execute(RequestContext request) throws DaoException {
         String login = ParameterTaker.takeString(Parameter.LOGIN, request);
         String pass = ParameterTaker.takeString(Parameter.PASSWORD, request);
         LineHasher lineHasher = new LineHasher();

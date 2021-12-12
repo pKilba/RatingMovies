@@ -1,5 +1,6 @@
 package com.epam.ratingmovies.controller.command.impl.user;
 
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.api.Command;
@@ -25,7 +26,7 @@ public class ChangeGeneralInfoCommand implements Command {
     private final AccountInfoChangeService accountInfoChangeService = new AccountInfoChangeService();
 
     @Override
-    public CommandResponse execute(RequestContext request) throws ServiceException, ParseException, SQLException {
+    public CommandResponse execute(RequestContext request) throws ServiceException, ParseException, SQLException, DaoException {
 
 
         //todo доделать чекер чтбы проверять на корректность

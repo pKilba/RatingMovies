@@ -1,5 +1,6 @@
 package com.epam.ratingmovies.controller;
 
+import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.service.UserService;
 import com.google.protobuf.ServiceException;
@@ -72,7 +73,7 @@ private static final UserService userService = new UserService();
                 System.out.println(request.getSession());
                 request.getSession().setAttribute(Attribute.PHOTO, fileName);
                 responseLine = SUCCESS_RESPONSE;
-            } catch (ServiceException | SQLException e) {
+            } catch (ServiceException | DaoException | SQLException e) {
                 responseLine = WRONG_RESPONSE;
                 LOGGER.warn("Upload photo error. User id= " + userId + " try upload.");
             }
