@@ -20,7 +20,7 @@ public class AdminService {
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
     private static AdminService instance = new AdminService();
     private static final ObjectMapper mapper = new ObjectMapper();
-    private static UserService userService = UserService.getInstance();
+    private static final UserService userService = UserService.getInstance();
 
     public static AdminService getInstance() {
         if (instance == null) {

@@ -220,20 +220,12 @@ public class UserDaoImpl implements UserDAO {
 
     public boolean isUnblockedById(long id) throws DaoException {
         User user = findUserById(id).get();
-        if (user.getUserStatus().getId() == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return user.getUserStatus().getId() == 1;
     }
 
     public boolean isBlockedById(long id) throws DaoException {
         User user = findUserById(id).get();
-        if (user.getUserStatus().getId() == 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return user.getUserStatus().getId() == 2;
     }
 
     public boolean unblockById(Long id) throws DaoException {

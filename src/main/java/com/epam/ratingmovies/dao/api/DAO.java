@@ -8,16 +8,16 @@ import java.util.Optional;
 
 public interface DAO <T extends AbstractEntity<K>, K> {
     //todo или назвать креейт
-    public  T save(T entity) throws DaoException;
+    T save(T entity) throws DaoException;
 
-    public  T update(T entity) throws DaoException;
+    T update(T entity) throws DaoException;
 
 
 
-    public void delete (K id) throws DaoException;
+    void delete(K id) throws DaoException;
 
-    public  List<T> findAll() throws DaoException;
+    List<T> findAll() throws DaoException;
 
-    public Optional<T> findById(K idEntity) throws DaoException;
+    Optional<T> findById(K idEntity) throws DaoException;
 
 }

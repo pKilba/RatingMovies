@@ -48,14 +48,14 @@ public class GoToReviewsPageCommand implements Command {
         if (amountQuery > amount) {
         }
         if (amount < size) {
-            size = (int) amount;
+            size = amount;
         }
         List commentsById = commentService.findByMovieId(id);
         comments = commentService.findCommentByRange(amountQuery, size, commentsById);
         request.addAttribute(Attribute.CURRENT_PAGE, page);
         int maxPage = 1;
         if (amount != 0) {
-            maxPage = (int) (amount / size);
+            maxPage = amount / size;
             if (amount % size != 0) {
                 ++maxPage;
             }

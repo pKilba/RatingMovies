@@ -6,16 +6,14 @@ import com.epam.ratingmovies.util.LineHasher;
 
 public class AccountChangePassword {
     UserValidator userValidator = UserValidator.getInstance();
-    private boolean isCorrectPassword;
 
     public boolean isCorrectPassword(String newPasswordFirst, String newPasswordSecond, User user, String currentPassword) {
 
 
-        isCorrectPassword =
+        boolean isCorrectPassword = isValidPassword(newPasswordFirst) &&
                 isValidPassword(newPasswordFirst) &&
-                        isValidPassword(newPasswordFirst) &&
-                        isEqualFirstNewPasswordAndSecond(newPasswordFirst, newPasswordSecond) &&
-                        isValidPassword(currentPassword) && isEqualPasswordUserAndCurrentPassword(user, currentPassword);
+                isEqualFirstNewPasswordAndSecond(newPasswordFirst, newPasswordSecond) &&
+                isValidPassword(currentPassword) && isEqualPasswordUserAndCurrentPassword(user, currentPassword);
         return isCorrectPassword;
     }
 

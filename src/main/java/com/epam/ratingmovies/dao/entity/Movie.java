@@ -122,7 +122,7 @@ public class Movie extends AbstractEntity<Long> {
 
 
     public static class MovieBuilder {
-        private Movie newMovie;
+        private final Movie newMovie;
 
         MovieBuilder() {
             newMovie = new Movie();

@@ -22,7 +22,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     private static final String USER = "nfjpip0zodjdbk23";
     private static final String PASS = "m0tm1u4yb9jefy5z";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static int INITIAL_PO0L_SIZE = 3;
+    private static final int INITIAL_PO0L_SIZE = 3;
     private static final AtomicBoolean IS_POOL_CREATED = new AtomicBoolean(false);
     private static final ReentrantLock INSTANCE_LOCKER = new ReentrantLock();
     //мб слева простая очередь и простой лист справа уже это реализация

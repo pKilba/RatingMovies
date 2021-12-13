@@ -33,7 +33,7 @@ public class GoToMoviesPageCommand implements Command {
         if (amountQuery > amount) {
         }
         if (amount < size) {
-            size = (int) amount;
+            size = amount;
         }
         movieList = movieService.findMovies();
 
@@ -44,7 +44,7 @@ if (movieList.size() > 10) {
 }
 movieListByRange = movieList;
        request.addAttribute(Attribute.CURRENT_PAGE, page);
-        int maxPage = (int) (amount / size);
+        int maxPage = amount / size;
         if (amount % size != 0) {
             ++maxPage;
         }

@@ -61,14 +61,10 @@ public class UserValidator implements Validator {
             return false;
         }
         String telegram = user.getTelegramAccount();
-        if (telegram == null || telegram.isEmpty()
-                || telegram.length() > MAX_TELEGRAM_LENGTH
-                || telegram.length() < MIN_TELEGRAM_LENGTH
-                || !isValidTelegram(telegram)) {
-            return false;
-        }
-
-return true;
+        return telegram != null && !telegram.isEmpty()
+                && telegram.length() <= MAX_TELEGRAM_LENGTH
+                && telegram.length() >= MIN_TELEGRAM_LENGTH
+                && isValidTelegram(telegram);
     }
 
 
@@ -89,10 +85,7 @@ return true;
 
 
     public boolean isValidPassword(String line) {
-        if (line == null || line.length() !=LENGTH_HASH_PASSWORD) {
-            return false;
-        }
-        return true;
+        return line != null && line.length() == LENGTH_HASH_PASSWORD;
     }
 
 

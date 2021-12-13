@@ -22,7 +22,7 @@ public class ConnectionCreator {
 
     static {
         try (InputStream inputStream =
-                     ConnectionCreator.class.getClassLoader().getResourceAsStream(DB_PROPERTIES_LOCATION);) {
+                     ConnectionCreator.class.getClassLoader().getResourceAsStream(DB_PROPERTIES_LOCATION)) {
             properties.load(inputStream);
             String driverName = (String) properties.get(DB_DRIVER_PROPERTY_KEY);
             Class.forName(driverName);

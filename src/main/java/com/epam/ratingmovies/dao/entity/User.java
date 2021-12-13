@@ -121,7 +121,7 @@ public class User extends AbstractEntity<Long> {
 
 
     public static class UserBuilder {
-        private User newUser;
+        private final User newUser;
 
         UserBuilder() {
             newUser = new User();

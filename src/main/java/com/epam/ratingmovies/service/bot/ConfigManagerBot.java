@@ -11,7 +11,7 @@ import java.util.Properties;
 public final class ConfigManagerBot {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private static String BOT_PROPERTIES = "bot.properties";
+    private static final String BOT_PROPERTIES = "bot.properties";
     private static String BOT_TOKEN;
     private static String CHANNEL_NAME;
     private static String BOT_NAME;

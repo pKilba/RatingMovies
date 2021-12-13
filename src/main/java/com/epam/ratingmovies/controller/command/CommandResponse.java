@@ -1,8 +1,8 @@
 package com.epam.ratingmovies.controller.command;
 
 public class  CommandResponse {
-    private  String page;
-    private  boolean isRedirect;
+    private final String page;
+    private final boolean isRedirect;
     private String Line;
 
     public CommandResponse(String page, boolean isRedirect) {

@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum UserStatus {
     ACTIVE(1),
     BANNED(2);
-    private int id;
+    private final int id;
 
     UserStatus(int id){
         this.id = id;

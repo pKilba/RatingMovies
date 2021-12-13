@@ -56,7 +56,7 @@ public class Comment extends AbstractEntity<Long> {
 
 
     public static class CommentBuilder {
-        private Comment newComment;
+        private final Comment newComment;
 
         CommentBuilder() {
             newComment = new Comment();

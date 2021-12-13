@@ -28,13 +28,13 @@ public class GoToUsersPageCommand implements Command {
         if (amountQuery > amount) {
         }
         if (amount < size) {
-            size = (int) amount;
+            size = amount;
         }
         List<User> userList = userService.findUsers();
         if (userList.size() > 10) {
             userList = userService.findUsersRange(amount - amountQuery + 1, size,userList);
         }
-        int maxPage = (int) (amount / size);
+        int maxPage = amount / size;
         if (amount % size != 0) {
             ++maxPage;
         }
