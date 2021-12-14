@@ -88,6 +88,12 @@
                                 </div>
 
                             </form>
+                            <h3 style="color: green">
+                                <fmt:message key="settings.success.${successMessage}" />
+                            </h3>
+                            <h3 class="text-danger error-message text-centr">
+                                <fmt:message key="settings.error.${errorMessage}" />
+                            </h3>
                         </div>
                     </div>
 
@@ -119,6 +125,13 @@
                                     <input type="password" name = "newPas2" class="form-control password" minlength="8" maxlength="32"
                                            required>
                                 </div>
+                                <h3 class="text-danger error-message text-centr">
+                                    <fmt:message key="settings.error.${errorMessage}" />
+                                </h3>
+
+                                <h3  style="color: green">
+                                    <fmt:message key="settings.success.${successMessage}" />
+                                </h3>
                             </form>
                         </div>
                     </div>
@@ -127,14 +140,6 @@
             </div>
         </div>
     </div>
-
-    <h3 class="text-danger error-message text-centr">
-        <fmt:message key="settings.error.${errorMessage}" />
-    </h3>
-
-    <h3  style="color: green">
-        <fmt:message key="settings.success.${successMessage}" />
-    </h3>
 
     <div class="text-right mt-3">
         <button type="submit" form="changeGeneralForm" class="btn btn-primary" id="btnSubmit">

@@ -1,6 +1,5 @@
 package com.epam.ratingmovies.controller.command.impl.user;
 
-import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
@@ -12,7 +11,7 @@ import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.service.AccountChangePassword;
 import com.epam.ratingmovies.service.UserService;
-import com.epam.ratingmovies.service.validator.UserValidator;
+import com.epam.ratingmovies.service.validator.impl.UserValidator;
 import com.epam.ratingmovies.util.LineHasher;
 
 
@@ -45,7 +44,7 @@ public class ChangePasswordCommand implements Command {
         if (accountChangePassword.isCorrectPassword(hashNewPasswordFirst,hashNewPasswordSecond, user, hashCurrentPassword)) {
 
             userService.updatePasswordByUserId(id, hashNewPasswordFirst);
-            requestContext.addAttribute(Attribute.SUCCES_MESSAGE, VALID_DATA_KEY);
+            requestContext.addAttribute(Attribute.SUCCESS_MESSAGE, VALID_DATA_KEY);
 
             return CommandResponse.forward(SETTINGS);
         }

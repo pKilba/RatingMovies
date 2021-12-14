@@ -8,6 +8,7 @@ import com.epam.ratingmovies.dao.entity.Genre;
 import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.service.MovieService;
+import com.epam.ratingmovies.util.Attribute;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -15,6 +16,9 @@ import java.time.LocalDateTime;
 
 
 public class CreateMovieCommand implements Command {
+
+    private static final String INVALID_DATA_KEY = "invalid.data";
+    private static final String VALID_DATA_KEY = "success";
 
     MovieService movieService = new MovieService();
     public static final String MOVIE = "/jsp/pages/createMovie.jsp";
@@ -25,7 +29,6 @@ public class CreateMovieCommand implements Command {
         String about = ParameterTaker.takeString("about", request);
 
         String image = ParameterTaker.takeString("img", request);
-
         String str = ParameterTaker.takeString("data", request);
         LocalDateTime dateTime = LocalDate.parse(str).atStartOfDay();
         Timestamp timestamp = Timestamp.valueOf(dateTime);
@@ -36,21 +39,25 @@ public class CreateMovieCommand implements Command {
         int duration = ParameterTaker.takeNumber("duration", request);
         int idGenre = ParameterTaker.takeNumber("genre", request);
         String imageBack = ParameterTaker.takeString("imgBack", request);
-        Movie movie = Movie.builder()
-                .setAbout(about).
-                setMovieGenre(Genre.getById(idGenre)).
-                setPoster(image).
-                setAmountDislike(dislike).
-                setAmountLike(like).
-                setReleaseTime(timestamp).
-                setMovieDuration(duration).
-                setMovieProducer(producer).
-                setMovieName(name).
-                setMovieBackground(imageBack).
-                build();
+        if (movieService.isValid(name, like, dislike, duration, producer, about)) {
+            request.addAttribute(Attribute.SUCCESS_MESSAGE, VALID_DATA_KEY);
+            Movie movie = Movie.builder()
+                    .setAbout(about).
+                    setMovieGenre(Genre.getById(idGenre)).
+                    setPoster(image).
+                    setAmountDislike(dislike).
+                    setAmountLike(like).
+                    setReleaseTime(timestamp).
+                    setMovieDuration(duration).
+                    setMovieProducer(producer).
+                    setMovieName(name).
+                    setMovieBackground(imageBack).
+                    build();
+            movieService.save(movie);
+        } else {
+            request.addAttribute(Attribute.ERROR_MESSAGE, INVALID_DATA_KEY);
+        }
 
-        movieService.save(movie);
-
-        return CommandResponse.redirect(MOVIE);
+        return CommandResponse.forward(MOVIE);
     }
 }

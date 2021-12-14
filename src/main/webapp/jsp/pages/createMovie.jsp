@@ -83,7 +83,13 @@
                 <option value="4"><fmt:message key="genre.horror"/></option>
             </select>
         </div>
+        <h3 class="text-danger error-message text-centr">
+            <fmt:message key="settings.error.${errorMessage}" />
+        </h3>
 
+        <h3  style="color: green">
+            <fmt:message key="settings.success.${successMessage}" />
+        </h3>
 
         <button type="submit" class="btn btn-primary"><fmt:message key="create.film.button"/></button>
     </form>

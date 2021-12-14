@@ -1,10 +1,7 @@
 package com.epam.ratingmovies.service;
 
-import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.impl.UserDaoImpl;
-import com.epam.ratingmovies.exception.DaoException;
-import com.epam.ratingmovies.service.validator.UserValidator;
-import com.google.protobuf.ServiceException;
+import com.epam.ratingmovies.service.validator.impl.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

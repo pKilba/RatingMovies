@@ -1,8 +1,7 @@
 package com.epam.ratingmovies.service;
 
 import com.epam.ratingmovies.dao.entity.User;
-import com.epam.ratingmovies.service.validator.UserValidator;
-import com.epam.ratingmovies.util.LineHasher;
+import com.epam.ratingmovies.service.validator.impl.UserValidator;
 
 public class AccountChangePassword {
     UserValidator userValidator = UserValidator.getInstance();

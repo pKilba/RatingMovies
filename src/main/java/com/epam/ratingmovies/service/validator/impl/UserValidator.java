@@ -1,4 +1,4 @@
-package com.epam.ratingmovies.service.validator;
+package com.epam.ratingmovies.service.validator.impl;
 
 
 import java.util.regex.Matcher;
@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 //todo можно логику немного поменять дорабоать + проверить
 
-public class UserValidator implements UserValidatorAPI {
+public class UserValidator implements com.epam.ratingmovies.service.validator.api.UserValidator {
     private static final String NAME_PATTERN = "[A-zА-яЁё]+";
     private static final String TELEGRAM_PATTERN = "^@[a-zA-Z0-9+]+$";
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";

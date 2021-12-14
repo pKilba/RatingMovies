@@ -5,6 +5,7 @@ import com.epam.ratingmovies.dao.impl.MovieDaoImpl;
 import com.epam.ratingmovies.dao.impl.UserDaoImpl;
 import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.exception.ServiceException;
+import com.epam.ratingmovies.service.validator.impl.MovieValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,6 +19,13 @@ public class MovieService {
     private static final String FIND_MOVIE_PROBLEM = "Exception find movie  ";
     private static final String SAVE_MOVIE_PROBLEM = "Exception save movie  ";
     MovieDaoImpl movieDao = new MovieDaoImpl();
+    MovieValidator movieValidator = new MovieValidator();
+
+    public boolean isValid(String name, int like,int dislike,int duration, String producer, String about){
+      return   movieValidator.isValid(name,like,dislike,duration,producer,about);
+
+    }
+
 
     public int findMoviesAmount() throws ServiceException {
         try {

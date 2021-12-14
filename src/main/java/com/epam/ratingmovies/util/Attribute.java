@@ -18,7 +18,7 @@ public class Attribute {
     public static final String STATUS = "status";
     public static final String INVALIDATE_ATTRIBUTE = "invalidate";
     public static final String ERROR_MESSAGE = "errorMessage";
-    public static final String SUCCES_MESSAGE = "successMessage";
+    public static final String SUCCESS_MESSAGE = "successMessage";
     public static final String MOVIE_LIST = "movieList";
     public static final String MOVIE = "movie";
     public static final String COMMENT_LIST = "commentList";
