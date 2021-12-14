@@ -1,6 +1,5 @@
 package com.epam.ratingmovies.service.validator;
 
-import com.epam.ratingmovies.dao.entity.User;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,7 +60,9 @@ public class UserValidator implements UserValidatorAPI {
 
     public boolean isValidTelegram(String telegram) {
         Matcher matcher = COMPILED_PATTERN_TELEGRAM.matcher(telegram);
-        if (matcher.matches() ||
+        boolean isCorrect = matcher.matches();
+        System.out.println(isCorrect);
+        if (!isCorrect ||
                 telegram.length() < MIN_TELEGRAM_LENGTH ||
                 telegram.length() > MAX_TELEGRAM_LENGTH) {
             return false;
@@ -71,7 +72,9 @@ public class UserValidator implements UserValidatorAPI {
 
     public boolean isValidName(String name) {
         Matcher matcher = COMPILED_PATTERN_NAME.matcher(name);
-        if (!matcher.matches() || name.length() > MAX_USER_NAME_LENGTH
+       boolean isCorrect = matcher.matches();
+        System.out.println(isCorrect);
+        if (!isCorrect || name.length() > MAX_USER_NAME_LENGTH
                 || name.length() < MIN_USER_NAME_LENGTH) {
             return false;
         }
@@ -79,6 +82,7 @@ public class UserValidator implements UserValidatorAPI {
     }
 
     public boolean isValidLogin(String login) {
+
         if ( login ==null|| login.length() > MAX_LOGIN_LENGTH || login.length() < MIN_LOGIN_LENGTH) {
             return false;
         }
@@ -87,7 +91,9 @@ public class UserValidator implements UserValidatorAPI {
 
     public boolean isValidEmail(String email) {
         Matcher matcher = COMPILED_PATTERN_EMAIL.matcher(email);
-        if (!matcher.matches() || email.length() > MAX_EMAIL_LENGTH
+        boolean isCorrect = matcher.matches();
+        System.out.println(isCorrect);
+        if (!isCorrect || email.length() > MAX_EMAIL_LENGTH
                 || email.length() < MIN_EMAIL_LENGTH
         ) {
             return false;

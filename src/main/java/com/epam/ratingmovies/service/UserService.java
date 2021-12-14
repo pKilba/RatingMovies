@@ -28,6 +28,8 @@ public class UserService {
         return instance;
     }
 
+
+
     public List findUsers() throws ServiceException {
         try {
             return userDao.findAll();

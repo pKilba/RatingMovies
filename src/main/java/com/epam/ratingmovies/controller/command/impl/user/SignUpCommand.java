@@ -39,7 +39,7 @@ public class SignUpCommand implements Command {
                 signUpService.isUserLoginExist(login) ||
                         signUpService.isUserEmailExist(email) ||
                         signUpService.isUserTelegramExist(telegram);
-        if (!isLoginOrMailOrTelegramExist &&signUpService.isValid(login,email,telegram,password,name) ) {
+        if (!isLoginOrMailOrTelegramExist && signUpService.isValid(login,email,telegram,password,name) ) {
             requestContext.addAttribute(Attribute.SAVED_LOGIN, login);
             requestContext.addAttribute(Attribute.SAVED_EMAIL, email);
             Timestamp nowTime = new Timestamp(System.currentTimeMillis());
@@ -57,13 +57,9 @@ public class SignUpCommand implements Command {
                     setProfilePicture(PRE_PHOTO).build();
 
             long idUser = signUpService.signUp(user);
-            if (idUser != -1) {
-                return CommandResponse.forward(LOGIN);
-            } else {
-                requestContext.addAttribute(Attribute.ERROR_MESSAGE, INVALID_DATA_KEY);
-            }
+
         } else {
-            requestContext.addAttribute(Attribute.ERROR_MESSAGE, USERNAME_EXIST_KEY);
+            requestContext.addAttribute(Attribute.ERROR_MESSAGE, INVALID_DATA_KEY);
         }
         return CommandResponse.forward(SIGN_UP);
 
