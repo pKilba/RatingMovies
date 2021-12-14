@@ -66,14 +66,13 @@ public class UploadFileController extends HttpServlet {
                 }
 
                 userService.updatePhotoByUserId(userId, fileName);
+
             } catch (ServiceException e) {
                 logger.warn("Upload photo error");
                 throw new ServletException(e);
             }
             request.getSession().setAttribute(Attribute.PHOTO, fileName);
-            responseLine = WRONG_RESPONSE;
-            logger.warn("Upload photo error. User id= " + userId + " try upload.");
-
+            responseLine = SUCCESS_RESPONSE;
         } else {
             responseLine = WRONG_RESPONSE;
             logger.warn("Upload photo wrong extension!");

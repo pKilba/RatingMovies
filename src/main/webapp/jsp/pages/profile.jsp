@@ -45,7 +45,7 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">
-                                name
+                                <fmt:message key="profile.name"/>
                             </h6>
                         </div>
                         <div class="col-sm-9 text-secondary">${user.getName()}</div>
@@ -54,7 +54,7 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">
-                                email
+                                <fmt:message key="profile.email"/>
                             </h6>
                         </div>
                         <div class="col-sm-9 text-secondary">${user.getEmail()}</div>
@@ -63,7 +63,7 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">
-                                tg
+                                <fmt:message key="profile.telegram"/>
                             </h6>
                         </div>
                         <div class="col-sm-9 text-secondary">${user.getTelegramAccount()}</div>
@@ -71,7 +71,7 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">
-                                время регистрации
+                                <fmt:message key="profile.dataReg"/>
                             </h6>
                         </div>
                         <div class="col-sm-9 text-secondary">${user.getDate()}</div>

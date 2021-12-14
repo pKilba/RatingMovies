@@ -31,8 +31,10 @@
                     </div>
                     <div class="col2">
                         <ul class="movie-likes">
-                            <li><i class="material-icons">Like</i>${movie.getAmount_like()}</li>
-                            <li><i class="material-icons">DisLike</i>${movie.getAmount_dislike()}</li>
+                            <li><i class="material-icons"><fmt:message
+                                    key="movie.like"/></i>${movie.getAmount_like()}</li>
+                            <li><i class="material-icons"><fmt:message
+                                    key="movie.dislike"/></i>${movie.getAmount_dislike()}</li>
                         </ul>
                     </div>
                 </div>

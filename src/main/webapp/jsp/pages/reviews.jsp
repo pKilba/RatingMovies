@@ -89,7 +89,7 @@
               action="${pageContext.request.contextPath}/ratingMovies?command=leaveComment&movieId=${id}&id=${sessionScope.get("userId")}">
             <div class="form-group">
                 <h4>Leave a comment</h4>
-                <textarea name="leaveComment" id="" msg cols="30" rows="5"
+                <textarea name="leaveComment" msg cols="30" rows="5"
                           class="form-control"
                           style="background-color: black;" required>
             </textarea>

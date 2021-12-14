@@ -32,7 +32,6 @@ public class MovieDaoImpl implements MovieDao {
 
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
-    private long idMovie;
 
     @Override
     public Movie save(Movie movie) throws DaoException {
@@ -58,6 +57,7 @@ public class MovieDaoImpl implements MovieDao {
                 } else {
                     throw new DaoException("Creating user failed, no ID obtained.");
                 }
+                preparedStatement.close();
                 connectionPool.returnConnection(connection);
             }
 
@@ -85,9 +85,9 @@ public class MovieDaoImpl implements MovieDao {
 
         Connection connection = connectionPool.takeConnection();
         List<Movie> result = new ArrayList<>();
-        try {
+        try (
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();){
             while (resultSet.next()) {
                 Movie movie = mapper.map(resultSet);
                 result.add(movie);
@@ -109,9 +109,9 @@ public class MovieDaoImpl implements MovieDao {
     public List<Movie> findMoviesRange(int offset, int amount) throws DaoException {
         Connection connection = connectionPool.takeConnection();
         List<Movie> result = new ArrayList<>();
-        try {
+        try (
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();){
             while (resultSet.next()) {
                 Movie movie = mapper.map(resultSet);
                 if (offset < movie.getId() && movie.getId() <= offset + amount) {
@@ -129,13 +129,12 @@ public class MovieDaoImpl implements MovieDao {
     public int findMoviesAmount() throws DaoException {
         Connection connection = connectionPool.takeConnection();
         int counter = 0;
-        try {
+        try (
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();){
             while (resultSet.next()) {
                 counter++;
             }
-            preparedStatement.close();
 
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
@@ -147,10 +146,10 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public Optional<Movie> findById(Long idMovie) throws DaoException {
-        this.idMovie = idMovie;
         ResultSet resultSet = null;
         Optional<Movie> movieOptional = null;
-        try (Connection connection = connectionPool.takeConnection();
+        Connection connection = connectionPool.takeConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_MOVIE_BY_ID)) {
             statement.setLong(1, idMovie);
             resultSet = statement.executeQuery();
@@ -159,6 +158,7 @@ public class MovieDaoImpl implements MovieDao {
             }
 
             connectionPool.returnConnection(connection);
+
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {

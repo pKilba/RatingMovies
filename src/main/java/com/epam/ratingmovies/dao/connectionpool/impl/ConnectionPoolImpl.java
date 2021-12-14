@@ -26,8 +26,8 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     private static final AtomicBoolean IS_POOL_CREATED = new AtomicBoolean(false);
     private static final ReentrantLock INSTANCE_LOCKER = new ReentrantLock();
     //мб слева простая очередь и простой лист справа уже это реализация
-    private final BlockingQueue<ProxyConnection> availableConnections;
-    private final BlockingQueue<ProxyConnection> giveAwayConnections;
+    private final LinkedBlockingQueue availableConnections;
+    private final LinkedBlockingQueue giveAwayConnections;
 
     private static final Logger logger = LogManager.getLogger(ConnectionPoolImpl.class);
 
@@ -121,7 +121,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
 
             }
         }
-        ProxyConnection connection = availableConnections.poll();
+        ProxyConnection connection = (ProxyConnection) availableConnections.poll();
         giveAwayConnections.add(connection);
         return connection;
     }
@@ -133,7 +133,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     @Override
     public synchronized void returnConnection(Connection connection) {
         if (giveAwayConnections.remove(connection)) {
-            availableConnections.add((ProxyConnection) connection);
+            availableConnections.add(connection);
             notifyAll();
         } else {
             logger.warn("Failed to get the connection back ");

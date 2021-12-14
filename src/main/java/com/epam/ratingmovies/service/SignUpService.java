@@ -23,7 +23,7 @@ public class SignUpService {
     private static final String EXIST_PROBLEM_TELEGRAM ="Telegram exist";
     private static SignUpService instance;
     private final UserDaoImpl userDao = new UserDaoImpl();
-    private final Validator<User> userValidator = UserValidator.getInstance();
+    private final UserValidator userValidator = UserValidator.getInstance();
     private static final Logger logger = LogManager.getLogger();
     private SignUpService() {
     }
@@ -35,14 +35,14 @@ public class SignUpService {
         return instance;
     }
 
+
+    public boolean isValid(String login,String email,String telegram ,String password,String name) {
+        return userValidator.isValid(login,email,telegram,password,name);
+    }
+
     //todo нужен ли тут вообще юзердто??!
     //todo userDto ВМЕСТО ЮЗЕР В ПАРАМЕТРАХ
     public long signUp(User user) throws ServiceException {
-        if (!userValidator.isValid(user)) {
-            logger.warn("Incorrect date ");
-            return -1;
-        }
-
         long userId = 1;
         try {
             userDao.save(user);
@@ -55,10 +55,8 @@ public class SignUpService {
         return userId;
     }
 
-
-    //todo isPresent ёт не работатет
     public boolean isUserLoginExist(String login) throws ServiceException {
-        Optional<User> user = null;
+        Optional<User> user = Optional.empty() ;
         try {
             user = userDao.findUserByLogin(login);
         } catch (DaoException e) {
@@ -82,7 +80,7 @@ public class SignUpService {
 
     //todo проверить сущ емейла и телеги не проверял
     public boolean isUserEmailExist(String email) throws ServiceException {
-        Optional<User> user = null;
+        Optional<User> user = Optional.empty();
         try {
             user = userDao.findUserByEmail(email);
         } catch (DaoException e) {
@@ -99,7 +97,7 @@ public class SignUpService {
     }
 
     public boolean isUserTelegramExist(String telegram) throws ServiceException {
-        Optional<User> user = null;
+        Optional<User> user = Optional.empty();
         try {
             user = userDao.findUserByTelegram(telegram);
         } catch (DaoException e) {

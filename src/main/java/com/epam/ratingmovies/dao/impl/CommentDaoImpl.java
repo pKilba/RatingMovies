@@ -7,9 +7,6 @@ import com.epam.ratingmovies.dao.entity.Comment;
 import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.CommentRowMapper;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,7 +27,6 @@ public class CommentDaoImpl implements CommentDao {
     private static final String SQL_FIND_BY_ID_MOVIES = "SELECT * FROM comments WHERE movie_id = ?";
 
 
-
     @Override
     public Comment save(Comment comment) throws DaoException {
         Connection connection = connectionPool.takeConnection();
@@ -40,20 +36,18 @@ public class CommentDaoImpl implements CommentDao {
             preparedStatement.setLong(2, comment.getMovieId());
             preparedStatement.setLong(3, comment.getUserId());
             preparedStatement.setTimestamp(4, comment.getCreateTimeComment());
-
-
-            int execute = preparedStatement.executeUpdate();
-
+            preparedStatement.executeUpdate();
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     comment.setId(generatedKeys.getLong(1));
                 } else {
                     throw new DaoException("Creating user failed, no ID obtained.");
                 }
+                preparedStatement.close();
                 connectionPool.returnConnection(connection);
             }
 
-        } catch (SQLException e ) {
+        } catch (SQLException e) {
             throw new DaoException(e);
         }
         return comment;
@@ -62,16 +56,15 @@ public class CommentDaoImpl implements CommentDao {
     public List<Comment> findCommentsRange(int offset, int amount) throws DaoException {
         Connection connection = connectionPool.takeConnection();
         List<Comment> result = new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_COMMENTS);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_COMMENTS);
+                ResultSet resultSet = preparedStatement.executeQuery();) {
             while (resultSet.next()) {
                 Comment comment = mapper.map(resultSet);
                 if (offset < comment.getId() && comment.getId() <= offset + amount) {
                     result.add(comment);
                 }
             }
-            preparedStatement.close();
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -83,15 +76,15 @@ public class CommentDaoImpl implements CommentDao {
     public int findCommentsAmountByMovieId(long id) throws DaoException {
         ResultSet resultSet = null;
         int result = 0;
-        try (Connection connection = connectionPool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_ID_MOVIES)) {
+        Connection connection = connectionPool.takeConnection();
+        try (
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_ID_MOVIES)) {
             statement.setLong(1, id);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
 
                 result++;
             }
-
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -111,14 +104,12 @@ public class CommentDaoImpl implements CommentDao {
     public int findCommentsAmount() throws DaoException {
         Connection connection = connectionPool.takeConnection();
         int counter = 0;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_COMMENTS);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_COMMENTS);
+                ResultSet resultSet = preparedStatement.executeQuery();) {
             while (resultSet.next()) {
                 counter++;
             }
-            preparedStatement.close();
-
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -129,9 +120,11 @@ public class CommentDaoImpl implements CommentDao {
 
     public List<Comment> findCommentByIdMovies(long id) throws DaoException {
         ResultSet resultSet = null;
-        ArrayList result = new ArrayList();
-        try (Connection connection = connectionPool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_ID_MOVIES)) {
+        ArrayList<Comment> result = new ArrayList<Comment>();
+        Connection connection = connectionPool.takeConnection();
+        try (
+                PreparedStatement statement =
+                        connection.prepareStatement(SQL_FIND_BY_ID_MOVIES)) {
             statement.setLong(1, id);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -140,8 +133,9 @@ public class CommentDaoImpl implements CommentDao {
 
                 result.add(comment);
             }
-
+            resultSet.close();
             connectionPool.returnConnection(connection);
+
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -172,14 +166,13 @@ public class CommentDaoImpl implements CommentDao {
     public List<Comment> findAll() throws DaoException {
         Connection connection = connectionPool.takeConnection();
         List<Comment> result = new ArrayList<>();
-        try {
+        try (
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_COMMENTS);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();){
             while (resultSet.next()) {
                 Comment comment = mapper.map(resultSet);
                 result.add(comment);
             }
-            preparedStatement.close();
             connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {

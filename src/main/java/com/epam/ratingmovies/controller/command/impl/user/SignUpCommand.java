@@ -28,19 +28,22 @@ public class SignUpCommand implements Command {
 
     @Override
     public CommandResponse execute(RequestContext requestContext) throws ServiceException {
+        String password = ParameterTaker.takeString(Parameter.PASSWORD,requestContext);
+        String name = ParameterTaker.takeString(Parameter.NAME,requestContext);
         String login = ParameterTaker.takeString(Parameter.LOGIN, requestContext);
         String email = ParameterTaker.takeString(Parameter.EMAIL, requestContext);
         String telegram = ParameterTaker.takeString(Parameter.TELEGRAM, requestContext);
+
         boolean isLoginOrMailOrTelegramExist = false;
         isLoginOrMailOrTelegramExist =
                 signUpService.isUserLoginExist(login) ||
                         signUpService.isUserEmailExist(email) ||
                         signUpService.isUserTelegramExist(telegram);
-        if (!isLoginOrMailOrTelegramExist) {
+        if (!isLoginOrMailOrTelegramExist &&signUpService.isValid(login,email,telegram,password,name) ) {
             requestContext.addAttribute(Attribute.SAVED_LOGIN, login);
             requestContext.addAttribute(Attribute.SAVED_EMAIL, email);
             Timestamp nowTime = new Timestamp(System.currentTimeMillis());
-            String password = ParameterTaker.takeString(Parameter.PASSWORD, requestContext);
+            password = ParameterTaker.takeString(Parameter.PASSWORD, requestContext);
             LineHasher lineHasher = new LineHasher();
             User user = User.builder().
                     setLogin(login).
@@ -61,8 +64,6 @@ public class SignUpCommand implements Command {
             }
         } else {
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, USERNAME_EXIST_KEY);
-
-
         }
         return CommandResponse.forward(SIGN_UP);
 

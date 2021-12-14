@@ -28,29 +28,28 @@
     <div class="container-content">
         <form name="signupForm" method="POST" action="${pageContext.request.contextPath}/ratingMovies?command=sign-up">
             <div class="form-group">
-                <input type="text" class="form-control" minlength="8" maxlength="32" name="login" value="${login}"
+                <input type="text" class="form-control" minlength="8" maxlength="32" name="login"
                        required>
             </div>
 
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="name" minlength="8" maxlength="32" name="name"
+                <input type="text" class="form-control" placeholder="name" minlength="2" maxlength="32" name="name"
                        required>
             </div>
 
             <div class="form-group">
                 <input type="email" class="form-control" placeholder="email" minlength="2" maxlength="32" name="email"
-
                        required>
             </div>
 
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="telegram" minlength="2" maxlength="32"
-                       name="telegram" value="${login}"
+                       name="telegram"
                        required>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="*****" name="password" minlength="8"
-                       maxlength="32" required="">
+                       maxlength="32" required>
             </div>
             <button type="submit" class="form-button button-l margin-b"><fmt:message
                     key="login.signin.button"/></button>
@@ -59,7 +58,7 @@
                     key="login.signup.button"/></small></a>
         </form>
         <h3 class="text-danger error-message">
-            <fmt:message key="login.error.${errorMessage}"/>
+            <fmt:message key="signup.error.${errorMessage}"/>
         </h3>
     </div>
 </div>

@@ -63,6 +63,14 @@ public class CommentService {
 
     }
 
+    public Comment save (Comment comment) throws ServiceException {
+        try {
+            return commentDao.save(comment);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
 
     public int findCommentsAmount() throws ServiceException {
         try {

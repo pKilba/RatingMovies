@@ -32,7 +32,7 @@ public class AdminService {
 
     public boolean isBlockedById(long id) throws ServiceException {
         UserDaoImpl userDao = new UserDaoImpl();
-        Optional<User> user = null;
+        Optional<User> user ;
         try {
             user = userDao.findUserById(id);
         } catch (DaoException e) {
@@ -84,7 +84,7 @@ public class AdminService {
             response = String.valueOf(objectNode);
         }
         if (response == null) {
-            if (!userService.isBlockedById(userId)) {
+            if (!userService.unblockedById(userId)) {
                 objectNode.put(Attribute.SUCCESS, false);
                 logger.warn("User id=" + userId + " not found.");
                 throw new ServiceException("User id=" + userId + " not found.");

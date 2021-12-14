@@ -103,15 +103,17 @@ public class UserDaoImpl implements UserDAO {
     public long findIdByLogin(String login) throws DaoException {
         ResultSet resultSet = null;
         long id = 0;
-        try (Connection connection = connectionPool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_ID_BY_LOGIN)) {
+        Connection connection = connectionPool.takeConnection();
+        try (
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_ID_BY_LOGIN)) {
             statement.setString(1, login);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
 
                 id = resultSet.getInt(USER_ID);
-
+                connectionPool.returnConnection(connection);
             }
+
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -141,14 +143,14 @@ public class UserDaoImpl implements UserDAO {
         } catch (SQLException e) {
             throw new DaoException(e);
         }
-
         connectionPool.returnConnection(connection);
     }
 
     public Optional<User> findUserById(long id) throws DaoException {
         ResultSet resultSet = null;
         Optional<User> userOptional = null;
-        try (Connection connection = connectionPool.takeConnection();
+        Connection connection = connectionPool.takeConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ID)) {
             statement.setLong(1, id);
             resultSet = statement.executeQuery();
@@ -156,8 +158,8 @@ public class UserDaoImpl implements UserDAO {
 
                 userOptional = Optional.of(mapper.map(resultSet));
             }
-
             connectionPool.returnConnection(connection);
+
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -292,7 +294,8 @@ public class UserDaoImpl implements UserDAO {
 
         ResultSet resultSet = null;
         Optional<User> userOptional = Optional.empty();
-        try (Connection connection = connectionPool.takeConnection();
+        Connection connection = connectionPool.takeConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN_AND_PASSWORD)) {
             statement.setString(1, login);
             statement.setString(2, password);
@@ -302,6 +305,7 @@ public class UserDaoImpl implements UserDAO {
             }
 
             connectionPool.returnConnection(connection);
+
         } catch (SQLException e) {
             throw new DaoException(e);
 
@@ -321,8 +325,9 @@ public class UserDaoImpl implements UserDAO {
 
     public Optional<User> findUserByTelegram(String telegram) throws DaoException {
         ResultSet resultSet = null;
-        Optional<User> userOptional = null;
-        try (Connection connection = connectionPool.takeConnection();
+        Optional<User> userOptional = Optional.empty();
+        Connection connection = connectionPool.takeConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ACCOUNT_TELEGRAM)) {
             statement.setString(1, telegram);
             resultSet = statement.executeQuery();
@@ -332,6 +337,7 @@ public class UserDaoImpl implements UserDAO {
             }
 
             connectionPool.returnConnection(connection);
+
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -351,8 +357,9 @@ public class UserDaoImpl implements UserDAO {
     @Override
     public Optional<User> findUserByLogin(String login) throws DaoException {
         ResultSet resultSet = null;
-        Optional<User> userOptional = null;
-        try (Connection connection = connectionPool.takeConnection();
+        Optional<User> userOptional = Optional.empty();
+        Connection connection = connectionPool.takeConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)) {
             statement.setString(1, login);
             resultSet = statement.executeQuery();
@@ -362,6 +369,7 @@ public class UserDaoImpl implements UserDAO {
             }
 
             connectionPool.returnConnection(connection);
+
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -380,7 +388,8 @@ public class UserDaoImpl implements UserDAO {
     @Override
     public boolean findUserByLogin(User user) throws DaoException {
         ResultSet resultSet = null;
-        try (Connection connection = connectionPool.takeConnection();
+        Connection connection = connectionPool.takeConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)) {
             statement.setString(1, user.getLogin());
             resultSet = statement.executeQuery();
@@ -405,11 +414,11 @@ public class UserDaoImpl implements UserDAO {
     @Override
     public boolean findUserByTelegram(User user) throws DaoException {
         ResultSet resultSet = null;
-        try (Connection connection = connectionPool.takeConnection();
+        Connection connection = connectionPool.takeConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ACCOUNT_TELEGRAM)) {
             statement.setString(1, user.getTelegramAccount());
             resultSet = statement.executeQuery();
-
             connectionPool.returnConnection(connection);
             return resultSet.next();
         } catch (SQLException e) {
@@ -432,19 +441,21 @@ public class UserDaoImpl implements UserDAO {
     public Optional<User> findUserByEmail(String email) throws DaoException {
 
         ResultSet resultSet = null;
-        Optional<User> userOptional = null;
-        try (Connection connection = connectionPool.takeConnection();
+        Optional<User> userOptional = Optional.empty();
+        Connection connection = connectionPool.takeConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_MAIL)) {
             statement.setString(1, email);
             resultSet = statement.executeQuery();
 
-            connectionPool.returnConnection(connection);
             if (resultSet.next()) {
 
                 userOptional = Optional.of(mapper.map(resultSet));
             }
+
+            connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-throw new DaoException(e);
+            throw new DaoException(e);
 
         } finally {
             try {
@@ -466,7 +477,8 @@ throw new DaoException(e);
     @Override
     public boolean findUserByEmail(User user) throws DaoException {
         ResultSet resultSet = null;
-        try (Connection connection = connectionPool.takeConnection();
+        Connection connection = connectionPool.takeConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_MAIL)) {
             statement.setString(1, user.getEmail());
             resultSet = statement.executeQuery();

@@ -24,7 +24,7 @@ public class MainController extends HttpServlet {
     private static final String UTF_EIGHT = "UTF-8";
     private static final String JSON_CONTENT_TYPE = "application/json";
 
-Logger logger = LogManager.getLogger();
+    Logger logger = LogManager.getLogger();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         processRequest(request, response);
@@ -47,7 +47,7 @@ Logger logger = LogManager.getLogger();
         } catch (Exception e) {
             e.printStackTrace();
             //    LOGGER.error(e);
-              handleException(request, response, e.getMessage());
+            handleException(request, response, e.getMessage());
         }
     }
 

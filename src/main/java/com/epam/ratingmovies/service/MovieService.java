@@ -29,7 +29,7 @@ public class MovieService {
     }
 
     public Movie findMovieById(long id) throws ServiceException {
-        Optional<Movie> movie = null;
+        Optional<Movie> movie;
         try {
             movie = movieDao.findById(id);
         } catch (DaoException e) {

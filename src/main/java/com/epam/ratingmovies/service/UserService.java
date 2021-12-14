@@ -102,7 +102,12 @@ public class UserService {
         try {
             return userDao.blockById(id);
         } catch (DaoException e) {
+            logger.error(FIND_PROBLEM + e);
+            throw new ServiceException(e);
         }
+    }
+
+    public boolean unblockedById(long id) throws ServiceException {
         try {
             return userDao.unblockById(id);
         } catch (DaoException e) {
@@ -133,7 +138,7 @@ public class UserService {
 
     //todo optional return
     public User findUserByLogin(String login) throws ServiceException {
-        Optional<User> user = null;
+        Optional<User> user;
         try {
             user = userDao.findUserByLogin(login);
         } catch (DaoException e) {
@@ -144,7 +149,7 @@ public class UserService {
     }
 
     public Optional<User> findUserByLoginAndPassword(String login, String password) throws ServiceException {
-        Optional<User> user = null;
+        Optional<User> user;
         try {
             user = userDao.findUserByLoginPassword(login, password);
         } catch (DaoException e) {

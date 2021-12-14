@@ -20,7 +20,7 @@ public class GoToMoviesPageCommand implements Command {
 
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
-        List<Movie> movieList;
+        List movieList;
         int page = ParameterTaker.takeNumber(Parameter.PAGE, request);
       //todo разобраться с page and size wtf отрицательное
         if (page < 0 )

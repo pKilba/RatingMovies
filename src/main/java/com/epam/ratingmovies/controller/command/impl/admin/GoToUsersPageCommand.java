@@ -30,7 +30,7 @@ public class GoToUsersPageCommand implements Command {
         if (amount < size) {
             size = amount;
         }
-        List<User> userList = userService.findUsers();
+        List userList = userService.findUsers();
         if (userList.size() > 10) {
             userList = userService.findUsersRange(amount - amountQuery + 1, size,userList);
         }
