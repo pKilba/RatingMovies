@@ -80,7 +80,7 @@ public class MovieService {
         List<Movie> result = new ArrayList<>();
 
         for (Movie movie : movies) {
-            if (amountQuery < count && count <= amountQuery + size) {
+            if (amountQuery > count && count <= amountQuery + size) {
                 result.add(movie);
             }
             count++;

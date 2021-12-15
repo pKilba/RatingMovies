@@ -35,9 +35,6 @@
                        class="nav-link px-2 text-white"><fmt:message key="nav.films.page"/></a>
                 </li>
 
-                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=statistic-comments-page&p=1&s=10" class="nav-link px-2 text-white">
-                    Статистика комментариев пользователя</a>
-                </li>
             </ul>
 
             <div class="dropdown text-end mr-3">

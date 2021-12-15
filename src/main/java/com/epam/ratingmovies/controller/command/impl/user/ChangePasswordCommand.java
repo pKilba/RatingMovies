@@ -41,7 +41,7 @@ public class ChangePasswordCommand implements Command {
         String hashCurrentPassword = lineHasher.hashingLine(currentPassword);
         String hashNewPasswordFirst = lineHasher.hashingLine(newPasswordFirst);
         String hashNewPasswordSecond = lineHasher.hashingLine(newPasswordSecond);
-        if (accountChangePassword.isCorrectPassword(hashNewPasswordFirst,hashNewPasswordSecond, user, hashCurrentPassword)) {
+        if (accountChangePassword.isCorrectPassword(newPasswordFirst,newPasswordSecond, user, hashCurrentPassword)) {
 
             userService.updatePasswordByUserId(id, hashNewPasswordFirst);
             requestContext.addAttribute(Attribute.SUCCESS_MESSAGE, VALID_DATA_KEY);

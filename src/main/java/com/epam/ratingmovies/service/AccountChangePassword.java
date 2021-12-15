@@ -6,13 +6,14 @@ import com.epam.ratingmovies.service.validator.impl.UserValidator;
 public class AccountChangePassword {
     UserValidator userValidator = UserValidator.getInstance();
 
-    public boolean isCorrectPassword(String newPasswordFirst, String newPasswordSecond, User user, String currentPassword) {
+    public boolean
+    isCorrectPassword(String newPasswordFirst, String newPasswordSecond, User user, String currentPassword) {
 
 
         boolean isCorrectPassword = isValidPassword(newPasswordFirst) &&
                 isValidPassword(newPasswordFirst) &&
                 isEqualFirstNewPasswordAndSecond(newPasswordFirst, newPasswordSecond) &&
-                isValidPassword(currentPassword) && isEqualPasswordUserAndCurrentPassword(user, currentPassword);
+                isEqualPasswordUserAndCurrentPassword(user, currentPassword);
         return isCorrectPassword;
     }
 

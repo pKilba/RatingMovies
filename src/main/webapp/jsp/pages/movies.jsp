@@ -4,6 +4,9 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <link rel="stylesheet" type="text/css" href="../../css/movies.css">
     <c:import url="/jsp/partspages/head.jsp"/>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    <fmt:setLocale value="${sessionScope.lang}"/>
+    <fmt:setBundle basename="locale"/>
     <title>Title</title>
 </head>
 <body style="background: white" >
@@ -17,7 +20,6 @@
         <div class="table-wrapper">
             <c:forEach items="${movieList}" varStatus="counter" var="movie">
 
-
                 <a style="text-decoration: none"
                    href="
                    ${pageContext.request.contextPath}/ratingMovies?command=movie-page&id=${movie.getId()}">
@@ -28,7 +30,7 @@
                                      src="${pageContext.request.contextPath}${movie.getPoster()}"/>
                                 <h1> ${movie.getName()}</h1>
                                 <h4>${movie.getReleaseDate()},${movie.getProducer()} </h4>
-                                <span class="minutes">${movie.getDuration()} min</span>
+                                <span class="minutes">${movie.getDuration()} <fmt:message key="movie.duration"/></span>
                                 <p class="type">${movie.getGenre()}</p>
                             </div>
                             <div class="movie_desc">

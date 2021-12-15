@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <!DOCTYPE html>
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale"/>
@@ -26,11 +25,16 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Имя пользователя</th>
-                    <th>Логин пользоватлея</th>
-                    <th>Дата создание аккаунта</th>
-                    <th>Роль юзера</th>
-                    <th>Статус пользователя</th>
+                    <th><fmt:message
+                            key="user.users"/></th>
+                    <th><fmt:message
+                            key="user.login"/></th>
+                    <th><fmt:message
+                            key="user.data.time"/></th>
+                    <th><fmt:message
+                            key="user.role"/></th>
+                    <th><fmt:message
+                            key="user.active"/></th>
                 </tr>
                 </thead>
                 <tbody class="table-of-users">

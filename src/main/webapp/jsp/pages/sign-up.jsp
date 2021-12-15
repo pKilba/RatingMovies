@@ -1,12 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Asus
-  Date: 23.11.2021
-  Time: 01:06
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lang}"/>
@@ -24,7 +17,8 @@
     <div>
         <h1 class="logo-badge text-whitesmoke"><span class="fa fa-user-circle"></span></h1>
     </div>
-    <p class="text-whitesmoke">Регистрация</p>
+    <p class="text-whitesmoke"><fmt:message
+            key="signup.reg"/></p>
     <div class="container-content">
         <form name="signupForm" method="POST" action="${pageContext.request.contextPath}/ratingMovies?command=sign-up">
             <div class="form-group">
@@ -52,10 +46,10 @@
                        maxlength="32" required>
             </div>
             <button type="submit" class="form-button button-l margin-b"><fmt:message
-                    key="login.signin.button"/></button>
+                    key="signup.btn.submit"/></button>
             <a class="text-darkyellow"
-               href="${pageContext.request.contextPath}/ratingMovies?command=sign-up-page"><small><fmt:message
-                    key="login.signup.button"/></small></a>
+               href="${pageContext.request.contextPath}/ratingMovies?command=login-page"><small><fmt:message
+                    key="signup.login"/></small></a>
         </form>
         <h3 class="text-danger error-message">
             <fmt:message key="signup.error.${errorMessage}"/>

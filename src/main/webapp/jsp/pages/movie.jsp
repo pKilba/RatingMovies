@@ -21,7 +21,7 @@
                     <div class="col1">
                         <h1 style="color: white">${movie.getName()}</h1>
                         <ul class="movie-gen">
-                            <li>${movie.getDuration()}min /</li>
+                            <li>${movie.getDuration()}<fmt:message key="movie.duration"/> /</li>
                             <li style="padding-bottom: 10px"> ${movie.getGenre()}</li>
                         </ul>
                     </div>
@@ -45,7 +45,8 @@
                 </div>
                     <div class="col1">
                         <a href="${pageContext.request.contextPath}
-                        /ratingMovies?command=reviews-page&p=1&s=10&movieId=${movie.getId()}">Комментарии</a>
+                        /ratingMovies?command=reviews-page&p=1&s=10&movieId=${movie.getId()}"><fmt:message
+                                key="movie.comments"/></a>
                     </div>
 
             </div>
