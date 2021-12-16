@@ -18,11 +18,9 @@ public class AccessFilter implements Filter {
     private static final Logger logger = LogManager.getLogger();
     private static final String WARN_MESSAGE = "Permission denied. Role: ";
     private static final String PERMISSION_DENIED = "Permission denied";
-////    private static final ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
-//    private static final JwtProvider jwtProvider = JwtProvider.getInstance();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void   init(FilterConfig filterConfig) throws ServletException {
     }
 
     @Override
