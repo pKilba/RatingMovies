@@ -36,6 +36,7 @@ public class AddCommentCommand implements Command {
 
 
         request.addAttribute(Attribute.ID, idMovie);
+
         return CommandResponse.redirect(RATING_MOVIES_COMMAND + idMovie);
 
     }

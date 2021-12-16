@@ -11,7 +11,7 @@ import java.text.ParseException;
 
 public interface Command {
 
-    CommandResponse execute(RequestContext request) throws ServiceException, ParseException, SQLException, DaoException, com.epam.ratingmovies.exception.ServiceException; //throws ServiceException, InvalidParametersException;;
+    CommandResponse execute(RequestContext request) throws Exception; //throws ServiceException, InvalidParametersException;;
 
     static Command withName(String name) {
         return ApplicationCommand.of(name);

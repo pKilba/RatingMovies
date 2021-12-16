@@ -22,13 +22,22 @@ public class MovieDaoImpl implements MovieDao {
 
     private static final String SQL_SAVE_MOVIE = "INSERT INTO movies(poster,about," +
             "movie_release_date,amount_like,amount_dislike,genre_id,name,producer,duration,background)" +
-            " values (?,?,?,?,?,?,?,?,?,?)";
-    private static final String SQL_FIND_ALL_MOVIES = "SELECT movie_id, poster, about,movie_release_date,amount_like,amount_dislike, genre_id,name,producer,duration,background FROM movies";
+            " values (?,?,?,?,?,?,?,?,?,?)" ;
+    private static final String SQL_FIND_ALL_MOVIES = "SELECT movie_id, poster, about,movie_release_date,amount_like,amount_dislike, genre_id,name,producer,duration,background FROM movies" ;
 
     private static final String SQL_FIND_MOVIE_BY_ID =
             "SELECT movie_id, poster, about," +
                     "movie_release_date,amount_like,amount_dislike," +
-                    "genre_id , name,producer,duration,background FROM movies WHERE movie_id = ?";
+                    "genre_id , name,producer,duration,background FROM movies WHERE movie_id = ?" ;
+
+
+    private static final String SQL_FIND_MOVIES_RANGE =
+            "SELECT movie_id, poster, about," +
+                    " movie_release_date, amount_like, amount_dislike," +
+                    "genre_id," +
+                    " name, producer, duration, " +
+                    "background FROM movies ORDER BY " +
+                    "movie_release_date DESC LIMIT ?,?" ;
 
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
@@ -73,7 +82,6 @@ public class MovieDaoImpl implements MovieDao {
     }
 
 
-
     @Override
     public void delete(Long id) {
 
@@ -86,8 +94,8 @@ public class MovieDaoImpl implements MovieDao {
         Connection connection = connectionPool.takeConnection();
         List<Movie> result = new ArrayList<>();
         try (
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
-            ResultSet resultSet = preparedStatement.executeQuery();){
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
+                ResultSet resultSet = preparedStatement.executeQuery();) {
             while (resultSet.next()) {
                 Movie movie = mapper.map(resultSet);
                 result.add(movie);
@@ -102,23 +110,18 @@ public class MovieDaoImpl implements MovieDao {
     }
 
 
-
-    //todo изменить логику крч я сравниваю по айди а например в моей бд
-    //были удалены юзеры с некоторыми айди поэтому не ровно выводит
-    //todo!!!! obezatelno
     public List<Movie> findMoviesRange(int offset, int amount) throws DaoException {
         Connection connection = connectionPool.takeConnection();
         List<Movie> result = new ArrayList<>();
         try (
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
-            ResultSet resultSet = preparedStatement.executeQuery();){
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_MOVIES_RANGE)) {
+            preparedStatement.setInt(1, offset);
+            preparedStatement.setInt(2, amount);
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Movie movie = mapper.map(resultSet);
-                if (offset < movie.getId() && movie.getId() <= offset + amount) {
-                    result.add(movie);
-                }
+                result.add(movie);
             }
-            preparedStatement.close();
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -130,8 +133,8 @@ public class MovieDaoImpl implements MovieDao {
         Connection connection = connectionPool.takeConnection();
         int counter = 0;
         try (
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
-            ResultSet resultSet = preparedStatement.executeQuery();){
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
+                ResultSet resultSet = preparedStatement.executeQuery();) {
             while (resultSet.next()) {
                 counter++;
             }
@@ -150,7 +153,7 @@ public class MovieDaoImpl implements MovieDao {
         Optional<Movie> movieOptional = null;
         Connection connection = connectionPool.takeConnection();
         try (
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_MOVIE_BY_ID)) {
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_MOVIE_BY_ID)) {
             statement.setLong(1, idMovie);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {

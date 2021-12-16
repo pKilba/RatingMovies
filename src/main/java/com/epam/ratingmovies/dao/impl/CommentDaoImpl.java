@@ -4,6 +4,7 @@ import com.epam.ratingmovies.dao.api.CommentDao;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.ratingmovies.dao.entity.Comment;
+import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.CommentRowMapper;
@@ -24,7 +25,13 @@ public class CommentDaoImpl implements CommentDao {
             " values (?,?,?,?)";
     private static final String SQL_FIND_ALL_COMMENTS = "SELECT * FROM comments";
 
-    private static final String SQL_FIND_BY_ID_MOVIES = "SELECT * FROM comments WHERE movie_id = ?";
+    private static final String SQL_FIND_BY_ID_MOVIES =
+            "SELECT * FROM comments WHERE movie_id = ?";
+
+    private static final String SQL_FIND_COMMENTS_RANGE =
+            "SELECT * FROM comments ORDER BY " +
+                    "create_time DESC LIMIT ?,?" ;
+
 
 
     @Override
@@ -57,13 +64,13 @@ public class CommentDaoImpl implements CommentDao {
         Connection connection = connectionPool.takeConnection();
         List<Comment> result = new ArrayList<>();
         try (
-                PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_COMMENTS);
-                ResultSet resultSet = preparedStatement.executeQuery();) {
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_COMMENTS_RANGE)) {
+            preparedStatement.setInt(1, offset);
+            preparedStatement.setInt(2, amount);
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Comment comment = mapper.map(resultSet);
-                if (offset < comment.getId() && comment.getId() <= offset + amount) {
-                    result.add(comment);
-                }
+                result.add(comment);
             }
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {

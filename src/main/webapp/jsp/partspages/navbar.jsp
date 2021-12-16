@@ -12,7 +12,7 @@
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <sc:access role="GUEST">
         <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="${pageContext.request.contextPath}/ratingMovies?command=movies-page"
+          <li><a href="${pageContext.request.contextPath}/ratingMovies?command=movies-page&p=1&s=5"
                  class="nav-link px-2 text-white"><fmt:message key="nav.films.page"/></a>
         </ul>
         <div class="text-end">
@@ -31,7 +31,7 @@
         <sc:access role="USER">
             <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
 
-                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=movies-page"
+                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=movies-page&p=1&s=5"
                        class="nav-link px-2 text-white"><fmt:message key="nav.films.page"/></a>
                 </li>
 
@@ -60,13 +60,13 @@
 
         <sc:access role="ADMIN">
             <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=movies-page"
+                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=movies-page&p=1&s=5"
                        class="nav-link px-2 text-white"><fmt:message key="nav.films.page"/></a>
                 </li>
-                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=users-page&p=1&s=10" class="nav-link px-2 text-white">
+                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=users-page&p=1&s=5" class="nav-link px-2 text-white">
                     <fmt:message key="nav.users.page"/></a>
-                </li>
-                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=createMovies-page&p=1&s=10" class="nav-link px-2 text-white">
+                </li>hj
+                <li><a href="${pageContext.request.contextPath}/ratingMovies?command=createMovies-page&p=1&s=5" class="nav-link px-2 text-white">
                     <fmt:message key="nav.added.movie.page"/></a>
                 </li>
             </ul>

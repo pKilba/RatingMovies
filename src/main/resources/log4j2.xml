@@ -8,8 +8,8 @@
         <Console name="STDOUT" target="SYSTEM_OUT">
             <PatternLayout pattern="${pattern_cmd}"/>
         </Console>                        <!--Only hard link to folder logs-->
-        <RollingFile name="File" fileName="D:/lastTestEpamCmon/logs/log-file.log"
-                     filePattern="D:/lastTestEpamCmon/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+        <RollingFile name="File" fileName="D:/epamLastPr/logs/log-file.log"
+                     filePattern="D:/epamLastPr/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout pattern="${pattern_file}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>

@@ -3,13 +3,11 @@ package com.epam.ratingmovies.dao.impl;
 import com.epam.ratingmovies.dao.api.UserDAO;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
+import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.UserRowMapper;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.*;
@@ -33,7 +31,6 @@ public class UserDaoImpl implements UserDAO {
     private static final String SQL_FIND_USER_BY_ID = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users WHERE user_id = ?";
     private static final String SQL_FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users WHERE login = ? and password = ?";
     private static final String SQL_FIND_USER_BY_ACCOUNT_TELEGRAM = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users WHERE account_telegram = ?";
-    private static final String SQL_FIND_USER_BY_MAIL = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users WHERE mail = ?";
 
 
     private static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE user_id = ?";
@@ -43,6 +40,12 @@ public class UserDaoImpl implements UserDAO {
     private static final String SQL_UPDATE_PASSWORD_BY_ID = "UPDATE users SET password  = ? WHERE user_id = ?";
     private static final String SQL_UPDATE_STATUS_BY_ID = "UPDATE users SET status_id  = ? WHERE user_id = ?";
     private static final String SQL_UPDATE_NAME_EMAIL_TELEGRAM_BY_ID = "UPDATE users SET name = ?, mail = ?, account_telegram = ? WHERE user_id = ?";
+    private static final String SQL_FIND_USER_BY_MAIL = "SELECT user_id, login, password," + "role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users WHERE mail = ?";
+
+    private static final String SQL_FIND_USERS_RANGE =
+            "SELECT user_id, login, password,role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users ORDER BY " +
+                    "create_time DESC LIMIT ?,?" ;
+
 
     public UserDaoImpl() {
     }
@@ -251,20 +254,23 @@ public class UserDaoImpl implements UserDAO {
     //были удалены юзеры с некоторыми айди поэтому не ровно выводит
     //todo!!!! obezatelno
     @Override
-    public List<User> findUsersRange(int offset, int amount, List<User> users) throws DaoException {
-        int count = 0;
+    public List<User> findUsersRange(int offset, int amount) throws DaoException {
 
-        //todo проверить правильно или не!!!!
-
+        Connection connection = connectionPool.takeConnection();
         List<User> result = new ArrayList<>();
-
-        for (User user : users) {
-            if (offset < count && count <= offset + amount) {
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USERS_RANGE)) {
+            preparedStatement.setInt(1, offset);
+            preparedStatement.setInt(2, amount);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                User user = mapper.map(resultSet);
                 result.add(user);
             }
-            count++;
+            connectionPool.returnConnection(connection);
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
-
         return result;
     }
 

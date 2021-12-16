@@ -90,10 +90,10 @@ public class UserService {
         }
     }
 
-    public List<User> findUsersRange(int amountQuery, int size, List<User> users) throws ServiceException {
+    public List<User> findUsersRange(int offset, int size) throws ServiceException {
 
         try {
-            return userDao.findUsersRange(amountQuery, size, users);
+            return userDao.findUsersRange(offset, size);
         } catch (DaoException e) {
             logger.error(FIND_PROBLEM + e);
             throw new ServiceException(FIND_PROBLEM + e);

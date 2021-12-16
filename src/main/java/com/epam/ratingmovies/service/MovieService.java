@@ -16,13 +16,13 @@ import java.util.Optional;
 public class MovieService {
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
-    private static final String FIND_MOVIE_PROBLEM = "Exception find movie  ";
-    private static final String SAVE_MOVIE_PROBLEM = "Exception save movie  ";
+    private static final String FIND_MOVIE_PROBLEM = "Exception find movie  " ;
+    private static final String SAVE_MOVIE_PROBLEM = "Exception save movie  " ;
     MovieDaoImpl movieDao = new MovieDaoImpl();
     MovieValidator movieValidator = new MovieValidator();
 
-    public boolean isValid(String name, int like,int dislike,int duration, String producer, String about){
-      return   movieValidator.isValid(name,like,dislike,duration,producer,about);
+    public boolean isValid(String name, int like, int dislike, int duration, String producer, String about) {
+        return movieValidator.isValid(name, like, dislike, duration, producer, about);
 
     }
 
@@ -31,7 +31,7 @@ public class MovieService {
         try {
             return movieDao.findMoviesAmount();
         } catch (DaoException e) {
-            logger.error(FIND_MOVIE_PROBLEM + e );
+            logger.error(FIND_MOVIE_PROBLEM + e);
             throw new ServiceException(FIND_MOVIE_PROBLEM + e);
         }
     }
@@ -47,8 +47,8 @@ public class MovieService {
         if (movie.isPresent()) {
             return movie.get();
         } else {
-            logger.error(FIND_MOVIE_PROBLEM );
-            throw new ServiceException(FIND_MOVIE_PROBLEM );
+            logger.error(FIND_MOVIE_PROBLEM);
+            throw new ServiceException(FIND_MOVIE_PROBLEM);
         }
     }
 
@@ -67,27 +67,18 @@ public class MovieService {
         try {
             return movieDao.findAll();
         } catch (DaoException e) {
-            logger.error(SAVE_MOVIE_PROBLEM +e );
+            logger.error(SAVE_MOVIE_PROBLEM + e);
             throw new ServiceException(SAVE_MOVIE_PROBLEM + e);
         }
     }
 
-    public List<Movie> findMoviesRange(int amountQuery, int size, List<Movie> movies) {
-        int count = 0;
-
-        //todo проверить правильно или не!!!!
-
-        List<Movie> result = new ArrayList<>();
-
-        for (Movie movie : movies) {
-            if (amountQuery > count && count <= amountQuery + size) {
-                result.add(movie);
-            }
-            count++;
+    public List<Movie> findMoviesRange(int offset, int size) throws ServiceException {
+        try {
+            return movieDao.findMoviesRange(offset, size);
+        } catch (DaoException e) {
+            //todo added logger and ref ex
+            throw new ServiceException(e);
         }
-
-        return result;
-
 
     }
 }

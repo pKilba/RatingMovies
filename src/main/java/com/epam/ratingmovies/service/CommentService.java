@@ -45,22 +45,14 @@ public class CommentService {
         }
     }
 
-    public List findCommentByRange(int offset, int amount, List<Comment> comments){
-        int count = 0;
+    public List findCommentRange( int offset,int size) throws ServiceException {
 
-        //todo проверить правильно или не!!!!
-        
-        List<Comment> result = new ArrayList<>();
-
-               for (Comment comment :comments){
-                   if (offset < count && count <= offset + amount) {
-                       result.add(comment);
-                   }
-                   count++;
-               }
-
-        return result;
-
+        try {
+            return commentDao.findCommentsRange(offset, size);
+        } catch (DaoException e) {
+            logger.error(FIND_COMMENTS_PROBLEM + e);
+            throw new ServiceException(FIND_COMMENTS_PROBLEM+ e);
+        }
     }
 
     public Comment save (Comment comment) throws ServiceException {
