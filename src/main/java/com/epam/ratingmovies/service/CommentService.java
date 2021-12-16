@@ -8,7 +8,6 @@ import com.epam.ratingmovies.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CommentService {
@@ -16,9 +15,9 @@ public class CommentService {
     private static final String FIND_COMMENTS_PROBLEM ="Exception find comments";
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
-    CommentDaoImpl commentDao = new CommentDaoImpl();
+    private final CommentDaoImpl commentDao = new CommentDaoImpl();
 
-    public List findAll() throws ServiceException {
+    public List<Comment> findAll() throws ServiceException {
         try {
             return commentDao.findAll();
         } catch (DaoException e) {
@@ -26,7 +25,7 @@ public class CommentService {
             throw new ServiceException(FIND_COMMENTS_PROBLEM + e );
         }
     }
-    public List findByMovieId( long id) throws ServiceException {
+    public List<Comment> findByMovieId(long id) throws ServiceException {
         try {
             return commentDao.findCommentByIdMovies(id);
         } catch (DaoException e) {
@@ -45,7 +44,7 @@ public class CommentService {
         }
     }
 
-    public List findCommentRange( int offset,int size) throws ServiceException {
+    public List<Comment> findCommentRange( int offset,int size) throws ServiceException {
 
         try {
             return commentDao.findCommentsRange(offset, size);

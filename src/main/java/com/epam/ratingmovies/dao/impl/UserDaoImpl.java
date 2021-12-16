@@ -3,14 +3,20 @@ package com.epam.ratingmovies.dao.impl;
 import com.epam.ratingmovies.dao.api.UserDAO;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
-import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.dao.entity.User;
-import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.UserRowMapper;
+import com.epam.ratingmovies.exception.DaoException;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import static com.epam.ratingmovies.dao.entity.ColumnName.USER_ID;
 
@@ -44,7 +50,7 @@ public class UserDaoImpl implements UserDAO {
 
     private static final String SQL_FIND_USERS_RANGE =
             "SELECT user_id, login, password,role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users ORDER BY " +
-                    "create_time DESC LIMIT ?,?" ;
+                    "create_time DESC LIMIT ?,?";
 
 
     public UserDaoImpl() {
@@ -151,10 +157,10 @@ public class UserDaoImpl implements UserDAO {
 
     public Optional<User> findUserById(long id) throws DaoException {
         ResultSet resultSet = null;
-        Optional<User> userOptional = null;
+        Optional<User> userOptional = Optional.empty();
         Connection connection = connectionPool.takeConnection();
         try (
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ID)) {
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ID)) {
             statement.setLong(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -302,7 +308,7 @@ public class UserDaoImpl implements UserDAO {
         Optional<User> userOptional = Optional.empty();
         Connection connection = connectionPool.takeConnection();
         try (
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN_AND_PASSWORD)) {
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN_AND_PASSWORD)) {
             statement.setString(1, login);
             statement.setString(2, password);
             resultSet = statement.executeQuery();
@@ -334,7 +340,7 @@ public class UserDaoImpl implements UserDAO {
         Optional<User> userOptional = Optional.empty();
         Connection connection = connectionPool.takeConnection();
         try (
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ACCOUNT_TELEGRAM)) {
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ACCOUNT_TELEGRAM)) {
             statement.setString(1, telegram);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -366,7 +372,7 @@ public class UserDaoImpl implements UserDAO {
         Optional<User> userOptional = Optional.empty();
         Connection connection = connectionPool.takeConnection();
         try (
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)) {
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)) {
             statement.setString(1, login);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -396,7 +402,7 @@ public class UserDaoImpl implements UserDAO {
         ResultSet resultSet = null;
         Connection connection = connectionPool.takeConnection();
         try (
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)) {
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)) {
             statement.setString(1, user.getLogin());
             resultSet = statement.executeQuery();
 
@@ -422,7 +428,7 @@ public class UserDaoImpl implements UserDAO {
         ResultSet resultSet = null;
         Connection connection = connectionPool.takeConnection();
         try (
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ACCOUNT_TELEGRAM)) {
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ACCOUNT_TELEGRAM)) {
             statement.setString(1, user.getTelegramAccount());
             resultSet = statement.executeQuery();
             connectionPool.returnConnection(connection);
@@ -450,7 +456,7 @@ public class UserDaoImpl implements UserDAO {
         Optional<User> userOptional = Optional.empty();
         Connection connection = connectionPool.takeConnection();
         try (
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_MAIL)) {
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_MAIL)) {
             statement.setString(1, email);
             resultSet = statement.executeQuery();
 
@@ -485,7 +491,7 @@ public class UserDaoImpl implements UserDAO {
         ResultSet resultSet = null;
         Connection connection = connectionPool.takeConnection();
         try (
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_MAIL)) {
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_MAIL)) {
             statement.setString(1, user.getEmail());
             resultSet = statement.executeQuery();
 

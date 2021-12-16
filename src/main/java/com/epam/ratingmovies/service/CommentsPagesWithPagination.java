@@ -18,7 +18,7 @@ import static com.epam.ratingmovies.controller.command.impl.user.AddCommentComma
 
 public class CommentsPagesWithPagination {
 
-    CommentService commentService = new CommentService();
+ private   final CommentService commentService = new CommentService();
 
 
     public void processCommandWithPagination(RequestContext requestContext) throws ServiceException {
@@ -83,7 +83,7 @@ public class CommentsPagesWithPagination {
 
     private List<Comment> buildCommentList(int page, int size) throws ServiceException {
         int offset = (page - 1) * size;
-        List<Comment> commentsList = null;
+        List<Comment> commentsList ;
         try {
             commentsList = commentService.findCommentRange(offset, size);
         } catch (ServiceException e) {

@@ -4,12 +4,15 @@ import com.epam.ratingmovies.dao.api.CommentDao;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.ratingmovies.dao.entity.Comment;
-import com.epam.ratingmovies.dao.entity.Movie;
-import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.CommentRowMapper;
+import com.epam.ratingmovies.exception.DaoException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +33,7 @@ public class CommentDaoImpl implements CommentDao {
 
     private static final String SQL_FIND_COMMENTS_RANGE =
             "SELECT * FROM comments ORDER BY " +
-                    "create_time DESC LIMIT ?,?" ;
-
+                    "create_time DESC LIMIT ?,?";
 
 
     @Override
@@ -113,7 +115,7 @@ public class CommentDaoImpl implements CommentDao {
         int counter = 0;
         try (
                 PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_COMMENTS);
-                ResultSet resultSet = preparedStatement.executeQuery();) {
+                ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 counter++;
             }
@@ -174,8 +176,8 @@ public class CommentDaoImpl implements CommentDao {
         Connection connection = connectionPool.takeConnection();
         List<Comment> result = new ArrayList<>();
         try (
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_COMMENTS);
-            ResultSet resultSet = preparedStatement.executeQuery();){
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_COMMENTS);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 Comment comment = mapper.map(resultSet);
                 result.add(comment);

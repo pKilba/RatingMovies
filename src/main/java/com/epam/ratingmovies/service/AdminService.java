@@ -29,6 +29,8 @@ public class AdminService {
         return instance;
     }
 
+    private AdminService(){}
+
 
     public boolean isBlockedById(long id) throws ServiceException {
         UserDaoImpl userDao = new UserDaoImpl();

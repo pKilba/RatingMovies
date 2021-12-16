@@ -4,14 +4,15 @@ import com.epam.ratingmovies.dao.api.MovieDao;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.ratingmovies.dao.entity.Movie;
-import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.MovieRowMapper;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.epam.ratingmovies.exception.DaoException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,13 +23,13 @@ public class MovieDaoImpl implements MovieDao {
 
     private static final String SQL_SAVE_MOVIE = "INSERT INTO movies(poster,about," +
             "movie_release_date,amount_like,amount_dislike,genre_id,name,producer,duration,background)" +
-            " values (?,?,?,?,?,?,?,?,?,?)" ;
-    private static final String SQL_FIND_ALL_MOVIES = "SELECT movie_id, poster, about,movie_release_date,amount_like,amount_dislike, genre_id,name,producer,duration,background FROM movies" ;
+            " values (?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_FIND_ALL_MOVIES = "SELECT movie_id, poster, about,movie_release_date,amount_like,amount_dislike, genre_id,name,producer,duration,background FROM movies";
 
     private static final String SQL_FIND_MOVIE_BY_ID =
             "SELECT movie_id, poster, about," +
                     "movie_release_date,amount_like,amount_dislike," +
-                    "genre_id , name,producer,duration,background FROM movies WHERE movie_id = ?" ;
+                    "genre_id , name,producer,duration,background FROM movies WHERE movie_id = ?";
 
 
     private static final String SQL_FIND_MOVIES_RANGE =
@@ -37,7 +38,7 @@ public class MovieDaoImpl implements MovieDao {
                     "genre_id," +
                     " name, producer, duration, " +
                     "background FROM movies ORDER BY " +
-                    "movie_release_date DESC LIMIT ?,?" ;
+                    "movie_release_date DESC LIMIT ?,?";
 
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
@@ -95,7 +96,7 @@ public class MovieDaoImpl implements MovieDao {
         List<Movie> result = new ArrayList<>();
         try (
                 PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
-                ResultSet resultSet = preparedStatement.executeQuery();) {
+                ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 Movie movie = mapper.map(resultSet);
                 result.add(movie);
@@ -133,8 +134,9 @@ public class MovieDaoImpl implements MovieDao {
         Connection connection = connectionPool.takeConnection();
         int counter = 0;
         try (
+
                 PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
-                ResultSet resultSet = preparedStatement.executeQuery();) {
+                ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 counter++;
             }
@@ -150,7 +152,7 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public Optional<Movie> findById(Long idMovie) throws DaoException {
         ResultSet resultSet = null;
-        Optional<Movie> movieOptional = null;
+        Optional<Movie> movieOptional = Optional.empty();
         Connection connection = connectionPool.takeConnection();
         try (
                 PreparedStatement statement = connection.prepareStatement(SQL_FIND_MOVIE_BY_ID)) {

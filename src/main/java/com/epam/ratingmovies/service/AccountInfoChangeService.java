@@ -5,7 +5,6 @@ import com.epam.ratingmovies.service.validator.impl.UserValidator;
 
 public class AccountInfoChangeService {
 
-    private boolean isCorrectInfoAccount;
     UserValidator userValidator = UserValidator.getInstance();
 
 

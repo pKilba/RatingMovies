@@ -1,32 +1,19 @@
 package com.epam.ratingmovies.controller.command.impl.admin;
 
-import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.exception.ServiceException;
-import com.epam.ratingmovies.service.MoviesPagesWithPagination;
 import com.epam.ratingmovies.service.UsersPagesWithPagination;
-import com.epam.ratingmovies.util.Attribute;
-import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandResponse;
-import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
-import com.epam.ratingmovies.dao.entity.User;
-import com.epam.ratingmovies.service.UserService;
-
-import java.util.List;
 
 public class GoToUsersPageCommand implements Command {
     public static final String USERS = "/jsp/pages/users.jsp";
-//    UserService userService = new UserService();
-//
-//
-//    //todo мб вынести в отдельный класс
+
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
 
         UsersPagesWithPagination usersPagesWithPagination = new UsersPagesWithPagination();
         usersPagesWithPagination.processCommandWithPagination(request);
-
         return CommandResponse.forward(USERS);
     }
 }

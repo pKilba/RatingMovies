@@ -143,7 +143,6 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     private boolean initializeConnections(int amount) {
         try {
             for (int i = 0; i < amount; i++) {
-                //FINAL&&&
                 Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
                 ProxyConnection proxyConnection = new ProxyConnection(connection, this);
                 availableConnections.add(proxyConnection);
