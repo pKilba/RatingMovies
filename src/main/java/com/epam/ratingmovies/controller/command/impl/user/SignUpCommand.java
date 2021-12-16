@@ -1,18 +1,17 @@
 package com.epam.ratingmovies.controller.command.impl.user;
 
-import com.epam.ratingmovies.exception.DaoException;
-import com.epam.ratingmovies.util.Attribute;
-import com.epam.ratingmovies.util.LineHasher;
 import com.epam.ratingmovies.controller.ParameterTaker;
-import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandResponse;
-import com.epam.ratingmovies.controller.command.util.Parameter;
+import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
+import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.entity.UserRole;
 import com.epam.ratingmovies.dao.entity.UserStatus;
+import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.service.SignUpService;
-import com.google.protobuf.ServiceException;
+import com.epam.ratingmovies.util.Attribute;
+import com.epam.ratingmovies.util.LineHasher;
 
 import java.sql.Timestamp;
 

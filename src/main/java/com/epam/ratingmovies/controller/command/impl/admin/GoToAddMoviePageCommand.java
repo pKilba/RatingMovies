@@ -1,9 +1,10 @@
 package com.epam.ratingmovies.controller.command.impl.admin;
 
-import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandResponse;
+import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
-import com.google.protobuf.ServiceException;
+import com.epam.ratingmovies.exception.ServiceException;
+
 
 public class GoToAddMoviePageCommand implements Command {
     public static final String CREATE_MOVIE = "/jsp/pages/createMovie.jsp";

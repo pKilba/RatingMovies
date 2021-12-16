@@ -1,21 +1,24 @@
 package com.epam.ratingmovies.controller;
 
-import java.io.*;
-
-import com.epam.ratingmovies.util.Attribute;
-import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandName;
 import com.epam.ratingmovies.controller.command.CommandResponse;
-import com.epam.ratingmovies.controller.command.util.Parameter;
+import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
+import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
+import com.epam.ratingmovies.exception.ServiceException;
+import com.epam.ratingmovies.util.Attribute;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/ratingMovies"}, name = "mainServlet")
 
@@ -30,11 +33,11 @@ public class MainController extends HttpServlet {
         processRequest(request, response);
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CommandResponse commandResult;
         String commandParam = "";
         commandParam = request.getParameter(Parameter.COMMAND);
@@ -44,9 +47,7 @@ public class MainController extends HttpServlet {
             commandResult = command.execute(requestContext);
             requestContext.fillData(request, response);
             dispatch(commandResult, request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            //    LOGGER.error(e);
+        } catch (ServiceException e) {
             handleException(request, response, e.getMessage());
         }
     }
@@ -76,19 +77,16 @@ public class MainController extends HttpServlet {
     }
 
 
-
-    private void handleException(HttpServletRequest req, HttpServletResponse resp, String errorMessage)
-            throws IOException {
+    private void handleException(HttpServletRequest req, HttpServletResponse resp, String errorMessage) throws IOException {
         req.setAttribute(Attribute.ERROR_MESSAGE, errorMessage);
         RequestDispatcher dispatcher = req.getRequestDispatcher(ERROR);
         try {
             dispatcher.forward(req, resp);
         } catch (ServletException e) {
-            //LOGGER.error(e);
+            logger.error(e);
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
-
 
 
     public void destroy() {

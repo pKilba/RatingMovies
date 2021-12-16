@@ -6,7 +6,6 @@ import com.epam.ratingmovies.controller.command.CommandResponse;
 import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.Comment;
-import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.service.CommentService;
 import com.epam.ratingmovies.service.UserService;
@@ -24,7 +23,7 @@ public class AddCommentCommand implements Command {
 
 
     @Override
-    public CommandResponse execute(RequestContext request) throws ServiceException, DaoException {
+    public CommandResponse execute(RequestContext request) throws ServiceException {
         long id = ParameterTaker.takeId(request);
         long idMovie = ParameterTaker.takeIdNow(request);
         Comment newComment = Comment.builder().

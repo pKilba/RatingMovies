@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDAO {
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
 
 
-    static private UserDaoImpl instance ;
+    static private UserDaoImpl instance;
 
     private UserDaoImpl() {
     }
@@ -36,7 +36,6 @@ public class UserDaoImpl implements UserDAO {
         }
         return instance;
     }
-
 
 
     private final RowMapper<User> mapper = new UserRowMapper();
@@ -77,9 +76,11 @@ public class UserDaoImpl implements UserDAO {
             preparedStatement.setString(3, telegram);
             preparedStatement.setLong(4, id);
             preparedStatement.executeUpdate();
-            connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+
         }
 
     }
@@ -110,12 +111,14 @@ public class UserDaoImpl implements UserDAO {
                     throw new DaoException("Creating user failed, no ID obtained.");
                 }
 
-                connectionPool.returnConnection(connection);
             }
 
         } catch (SQLException e) {
 
             throw new DaoException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+
         }
         return user;
     }
@@ -131,12 +134,13 @@ public class UserDaoImpl implements UserDAO {
             if (resultSet.next()) {
 
                 id = resultSet.getInt(USER_ID);
-                connectionPool.returnConnection(connection);
             }
 
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
+            connectionPool.returnConnection(connection);
+
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -162,8 +166,10 @@ public class UserDaoImpl implements UserDAO {
             System.out.println(result);
         } catch (SQLException e) {
             throw new DaoException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+
         }
-        connectionPool.returnConnection(connection);
     }
 
     public Optional<User> findUserById(long id) throws DaoException {
@@ -178,12 +184,13 @@ public class UserDaoImpl implements UserDAO {
 
                 userOptional = Optional.of(mapper.map(resultSet));
             }
-            connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
             try {
+                connectionPool.returnConnection(connection);
+
                 if (resultSet != null) {
                     resultSet.close();
                 }
@@ -210,9 +217,11 @@ public class UserDaoImpl implements UserDAO {
             }
             preparedStatement.close();
 
-            connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+
         }
         return result;
     }
@@ -224,8 +233,8 @@ public class UserDaoImpl implements UserDAO {
     }
 
     public boolean blockById(Long id) throws DaoException {
+        Connection connection = connectionPool.takeConnection();
         try {
-            Connection connection = connectionPool.takeConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_STATUS_BY_ID);
             preparedStatement.setInt(1, 2);
             preparedStatement.setLong(2, id);
@@ -234,8 +243,9 @@ public class UserDaoImpl implements UserDAO {
 
         } catch (SQLException e) {
             throw new DaoException(e);
-
         }
+        connectionPool.returnConnection(connection);
+
         return true;
     }
 
@@ -251,28 +261,27 @@ public class UserDaoImpl implements UserDAO {
     }
 
     public boolean unblockById(Long id) throws DaoException {
+
+        Connection connection = connectionPool.takeConnection();
         try {
-            Connection connection = connectionPool.takeConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_STATUS_BY_ID);
             preparedStatement.setInt(1, 1);
             preparedStatement.setLong(2, id);
             preparedStatement.executeUpdate();
-            connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
             throw new DaoException(e);
 
+        } finally {
+
+            connectionPool.returnConnection(connection);
         }
         return true;
     }
 
 
-    //todo изменить логику крч я сравниваю по айди а например в моей бд
-    //были удалены юзеры с некоторыми айди поэтому не ровно выводит
-    //todo!!!! obezatelno
     @Override
     public List<User> findUsersRange(int offset, int amount) throws DaoException {
-
         Connection connection = connectionPool.takeConnection();
         List<User> result = new ArrayList<>();
         try (
@@ -284,15 +293,15 @@ public class UserDaoImpl implements UserDAO {
                 User user = mapper.map(resultSet);
                 result.add(user);
             }
-            connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
+        } finally {
+
+            connectionPool.returnConnection(connection);
         }
         return result;
     }
 
-
-    //todo мб поменять логику
     @Override
     public int findUsersAmount() throws DaoException {
         Connection connection = connectionPool.takeConnection();
@@ -304,10 +313,11 @@ public class UserDaoImpl implements UserDAO {
                 counter++;
             }
             preparedStatement.close();
-            connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
             throw new DaoException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
         }
         return counter;
     }
@@ -327,12 +337,11 @@ public class UserDaoImpl implements UserDAO {
                 userOptional = Optional.of(mapper.map(resultSet));
             }
 
-            connectionPool.returnConnection(connection);
-
         } catch (SQLException e) {
             throw new DaoException(e);
 
         } finally {
+            connectionPool.returnConnection(connection);
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -358,12 +367,10 @@ public class UserDaoImpl implements UserDAO {
 
                 userOptional = Optional.of(mapper.map(resultSet));
             }
-
-            connectionPool.returnConnection(connection);
-
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
+            connectionPool.returnConnection(connection);
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -391,11 +398,11 @@ public class UserDaoImpl implements UserDAO {
                 userOptional = Optional.of(mapper.map(resultSet));
             }
 
-            connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
+            connectionPool.returnConnection(connection);
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -417,11 +424,11 @@ public class UserDaoImpl implements UserDAO {
             statement.setString(1, user.getLogin());
             resultSet = statement.executeQuery();
 
-            connectionPool.returnConnection(connection);
             return resultSet.next();
         } catch (SQLException e) {
 
         } finally {
+            connectionPool.returnConnection(connection);
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -442,12 +449,12 @@ public class UserDaoImpl implements UserDAO {
                 PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ACCOUNT_TELEGRAM)) {
             statement.setString(1, user.getTelegramAccount());
             resultSet = statement.executeQuery();
-            connectionPool.returnConnection(connection);
             return resultSet.next();
         } catch (SQLException e) {
             throw new DaoException(e);
 
         } finally {
+            connectionPool.returnConnection(connection);
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -476,11 +483,11 @@ public class UserDaoImpl implements UserDAO {
                 userOptional = Optional.of(mapper.map(resultSet));
             }
 
-            connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
 
         } finally {
+            connectionPool.returnConnection(connection);
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -506,11 +513,12 @@ public class UserDaoImpl implements UserDAO {
             statement.setString(1, user.getEmail());
             resultSet = statement.executeQuery();
 
-            connectionPool.returnConnection(connection);
             return resultSet.next();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+
+            connectionPool.returnConnection(connection);
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -525,38 +533,42 @@ public class UserDaoImpl implements UserDAO {
 
 
     public void updatePhotoByUserId(long id, String photo) throws DaoException {
+
+        Connection connection = connectionPool.takeConnection();
         try {
-            Connection connection = connectionPool.takeConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PHOTO_BY_ID);
             preparedStatement.setString(1, photo);
             preparedStatement.setLong(2, id);
             preparedStatement.executeUpdate();
-            connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
+        } finally {
+
+            connectionPool.returnConnection(connection);
         }
     }
 
     public boolean updatePasswordByUserId(long id, String password) throws DaoException {
+        Connection connection = connectionPool.takeConnection();
 
         try {
-            Connection connection = connectionPool.takeConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PASSWORD_BY_ID);
             preparedStatement.setString(1, password);
             preparedStatement.setLong(2, id);
             preparedStatement.executeUpdate();
-            connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
             throw new DaoException(e);
         }
+      finally {
+            connectionPool.returnConnection(connection);
+        }
+
         return true;
     }
 
 
-    //todo мб буду вызывать здесь функцию апдейта юзера по айди а в этой просто получать этот айди
     @Override
-    //todo брать возвр ти или сменить его на булеан !!!
     public User update(User user) throws DaoException {
         Connection connection = connectionPool.takeConnection();
         try {
@@ -575,10 +587,12 @@ public class UserDaoImpl implements UserDAO {
             preparedStatement.setLong(10, user.getId());
             Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
             preparedStatement.close();
-
-            connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
+        }
+        finally {
+            connectionPool.returnConnection(connection);
+
         }
         return user;
 

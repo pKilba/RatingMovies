@@ -6,7 +6,6 @@ import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
-
 import java.util.List;
 
 public class UsersPagesWithPagination {

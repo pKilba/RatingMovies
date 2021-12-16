@@ -82,11 +82,14 @@ public class MovieDaoImpl implements MovieDao {
                     throw new DaoException("Creating user failed, no ID obtained.");
                 }
                 preparedStatement.close();
-                connectionPool.returnConnection(connection);
             }
 
         } catch (SQLException e) {
             throw new DaoException(e);
+        }
+        finally {
+            connectionPool.returnConnection(connection);
+
         }
         return movie;
     }
@@ -111,15 +114,18 @@ public class MovieDaoImpl implements MovieDao {
         try (
                 PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
+            preparedStatement.close();
             while (resultSet.next()) {
                 Movie movie = mapper.map(resultSet);
                 result.add(movie);
-            }
-            preparedStatement.close();
-            connectionPool.returnConnection(connection);
+
+        }
 
         } catch (SQLException e) {
             throw new DaoException(e);
+        } finally {
+
+            connectionPool.returnConnection(connection);
         }
         return result;
     }
@@ -137,9 +143,11 @@ public class MovieDaoImpl implements MovieDao {
                 Movie movie = mapper.map(resultSet);
                 result.add(movie);
             }
-            connectionPool.returnConnection(connection);
+
         } catch (SQLException e) {
             throw new DaoException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
         }
         return result;
     }
@@ -155,9 +163,12 @@ public class MovieDaoImpl implements MovieDao {
                 counter++;
             }
 
-            connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
+        }
+        finally {
+            connectionPool.returnConnection(connection);
+
         }
         return counter;
     }
@@ -181,6 +192,8 @@ public class MovieDaoImpl implements MovieDao {
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
+            connectionPool.returnConnection(connection);
+
             try {
                 if (resultSet != null) {
                     resultSet.close();

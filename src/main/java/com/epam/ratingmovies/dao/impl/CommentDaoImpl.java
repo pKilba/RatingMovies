@@ -35,7 +35,7 @@ public class CommentDaoImpl implements CommentDao {
             "SELECT * FROM comments ORDER BY " +
                     "create_time DESC LIMIT ?,?";
 
-    static private CommentDaoImpl instance ;
+    static private CommentDaoImpl instance;
 
     private CommentDaoImpl() {
 
@@ -47,7 +47,6 @@ public class CommentDaoImpl implements CommentDao {
         }
         return instance;
     }
-
 
 
     @Override
@@ -66,6 +65,8 @@ public class CommentDaoImpl implements CommentDao {
                 } else {
                     throw new DaoException("Creating user failed, no ID obtained.");
                 }
+
+            } finally {
                 preparedStatement.close();
                 connectionPool.returnConnection(connection);
             }
@@ -88,9 +89,10 @@ public class CommentDaoImpl implements CommentDao {
                 Comment comment = mapper.map(resultSet);
                 result.add(comment);
             }
-            connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
         }
         return result;
     }
@@ -108,11 +110,12 @@ public class CommentDaoImpl implements CommentDao {
 
                 result++;
             }
-            connectionPool.returnConnection(connection);
+
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
             try {
+                connectionPool.returnConnection(connection);
                 if (resultSet != null) {
                     resultSet.close();
                 }
@@ -133,9 +136,10 @@ public class CommentDaoImpl implements CommentDao {
             while (resultSet.next()) {
                 counter++;
             }
-            connectionPool.returnConnection(connection);
         } catch (SQLException e) {
             throw new DaoException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
         }
         return counter;
     }
@@ -157,12 +161,13 @@ public class CommentDaoImpl implements CommentDao {
                 result.add(comment);
             }
             resultSet.close();
-            connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
             try {
+                connectionPool.returnConnection(connection);
+
                 if (resultSet != null) {
                     resultSet.close();
                 }
@@ -196,10 +201,11 @@ public class CommentDaoImpl implements CommentDao {
                 Comment comment = mapper.map(resultSet);
                 result.add(comment);
             }
-            connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
             throw new DaoException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
         }
         return result;
     }

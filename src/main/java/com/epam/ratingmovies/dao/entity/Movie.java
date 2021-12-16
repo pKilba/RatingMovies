@@ -1,7 +1,7 @@
 package com.epam.ratingmovies.dao.entity;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Movie extends AbstractEntity<Long> {
     private String name;
@@ -61,8 +61,18 @@ public class Movie extends AbstractEntity<Long> {
         this.background = background;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return amount_like == movie.amount_like && amount_dislike == movie.amount_dislike && duration == movie.duration && Objects.equals(name, movie.name) && Objects.equals(poster, movie.poster) && Objects.equals(about, movie.about) && Objects.equals(releaseDate, movie.releaseDate) && genre == movie.genre && Objects.equals(producer, movie.producer) && Objects.equals(background, movie.background);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, poster, about, releaseDate, amount_like, amount_dislike, genre, producer, duration, background);
+    }
 
     public String getPoster() {
         return poster;
