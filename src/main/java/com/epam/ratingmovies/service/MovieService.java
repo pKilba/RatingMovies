@@ -9,7 +9,6 @@ import com.epam.ratingmovies.service.validator.impl.MovieValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,12 +17,26 @@ public class MovieService {
 
     private static final String FIND_MOVIE_PROBLEM = "Exception find movie  " ;
     private static final String SAVE_MOVIE_PROBLEM = "Exception save movie  " ;
-    MovieDaoImpl movieDao = new MovieDaoImpl();
-    MovieValidator movieValidator = new MovieValidator();
+    MovieDaoImpl movieDao = MovieDaoImpl.getInstance();
+    MovieValidator movieValidator = MovieValidator.getInstance();
+
+
+    static private MovieService instance ;
+
+    private MovieService() {
+
+    }
+
+    public static MovieService getInstance() {
+        if (instance == null) {
+            instance = new MovieService();
+        }
+        return instance;
+    }
+
 
     public boolean isValid(String name, int like, int dislike, int duration, String producer, String about) {
         return movieValidator.isValid(name, like, dislike, duration, producer, about);
-
     }
 
 

@@ -24,6 +24,21 @@ public class UserDaoImpl implements UserDAO {
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
 
+
+    static private UserDaoImpl instance ;
+
+    private UserDaoImpl() {
+    }
+
+    public static UserDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new UserDaoImpl();
+        }
+        return instance;
+    }
+
+
+
     private final RowMapper<User> mapper = new UserRowMapper();
     private static final String SQL_SAVE_USER = "INSERT INTO users( login, password," +
             " role_id, name, mail, account_telegram, status_id, create_time," +
@@ -51,10 +66,6 @@ public class UserDaoImpl implements UserDAO {
     private static final String SQL_FIND_USERS_RANGE =
             "SELECT user_id, login, password,role_id,name,mail,account_telegram,status_id,create_time,profile_picture FROM users ORDER BY " +
                     "create_time DESC LIMIT ?,?";
-
-
-    public UserDaoImpl() {
-    }
 
     public void updateNameEmailTelegramById(String name, String email, String telegram, long id) throws DaoException {
         Connection connection = connectionPool.takeConnection();

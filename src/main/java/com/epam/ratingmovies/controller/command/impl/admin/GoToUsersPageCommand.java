@@ -12,7 +12,7 @@ public class GoToUsersPageCommand implements Command {
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
 
-        UsersPagesWithPagination usersPagesWithPagination = new UsersPagesWithPagination();
+        UsersPagesWithPagination usersPagesWithPagination = UsersPagesWithPagination.getInstance();
         usersPagesWithPagination.processCommandWithPagination(request);
         return CommandResponse.forward(USERS);
     }

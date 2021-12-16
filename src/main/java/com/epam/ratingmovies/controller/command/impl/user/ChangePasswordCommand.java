@@ -16,7 +16,7 @@ public class ChangePasswordCommand implements Command {
     private static final String INVALID_DATA_KEY = "invalid.pass";
     private static final String VALID_DATA_KEY = "success.pass";
     UserService userService = new UserService();
-    AccountChangePassword accountChangePassword = new AccountChangePassword();
+    AccountChangePassword accountChangePassword = AccountChangePassword.getInstance();
     public static final String SETTINGS = "/jsp/pages/account-settings.jsp";
     LineHasher lineHasher = new LineHasher();
 

@@ -13,7 +13,7 @@ import java.util.Optional;
 public class UserService {
     private static UserService instance;
     //todo мб надо синглтон на юзердао
-    private static final UserDaoImpl userDao = new UserDaoImpl();
+    private static final UserDaoImpl userDao = UserDaoImpl.getInstance();
 
     private static final String UPDATE_PROBLEM = "Update exception  ";
     private static final String FIND_PROBLEM = "Find exception  ";

@@ -3,7 +3,6 @@ package com.epam.ratingmovies.service;
 import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.controller.command.util.Parameter;
-import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
@@ -13,6 +12,20 @@ import java.util.List;
 public class UsersPagesWithPagination {
 
     UserService userService = new UserService();
+
+
+    static private UsersPagesWithPagination instance ;
+
+    private UsersPagesWithPagination() {
+
+    }
+
+    public static UsersPagesWithPagination getInstance() {
+        if (instance == null) {
+            instance = new UsersPagesWithPagination();
+        }
+        return instance;
+    }
 
 
     public void processCommandWithPagination(RequestContext requestContext) throws ServiceException {

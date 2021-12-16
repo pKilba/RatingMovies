@@ -20,7 +20,7 @@ public class CreateMovieCommand implements Command {
     private static final String INVALID_DATA_KEY = "invalid.data";
     private static final String VALID_DATA_KEY = "success";
 
-    MovieService movieService = new MovieService();
+    MovieService movieService = MovieService.getInstance();
     public static final String MOVIE = "/jsp/pages/createMovie.jsp";
 
     @Override

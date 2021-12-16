@@ -17,6 +17,21 @@ public class MovieValidator {
     private static final int MIN_FILM_PRODUCER_LENGTH = 2;
     private static final int MIN_FILM_NAME_LENGTH = 2;
 
+    static private MovieValidator instance ;
+
+    private MovieValidator() {
+
+    }
+
+    public static MovieValidator getInstance() {
+        if (instance == null) {
+            instance = new MovieValidator();
+        }
+        return instance;
+    }
+
+
+
     public boolean isValid(String name, int like, int dislike, int duration, String producer, String about) {
         if (isValidName(name) && isValidNameProducer(producer)
                 && isValidNumber(like) && isValidNumber(dislike) && isValidNumber(duration) && isValidAbout(about)) {

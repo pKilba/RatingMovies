@@ -15,7 +15,23 @@ public class CommentService {
     private static final String FIND_COMMENTS_PROBLEM ="Exception find comments";
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
-    private final CommentDaoImpl commentDao = new CommentDaoImpl();
+    private final CommentDaoImpl commentDao =CommentDaoImpl.getInstance();
+
+
+    static private CommentService instance ;
+
+    private CommentService() {
+
+    }
+
+    public static CommentService getInstance() {
+        if (instance == null) {
+            instance = new CommentService();
+        }
+        return instance;
+    }
+
+
 
     public List<Comment> findAll() throws ServiceException {
         try {

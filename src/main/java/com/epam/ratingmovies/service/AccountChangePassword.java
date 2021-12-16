@@ -6,6 +6,23 @@ import com.epam.ratingmovies.service.validator.impl.UserValidator;
 public class AccountChangePassword {
     private final UserValidator userValidator = UserValidator.getInstance();
 
+
+
+    static private AccountChangePassword instance ;
+
+    private AccountChangePassword() {
+
+    }
+
+    public static AccountChangePassword getInstance() {
+        if (instance == null) {
+            instance = new AccountChangePassword();
+        }
+        return instance;
+    }
+
+
+
     public boolean
     isCorrectPassword(String newPasswordFirst, String newPasswordSecond, User user, String currentPassword) {
 

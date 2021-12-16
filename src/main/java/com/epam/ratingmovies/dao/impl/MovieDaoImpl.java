@@ -43,6 +43,20 @@ public class MovieDaoImpl implements MovieDao {
 
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
 
+
+    static private MovieDaoImpl instance;
+
+    private MovieDaoImpl() {
+    }
+
+    public static MovieDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new MovieDaoImpl();
+        }
+        return instance;
+    }
+
+
     @Override
     public Movie save(Movie movie) throws DaoException {
         Connection connection = connectionPool.takeConnection();

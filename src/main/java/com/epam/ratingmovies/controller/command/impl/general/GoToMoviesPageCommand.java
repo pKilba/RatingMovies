@@ -8,14 +8,14 @@ import com.epam.ratingmovies.service.MovieService;
 
 public class GoToMoviesPageCommand implements Command {
 
-    public static final MovieService movieService = new MovieService();
+    public static final MovieService movieService = MovieService.getInstance();
     public static final String MOVIES = "/jsp/pages/movies.jsp" ;
 
     @Override
     public CommandResponse execute(RequestContext request) throws Exception {
 
 
-        MoviesPagesWithPagination moviesPagesWithPagination = new MoviesPagesWithPagination();
+        MoviesPagesWithPagination moviesPagesWithPagination = MoviesPagesWithPagination.getInstance();
         moviesPagesWithPagination.processCommandWithPagination(request);
         return CommandResponse.forward(MOVIES);
     }

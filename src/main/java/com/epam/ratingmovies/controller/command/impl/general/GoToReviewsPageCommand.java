@@ -13,7 +13,7 @@ public class GoToReviewsPageCommand implements Command {
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
 
-        CommentsPagesWithPagination commentsPagesWithPagination = new CommentsPagesWithPagination();
+        CommentsPagesWithPagination commentsPagesWithPagination = CommentsPagesWithPagination.getInstance();
         commentsPagesWithPagination.processCommandWithPagination(request);
         return CommandResponse.forward(REVIEWS);
     }

@@ -18,7 +18,23 @@ import static com.epam.ratingmovies.controller.command.impl.user.AddCommentComma
 
 public class CommentsPagesWithPagination {
 
- private   final CommentService commentService = new CommentService();
+ private   final CommentService commentService = CommentService.getInstance();
+
+
+
+
+    static private CommentsPagesWithPagination instance ;
+
+    private CommentsPagesWithPagination() {
+
+    }
+
+    public static CommentsPagesWithPagination getInstance() {
+        if (instance == null) {
+            instance = new CommentsPagesWithPagination();
+        }
+        return instance;
+    }
 
 
     public void processCommandWithPagination(RequestContext requestContext) throws ServiceException {

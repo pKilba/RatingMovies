@@ -12,7 +12,7 @@ public class LoginService {
     private static final String EXIST_PROBLEM_EMAIL = "Email exist";
     private static final String EXIST_PROBLEM_TELEGRAM = "Telegram exist";
     private static LoginService instance;
-    private final UserDaoImpl userDao = new UserDaoImpl();
+    private final UserDaoImpl userDao = UserDaoImpl.getInstance();
     private final UserValidator userValidator = UserValidator.getInstance();
     private static final Logger logger = LogManager.getLogger();
 

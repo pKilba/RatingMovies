@@ -33,7 +33,7 @@ public class AdminService {
 
 
     public boolean isBlockedById(long id) throws ServiceException {
-        UserDaoImpl userDao = new UserDaoImpl();
+        UserDaoImpl userDao = UserDaoImpl.getInstance();
         Optional<User> user ;
         try {
             user = userDao.findUserById(id);

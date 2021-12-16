@@ -5,14 +5,27 @@ import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.exception.ServiceException;
-import com.epam.ratingmovies.service.MovieService;
 import com.epam.ratingmovies.util.Attribute;
 
 import java.util.List;
 
 public class MoviesPagesWithPagination {
 
-    MovieService movieService = new MovieService();
+    MovieService movieService = MovieService.getInstance();
+
+
+    static private MoviesPagesWithPagination instance ;
+
+    private MoviesPagesWithPagination() {
+
+    }
+
+    public static MoviesPagesWithPagination getInstance() {
+        if (instance == null) {
+            instance = new MoviesPagesWithPagination();
+        }
+        return instance;
+    }
 
 
     public void processCommandWithPagination(RequestContext requestContext) throws ServiceException {

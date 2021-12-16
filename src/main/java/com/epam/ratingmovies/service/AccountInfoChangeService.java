@@ -8,6 +8,20 @@ public class AccountInfoChangeService {
     UserValidator userValidator = UserValidator.getInstance();
 
 
+    static private AccountInfoChangeService instance ;
+
+    private AccountInfoChangeService() {
+
+    }
+
+    public static AccountInfoChangeService getInstance() {
+        if (instance == null) {
+            instance = new AccountInfoChangeService();
+        }
+        return instance;
+    }
+
+
     public boolean isValidTelegram(String telegram) {
 
         return userValidator.isValidTelegram(telegram);

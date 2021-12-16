@@ -35,6 +35,20 @@ public class CommentDaoImpl implements CommentDao {
             "SELECT * FROM comments ORDER BY " +
                     "create_time DESC LIMIT ?,?";
 
+    static private CommentDaoImpl instance ;
+
+    private CommentDaoImpl() {
+
+    }
+
+    public static CommentDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new CommentDaoImpl();
+        }
+        return instance;
+    }
+
+
 
     @Override
     public Comment save(Comment comment) throws DaoException {

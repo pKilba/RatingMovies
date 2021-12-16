@@ -20,8 +20,8 @@ import java.util.List;
 public class GoToMoviePageCommand implements Command {
     private static final String RATING_MOVIES_COMMAND = "ratingMovies?command=" + CommandName.MOVIE_PAGE + "&id=";
     public static final String MOVIE = "/jsp/pages/movie.jsp";
-    public static final MovieService movieService = new MovieService();
-    public static final CommentService commentService = new CommentService();
+    public static final MovieService movieService =MovieService.getInstance();
+    public static final CommentService commentService = CommentService.getInstance();
     public static final UserService userService = new UserService();
 
 
