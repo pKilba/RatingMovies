@@ -6,14 +6,18 @@ import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.List;
 
 public class UsersPagesWithPagination {
 
-    UserService userService = new UserService();
-
-
-    static private UsersPagesWithPagination instance ;
+    private static final Logger logger = LogManager.getLogger();
+    private static final UserService userService = UserService.getInstance();
+    private static final String INVALID_PAGE_OR_SIZE = "Invalid page or size!";
+    private static final String INVALID_PARAMETER = "Parameter in query invalid";
+    private static UsersPagesWithPagination instance;
 
     private UsersPagesWithPagination() {
 
@@ -33,7 +37,8 @@ public class UsersPagesWithPagination {
         long amount = userService.findUsersAmount();
         long amountQuery = (page - 1) * size;
         if (amountQuery > amount) {
-            throw new ServiceException("Parameter in query invalid");
+            logger.warn(INVALID_PARAMETER);
+            throw new ServiceException(INVALID_PARAMETER);
         }
         if (amount < size) {
             size = (int) amount;
@@ -51,12 +56,12 @@ public class UsersPagesWithPagination {
 
     private List<User> buildUserList(int page, int size) throws ServiceException {
         int offset = (page - 1) * size;
-        List<User> usersList = null;
+        List<User> usersList;
         try {
             usersList = userService.findUsersRange(offset, size);
         } catch (ServiceException e) {
-            //todo logger
-            throw new ServiceException("Invalid page or size!");
+            logger.warn(INVALID_PAGE_OR_SIZE + e);
+            throw new ServiceException(INVALID_PAGE_OR_SIZE);
         }
 
         return usersList;

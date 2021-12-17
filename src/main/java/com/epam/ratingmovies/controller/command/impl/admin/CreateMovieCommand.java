@@ -4,6 +4,7 @@ import com.epam.ratingmovies.controller.ParameterTaker;
 import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandResponse;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
+import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.dao.entity.Genre;
 import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.exception.ServiceException;
@@ -25,20 +26,18 @@ public class CreateMovieCommand implements Command {
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
 
-
-        //todo check!
-        String about = ParameterTaker.takeString("about", request);
-        String image = ParameterTaker.takeString("img", request);
-        String str = ParameterTaker.takeString("data", request);
+        String about = ParameterTaker.takeString(Parameter.ABOUT, request);
+        String image = ParameterTaker.takeString(Parameter.IMAGE_FILM, request);
+        String str = ParameterTaker.takeString(Parameter.DATA, request);
         LocalDateTime dateTime = LocalDate.parse(str).atStartOfDay();
         Timestamp timestamp = Timestamp.valueOf(dateTime);
-        int like = ParameterTaker.takeNumber("like", request);
-        int dislike = ParameterTaker.takeNumber("dislike", request);
-        String name = ParameterTaker.takeString("name", request);
-        String producer = ParameterTaker.takeString("producer", request);
-        int duration = ParameterTaker.takeNumber("duration", request);
-        int idGenre = ParameterTaker.takeNumber("genre", request);
-        String imageBack = ParameterTaker.takeString("imgBack", request);
+        int like = ParameterTaker.takeNumber(Parameter.LIKE, request);
+        int dislike = ParameterTaker.takeNumber(Parameter.DISLIKE, request);
+        String name = ParameterTaker.takeString(Parameter.NAME, request);
+        String producer = ParameterTaker.takeString(Parameter.PRODUCER, request);
+        int duration = ParameterTaker.takeNumber(Parameter.DURATION, request);
+        int idGenre = ParameterTaker.takeNumber(Parameter.GENRE, request);
+        String imageBack = ParameterTaker.takeString(Parameter.IMAGE_FILM_BACK, request);
         if (movieService.isValid(name, like, dislike, duration, producer, about)) {
             request.addAttribute(Attribute.SUCCESS_MESSAGE, VALID_DATA_KEY);
             Movie movie = Movie.builder()

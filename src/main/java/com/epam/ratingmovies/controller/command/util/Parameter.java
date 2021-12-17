@@ -16,7 +16,16 @@ public class Parameter {
     public static final String PAGE = "p";
     public static final String SIZE = "s";
     public static final String DATE = "date";
-    public static final String BIO = "bio";
     public static final String LEAVE_COMMENT = "leaveComment";
+    public static final String ABOUT = "about";
+    public static final String IMAGE_FILM = "img";
+    public static final String DATA = "data";
+    public static final String LIKE = "like";
+    public static final String DISLIKE = "dislike";
+    public static final String PRODUCER = "producer";
+    public static final String DURATION = "duration";
+    public static final String GENRE = "genre";
+    public static final String IMAGE_FILM_BACK = "genre";
+
 
 }

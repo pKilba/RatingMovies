@@ -437,7 +437,6 @@ public class UserDaoImpl implements UserDAO {
                 throw new DaoException(e);
             }
         }
-        //todo исправить
         return false;
     }
 
@@ -464,7 +463,6 @@ public class UserDaoImpl implements UserDAO {
                 throw new DaoException(e);
             }
         }
-        //todo исправить
     }
 
     @Override
@@ -527,7 +525,6 @@ public class UserDaoImpl implements UserDAO {
                 throw new DaoException(e);
             }
         }
-        //todo исправить
         return false;
     }
 
@@ -572,7 +569,6 @@ public class UserDaoImpl implements UserDAO {
         Connection connection = connectionPool.takeConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER_BY_ID);
-            //todo что за конченый цвет подсвечивает
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setInt(3, user.getUserRole().ordinal());

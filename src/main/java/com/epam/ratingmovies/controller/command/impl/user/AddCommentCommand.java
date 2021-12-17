@@ -16,6 +16,7 @@ public class AddCommentCommand implements Command {
 
     private static final String RATING_MOVIES_COMMAND = "ratingMovies?command=" + CommandName.MOVIE_PAGE + "&id=";
     private static final CommentService commentService = CommentService.getInstance();
+    private static final String LeaveCommentParameter = "leaveComment";
 
 
     @Override
@@ -23,14 +24,12 @@ public class AddCommentCommand implements Command {
         long id = ParameterTaker.takeId(request);
         long idMovie = ParameterTaker.takeIdNow(request);
         Comment newComment = Comment.builder().
-                setMessage(request.getRequestParameter("leaveComment"))
+                setMessage(request.getRequestParameter(LeaveCommentParameter))
                 .setMovie(idMovie).
                 setUser(id).
                 setCreateTime(new Timestamp(System.currentTimeMillis())).build();
         commentService.save(newComment);
         request.addAttribute(Attribute.ID, idMovie);
-
         return CommandResponse.redirect(RATING_MOVIES_COMMAND + idMovie);
-
     }
 }

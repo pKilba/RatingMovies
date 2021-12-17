@@ -15,11 +15,10 @@ import com.epam.ratingmovies.util.LineHasher;
 public class ChangePasswordCommand implements Command {
     private static final String INVALID_DATA_KEY = "invalid.pass";
     private static final String VALID_DATA_KEY = "success.pass";
-    private static final UserService userService = new UserService();
+    private static final UserService userService = UserService.getInstance();
     private static final AccountChangePassword accountChangePassword = AccountChangePassword.getInstance();
     private static final String SETTINGS = "/jsp/pages/account-settings.jsp";
     private static final LineHasher lineHasher = new LineHasher();
-
     @Override
     public CommandResponse execute(RequestContext requestContext)
             throws ServiceException {

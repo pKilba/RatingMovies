@@ -8,25 +8,19 @@ import java.util.regex.Pattern;
 //todo можно логику немного поменять дорабоать + проверить
 
 public class UserValidator implements com.epam.ratingmovies.service.validator.api.UserValidator {
+
     private static final String NAME_PATTERN = "[A-zА-яЁё]+";
     private static final String TELEGRAM_PATTERN = "^@[a-zA-Z0-9+]+$";
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
     private static final Pattern COMPILED_PATTERN_NAME = Pattern.compile(NAME_PATTERN);
     private static final Pattern COMPILED_PATTERN_TELEGRAM = Pattern.compile(TELEGRAM_PATTERN);
     private static final Pattern COMPILED_PATTERN_EMAIL = Pattern.compile(EMAIL_PATTERN);
-
     private static final int MIN_USER_NAME_LENGTH = 2;
     private static final int MAX_USER_NAME_LENGTH = 32;
     private static final int MIN_LOGIN_LENGTH = 2;
     private static final int MAX_LOGIN_LENGTH = 32;
     private static final int MAX_EMAIL_LENGTH = 64;
     private static final int MIN_EMAIL_LENGTH = 2;
-
-
-    private static final int MAX_PASSWORD_LENGTH = 32 ;
-    private static final int MIN_PASSWORD_LENGTH = 8 ;
-
-    private static final int LENGTH_HASH_PASSWORD = 64;
     private static final int MAX_TELEGRAM_LENGTH = 32;
     private static final int MIN_TELEGRAM_LENGTH = 2;
     private static UserValidator instance;
@@ -42,16 +36,16 @@ public class UserValidator implements com.epam.ratingmovies.service.validator.ap
     }
 
     @Override
-    public boolean isValid(String login,String email,String telegram ,String password,String name) {
+    public boolean isValid(String login, String email, String telegram, String password, String name) {
         if (isValidName(name) && isValidLogin(login)
-                && isValidTelegram(telegram) && isValidPassword(password)&& isValidEmail(email)) {
+                && isValidTelegram(telegram) && isValidPassword(password) && isValidEmail(email)) {
             return true;
         }
         return false;
     }
 
-    public boolean isValidPassword(String password){
-        if ( password ==null|| password.length() > MAX_LOGIN_LENGTH
+    public boolean isValidPassword(String password) {
+        if (password == null || password.length() > MAX_LOGIN_LENGTH
                 || password.length() < MIN_LOGIN_LENGTH) {
             return false;
         }
@@ -72,7 +66,7 @@ public class UserValidator implements com.epam.ratingmovies.service.validator.ap
 
     public boolean isValidName(String name) {
         Matcher matcher = COMPILED_PATTERN_NAME.matcher(name);
-       boolean isCorrect = matcher.matches();
+        boolean isCorrect = matcher.matches();
         System.out.println(isCorrect);
         if (!isCorrect || name.length() > MAX_USER_NAME_LENGTH
                 || name.length() < MIN_USER_NAME_LENGTH) {
@@ -83,7 +77,7 @@ public class UserValidator implements com.epam.ratingmovies.service.validator.ap
 
     public boolean isValidLogin(String login) {
 
-        if ( login ==null|| login.length() > MAX_LOGIN_LENGTH || login.length() < MIN_LOGIN_LENGTH) {
+        if (login == null || login.length() > MAX_LOGIN_LENGTH || login.length() < MIN_LOGIN_LENGTH) {
             return false;
         }
         return true;

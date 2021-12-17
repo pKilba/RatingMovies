@@ -8,12 +8,13 @@ import com.epam.ratingmovies.service.AdminService;
 
 public class ActionBanUserCommand implements Command {
 
-   private static final AdminService adminService = AdminService.getInstance();
+    private static final AdminService adminService = AdminService.getInstance();
+    private static final String JSON = "json";
 
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
         String response = adminService.banUserById(request);
-        CommandResponse commandResult = new CommandResponse("json", false);
+        CommandResponse commandResult = new CommandResponse(JSON, false);
         commandResult.setLine(response);
         return commandResult;
     }

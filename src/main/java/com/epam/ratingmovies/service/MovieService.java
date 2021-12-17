@@ -2,7 +2,6 @@ package com.epam.ratingmovies.service;
 
 import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.dao.impl.MovieDaoImpl;
-import com.epam.ratingmovies.dao.impl.UserDaoImpl;
 import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.service.validator.impl.MovieValidator;
@@ -13,15 +12,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class MovieService {
-    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
-    private static final String FIND_MOVIE_PROBLEM = "Exception find movie  " ;
-    private static final String SAVE_MOVIE_PROBLEM = "Exception save movie  " ;
-    MovieDaoImpl movieDao = MovieDaoImpl.getInstance();
-    MovieValidator movieValidator = MovieValidator.getInstance();
+    private static final Logger logger = LogManager.getLogger();
+    private static final String FIND_MOVIE_PROBLEM = "Exception find movie  ";
+    private static final String SAVE_MOVIE_PROBLEM = "Exception save movie  ";
+    private static final MovieDaoImpl movieDao = MovieDaoImpl.getInstance();
+    private static final MovieValidator movieValidator = MovieValidator.getInstance();
 
 
-    static private MovieService instance ;
+    static private MovieService instance;
 
     private MovieService() {
 
@@ -89,8 +88,8 @@ public class MovieService {
         try {
             return movieDao.findMoviesRange(offset, size);
         } catch (DaoException e) {
-            //todo added logger and ref ex
-            throw new ServiceException(e);
+            logger.error(FIND_MOVIE_PROBLEM+e);
+            throw new ServiceException(FIND_MOVIE_PROBLEM);
         }
 
     }

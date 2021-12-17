@@ -65,7 +65,6 @@
                 </li>
                 <li><a href="${pageContext.request.contextPath}/ratingMovies?command=users-page&p=1&s=5" class="nav-link px-2 text-white">
                     <fmt:message key="nav.users.page"/></a>
-                </li>hj
                 <li><a href="${pageContext.request.contextPath}/ratingMovies?command=createMovies-page&p=1&s=5" class="nav-link px-2 text-white">
                     <fmt:message key="nav.added.movie.page"/></a>
                 </li>
