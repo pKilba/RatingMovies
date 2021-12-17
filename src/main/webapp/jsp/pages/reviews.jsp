@@ -32,77 +32,64 @@
                 </div>
             </c:forEach>
         </div>
-    </div>
 
-    <div class="container">
-        <c:if test="${commentUserList.size() != 0}">
-            <p>auf</p>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <c:forEach var="i" begin="1" end="${maxPage}">
-                        <c:if test="${i == currentPage+4}">
-                            <li class="page-item">
-                                <a class="page-link">...</a>
-                            </li>
-                        </c:if>
-                        <c:if test="${(((currentPage-1) == i) || ((i < currentPage+3) && (i > currentPage-3))) || (i > maxPage-2) || (i == 1)}">
-                            <li class="page-item <c:if test="${currentPage == i}">active</c:if>">
-                                <a class="page-link"
-                                   href="${pageContext.request.contextPath}/ratingMovies?command=reviews-page&movieId=${id}&id=${sessionScope.get("userId")}&p=<c:out value = "${i}"/>&s=${amountOfPage}">
-                                    <c:out value="${i}"/>
-                                </a>
-                            </li>
-                        </c:if>
-                    </c:forEach>
-                </ul>
-            </nav>
-        </c:if>
-    <sc:access role="USER">
-
-        <div class="col-lg-10 col-md-8  offset-md-1 offset-sm-3 col-12 mt-8">
-            <form id="algin-form" method="POST"
-                  action="${pageContext.request.contextPath}/ratingMovies?command=leaveComment&movieId=${id}&id=${sessionScope.get("userId")}">
-                <div class="form-group">
-                    <h4>Leave a comment</h4>
-                    <textarea name="leaveComment" id="" msg cols="30" rows="5"
-                              class="form-control"
-                              style="background-color: black;" required>
-
-                        </textarea>
-                </div>
-
-                <div class="form-inline"><input type="checkbox" name="check" id="checkbx" class="mr-1"> Subscribe me
-                    to the newlettter
-                </div>
-                <button type="submit" class="form-button button-l margin-b">post</button>
-            </form>
+        <div class="">
+            <c:if test="${commentUserList.size() != 0}">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <c:forEach var="i" begin="1" end="${maxPage}">
+                            <c:if test="${i == currentPage+4}">
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            </c:if>
+                            <c:if test="${(((currentPage-1) == i) || ((i < currentPage+3) && (i > currentPage-3))) || (i > maxPage-2) || (i == 1)}">
+                                <li class="page-item <c:if test="${currentPage == i}">active</c:if>">
+                                    <a class="page-link"
+                                       href="${pageContext.request.contextPath}/ratingMovies?command=reviews-page&movieId=${id}&id=${sessionScope.get("userId")}&p=<c:out value = "${i}"/>&s=${amountOfPage}">
+                                        <c:out value="${i}"/>
+                                    </a>
+                                </li>
+                            </c:if>
+                        </c:forEach>
+                    </ul>
+                </nav>
+            </c:if>
         </div>
-    </sc:access>
 
-    <sc:access role="ADMIN">
 
-        <div class="col-lg-10 col-md-8  offset-md-1 offset-sm-3 col-12 mt-8">
-            <form id="algin-form" method="POST"
-                  action="${pageContext.request.contextPath}/ratingMovies?command=leaveComment&movieId=${id}&id=${sessionScope.get("userId")}">
-                <div class="form-group">
-                    <h4>Leave a comment</h4>
-                    <textarea name="leaveComment" msg cols="30" rows="5"
-                              class="form-control"
-                              style="background-color: black;" required>
-                        </textarea>
+        <div class="comment">
+            <sc:access role="USER">
+                <div class="col-lg-10 col-md-8  offset-md-1 offset-sm-3 col-12 mt-8">
+                    <form id="algin-form" method="POST"
+                          action="${pageContext.request.contextPath}/ratingMovies?command=leaveComment&movieId=${id}&id=${sessionScope.get("userId")}">
+                        <div class="form-group">
+                            <h4>PIIIIIIIIIIDOR Leave a comment</h4>
+                            <textarea name="leaveComment" id="" cols="120" rows="5" class="form-control"style="background-color: black;" required></textarea>
+                        </div>
+              <button type="submit" class="btn btn-outline-light">post</button>
+                    </form>
                 </div>
+            </sc:access>
 
-                <div class="form-inline"><input type="checkbox" name="check" id="checkbx" class="mr-1"> Subscribe me
-                    to the newlettter
+            <sc:access role="ADMIN">
+                <div class="col-lg-10 col-md-8  offset-md-1 offset-sm-3 col-12 mt-8">
+                    <form id="algin-form" method="POST"
+                          action="${pageContext.request.contextPath}/ratingMovies?command=leaveComment&movieId=${id}&id=${sessionScope.get("userId")}">
+                        <div class="form-group">
+                            <h4>Leave a comment</h4>
+                            <textarea name="leaveComment" cols="120" rows="5" class="form-control" style="background-color: black;" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-outline-light">PIIIIIIIIIIDOR</button>
+                    </form>
                 </div>
-                <button type="submit" class="form-button button-l margin-b">Sign In</button>
-            </form>
+            </sc:access>
         </div>
-    </sc:access>
+
+
     </div>
 
 </section>
-
 
 
 </body>
