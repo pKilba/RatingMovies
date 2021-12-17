@@ -19,15 +19,15 @@ public class CreateMovieCommand implements Command {
 
     private static final String INVALID_DATA_KEY = "invalid.data";
     private static final String VALID_DATA_KEY = "success";
-
-    MovieService movieService = MovieService.getInstance();
-    public static final String MOVIE = "/jsp/pages/createMovie.jsp";
+    private static final MovieService movieService = MovieService.getInstance();
+    private static final String MOVIE = "/jsp/pages/createMovie.jsp";
 
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
 
-        String about = ParameterTaker.takeString("about", request);
 
+        //todo check!
+        String about = ParameterTaker.takeString("about", request);
         String image = ParameterTaker.takeString("img", request);
         String str = ParameterTaker.takeString("data", request);
         LocalDateTime dateTime = LocalDate.parse(str).atStartOfDay();

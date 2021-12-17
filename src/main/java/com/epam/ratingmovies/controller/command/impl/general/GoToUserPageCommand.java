@@ -1,19 +1,18 @@
 package com.epam.ratingmovies.controller.command.impl.general;
 
-import com.epam.ratingmovies.exception.DaoException;
-import com.epam.ratingmovies.exception.ServiceException;
-import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
-import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandResponse;
+import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.User;
+import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.service.UserService;
+import com.epam.ratingmovies.util.Attribute;
 
 
 public class GoToUserPageCommand implements Command {
 
-    public static final String USER = "/jsp/pages/profile.jsp";
+    private static final String USER = "/jsp/pages/profile.jsp";
     private static final UserService userService = UserService.getInstance();
 
     @Override
@@ -23,5 +22,5 @@ public class GoToUserPageCommand implements Command {
         request.addAttribute(Attribute.USER, user);
         return CommandResponse.forward(USER);
     }
-    }
+}
 

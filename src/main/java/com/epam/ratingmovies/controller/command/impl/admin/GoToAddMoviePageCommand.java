@@ -7,14 +7,10 @@ import com.epam.ratingmovies.exception.ServiceException;
 
 
 public class GoToAddMoviePageCommand implements Command {
-    public static final String CREATE_MOVIE = "/jsp/pages/createMovie.jsp";
-
+    private static final String CREATE_MOVIE = "/jsp/pages/createMovie.jsp";
 
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
-
-
-
 
         return CommandResponse.forward(CREATE_MOVIE);
     }

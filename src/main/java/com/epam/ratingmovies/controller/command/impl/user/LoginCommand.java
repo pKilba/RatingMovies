@@ -24,7 +24,7 @@ public class LoginCommand implements Command {
     private static final String FREEZE_USER_KEY = "banned";
     private static final UserService service = UserService.getInstance();
     private static final LoginService loginService = LoginService.getInstance();
-    public static final String LOGIN = "/jsp/pages/login.jsp";
+    private static final String LOGIN = "/jsp/pages/login.jsp";
 
 
     @Override

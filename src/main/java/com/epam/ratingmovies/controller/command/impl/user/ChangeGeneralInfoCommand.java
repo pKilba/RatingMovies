@@ -17,7 +17,7 @@ public class ChangeGeneralInfoCommand implements Command {
     private static final String VALID_DATA_KEY = "success";
     private final UserService userService = new UserService();
     public static final String USER_ACCOUNT_SETTINGS = "/jsp/pages/account-settings.jsp";
-    private final AccountInfoChangeService accountInfoChangeService =AccountInfoChangeService.getInstance();
+    private final AccountInfoChangeService accountInfoChangeService = AccountInfoChangeService.getInstance();
 
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {

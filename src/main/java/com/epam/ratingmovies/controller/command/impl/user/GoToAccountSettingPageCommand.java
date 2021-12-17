@@ -1,21 +1,19 @@
 package com.epam.ratingmovies.controller.command.impl.user;
 
-import com.epam.ratingmovies.exception.DaoException;
-import com.epam.ratingmovies.exception.ServiceException;
-import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
-import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandResponse;
+import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.User;
+import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.service.UserService;
+import com.epam.ratingmovies.util.Attribute;
 
 public class GoToAccountSettingPageCommand implements Command {
 
 
-    public static final String SETTING = "/jsp/pages/account-settings.jsp";
-    public static final UserService userService = new UserService();
-
+    private static final String SETTING = "/jsp/pages/account-settings.jsp";
+    private static final UserService userService = new UserService();
 
     @Override
     public CommandResponse execute(RequestContext requestContext) throws ServiceException {

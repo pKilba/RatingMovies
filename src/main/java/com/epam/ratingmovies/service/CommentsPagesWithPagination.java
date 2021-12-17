@@ -14,16 +14,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.epam.ratingmovies.controller.command.impl.user.AddCommentCommand.userService;
 
 public class CommentsPagesWithPagination {
 
- private   final CommentService commentService = CommentService.getInstance();
+    private final CommentService commentService = CommentService.getInstance();
 
 
-
-
-    static private CommentsPagesWithPagination instance ;
+    private UserService userService = UserService.getInstance();
+    static private CommentsPagesWithPagination instance;
 
     private CommentsPagesWithPagination() {
 
@@ -55,7 +53,6 @@ public class CommentsPagesWithPagination {
         requestContext.addAttribute(Attribute.COMMENT_LIST, commentList);
 
 
-
         List<User> users = new ArrayList<>();
         User user = new User();
         for (Comment comment : commentList) {
@@ -71,35 +68,23 @@ public class CommentsPagesWithPagination {
         requestContext.addAttribute("commentUserList", commentUserMap);
 
 
-
-
-
-
-
-
-
-
-
-
-
         requestContext.addAttribute(Attribute.CURRENT_PAGE, page);
-       int maxPage;
-        if (amount!=0 &&size!=0) {
+        int maxPage;
+        if (amount != 0 && size != 0) {
             maxPage = (int) (amount / size);
-           if (amount % size != 0) {
-               ++maxPage;
-           }
-       }
-       else {
-           maxPage = 1 ;
-       }
+            if (amount % size != 0) {
+                ++maxPage;
+            }
+        } else {
+            maxPage = 1;
+        }
         requestContext.addAttribute(Attribute.AMOUNT_OF_PAGE, size);
         requestContext.addAttribute(Attribute.MAX_PAGE, maxPage);
     }
 
     private List<Comment> buildCommentList(int page, int size) throws ServiceException {
         int offset = (page - 1) * size;
-        List<Comment> commentsList ;
+        List<Comment> commentsList;
         try {
             commentsList = commentService.findCommentRange(offset, size);
         } catch (ServiceException e) {
@@ -109,8 +94,6 @@ public class CommentsPagesWithPagination {
 
         return commentsList;
     }
-
-
 
 
 }

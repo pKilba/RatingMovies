@@ -8,12 +8,13 @@ import com.epam.ratingmovies.service.CommentsPagesWithPagination;
 
 public class GoToReviewsPageCommand implements Command {
 
-    public static final String REVIEWS = "/jsp/pages/reviews.jsp";
+    private static final String REVIEWS = "/jsp/pages/reviews.jsp";
+    private static final CommentsPagesWithPagination commentsPagesWithPagination = CommentsPagesWithPagination.getInstance();
+
 
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
 
-        CommentsPagesWithPagination commentsPagesWithPagination = CommentsPagesWithPagination.getInstance();
         commentsPagesWithPagination.processCommandWithPagination(request);
         return CommandResponse.forward(REVIEWS);
     }

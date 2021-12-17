@@ -18,27 +18,23 @@ import java.sql.Timestamp;
 public class SignUpCommand implements Command {
 
     public static final String SIGN_UP = "/jsp/pages/sign-up.jsp";
-    public static final String LOGIN = "/jsp/pages/login.jsp";
-    public final SignUpService signUpService = SignUpService.getInstance();
+    private static final SignUpService signUpService = SignUpService.getInstance();
     private static final String PRE_PHOTO = "notAva.jpg";
-    private static final String USERNAME_EXIST_KEY = "username.exist";
     private static final String INVALID_DATA_KEY = "invalid.data";
 
 
     @Override
     public CommandResponse execute(RequestContext requestContext) throws ServiceException {
-        String password = ParameterTaker.takeString(Parameter.PASSWORD,requestContext);
-        String name = ParameterTaker.takeString(Parameter.NAME,requestContext);
+        String password = ParameterTaker.takeString(Parameter.PASSWORD, requestContext);
+        String name = ParameterTaker.takeString(Parameter.NAME, requestContext);
         String login = ParameterTaker.takeString(Parameter.LOGIN, requestContext);
         String email = ParameterTaker.takeString(Parameter.EMAIL, requestContext);
         String telegram = ParameterTaker.takeString(Parameter.TELEGRAM, requestContext);
-
-        boolean isLoginOrMailOrTelegramExist = false;
-        isLoginOrMailOrTelegramExist =
+        boolean isLoginOrMailOrTelegramExist =
                 signUpService.isUserLoginExist(login) ||
                         signUpService.isUserEmailExist(email) ||
                         signUpService.isUserTelegramExist(telegram);
-        if (!isLoginOrMailOrTelegramExist && signUpService.isValid(login,email,telegram,password,name) ) {
+        if (!isLoginOrMailOrTelegramExist && signUpService.isValid(login, email, telegram, password, name)) {
             requestContext.addAttribute(Attribute.SAVED_LOGIN, login);
             requestContext.addAttribute(Attribute.SAVED_EMAIL, email);
             Timestamp nowTime = new Timestamp(System.currentTimeMillis());
@@ -54,8 +50,6 @@ public class SignUpCommand implements Command {
                     setUserStatus(UserStatus.ACTIVE).
                     setCreateTime(nowTime).
                     setProfilePicture(PRE_PHOTO).build();
-
-            long idUser = signUpService.signUp(user);
 
         } else {
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, INVALID_DATA_KEY);

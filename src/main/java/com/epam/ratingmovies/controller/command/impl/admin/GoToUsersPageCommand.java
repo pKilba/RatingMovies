@@ -7,12 +7,13 @@ import com.epam.ratingmovies.controller.command.CommandResponse;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 
 public class GoToUsersPageCommand implements Command {
-    public static final String USERS = "/jsp/pages/users.jsp";
+    private static final String USERS = "/jsp/pages/users.jsp";
+    private static final UsersPagesWithPagination usersPagesWithPagination = UsersPagesWithPagination.getInstance();
+
 
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
 
-        UsersPagesWithPagination usersPagesWithPagination = UsersPagesWithPagination.getInstance();
         usersPagesWithPagination.processCommandWithPagination(request);
         return CommandResponse.forward(USERS);
     }
