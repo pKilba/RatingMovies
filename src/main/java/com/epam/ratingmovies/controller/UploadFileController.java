@@ -1,9 +1,8 @@
 package com.epam.ratingmovies.controller;
 
-import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.exception.ServiceException;
-import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.service.UserService;
+import com.epam.ratingmovies.util.Attribute;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,6 +24,7 @@ import java.util.UUID;
         maxFileSize = 1024 * 1024 * 10,
         maxRequestSize = 1024 * 1024 * 11)
 public class UploadFileController extends HttpServlet {
+
     private static final Logger logger = LogManager.getLogger();
     private static final String UPLOAD_FOLDER = "images/photo";
     private static final List<String> NAME_EXTENSIONS = List.of(".jpeg", ".jpg", ".png", ".gif");

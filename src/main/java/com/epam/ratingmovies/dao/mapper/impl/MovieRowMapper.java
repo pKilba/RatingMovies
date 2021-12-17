@@ -1,16 +1,23 @@
 package com.epam.ratingmovies.dao.mapper.impl;
 
-import com.epam.ratingmovies.dao.entity.*;
+import com.epam.ratingmovies.dao.entity.Genre;
+import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
-import static com.epam.ratingmovies.dao.entity.ColumnName.*;
-import static com.epam.ratingmovies.dao.entity.ColumnName.USER_PROFILE_PICTURE;
+import static com.epam.ratingmovies.dao.entity.ColumnName.MOVIE_ABOUT;
+import static com.epam.ratingmovies.dao.entity.ColumnName.MOVIE_AMOUNT_DISLIKE;
+import static com.epam.ratingmovies.dao.entity.ColumnName.MOVIE_AMOUNT_LIKE;
+import static com.epam.ratingmovies.dao.entity.ColumnName.MOVIE_BACKGROUND;
+import static com.epam.ratingmovies.dao.entity.ColumnName.MOVIE_DURATION;
+import static com.epam.ratingmovies.dao.entity.ColumnName.MOVIE_GENRE_ID;
+import static com.epam.ratingmovies.dao.entity.ColumnName.MOVIE_ID;
+import static com.epam.ratingmovies.dao.entity.ColumnName.MOVIE_NAME;
+import static com.epam.ratingmovies.dao.entity.ColumnName.MOVIE_POSTER;
+import static com.epam.ratingmovies.dao.entity.ColumnName.MOVIE_PRODUCER;
+import static com.epam.ratingmovies.dao.entity.ColumnName.MOVIE_RELEASE_DATE;
 
 public class MovieRowMapper implements RowMapper<Movie> {
     private static MovieRowMapper instance;

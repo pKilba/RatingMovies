@@ -4,7 +4,6 @@ import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.entity.UserRole;
 import com.epam.ratingmovies.dao.entity.UserStatus;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

@@ -1,7 +1,6 @@
 package com.epam.ratingmovies.controller.filter;
 
 
-
 import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.dao.entity.UserRole;
 import com.epam.ratingmovies.util.Attribute;
@@ -20,7 +19,7 @@ public class AccessFilter implements Filter {
     private static final String PERMISSION_DENIED = "Permission denied";
 
     @Override
-    public void   init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override
@@ -31,10 +30,9 @@ public class AccessFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession();
         UserRole userRole;
-        if (session.getAttribute("role")==null){
+        if (session.getAttribute("role") == null) {
             userRole = UserRole.GUEST;
-        }
-        else{
+        } else {
             userRole = (UserRole) session.getAttribute("role");
         }
         session.setAttribute(Attribute.ROLE, userRole);
@@ -55,7 +53,7 @@ public class AccessFilter implements Filter {
         try {
             return UserRole.valueOf(roleLine).isExistCommandName(commandName);
         } catch (IllegalArgumentException e) {
-            //  LOGGER.warn(WARN_MESSAGE + roleLine);
+            logger.warn(WARN_MESSAGE + roleLine);
             return false;
 
         }

@@ -35,7 +35,7 @@ public class CommentDaoImpl implements CommentDao {
             "SELECT * FROM comments ORDER BY " +
                     "create_time DESC LIMIT ?,?";
 
-    static private CommentDaoImpl instance;
+    private static CommentDaoImpl instance;
 
     private CommentDaoImpl() {
 

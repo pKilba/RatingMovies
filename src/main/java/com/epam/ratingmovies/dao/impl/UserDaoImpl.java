@@ -559,8 +559,7 @@ public class UserDaoImpl implements UserDAO {
 
         } catch (SQLException e) {
             throw new DaoException(e);
-        }
-      finally {
+        } finally {
             connectionPool.returnConnection(connection);
         }
 
@@ -589,8 +588,7 @@ public class UserDaoImpl implements UserDAO {
             preparedStatement.close();
         } catch (SQLException e) {
             throw new DaoException(e);
-        }
-        finally {
+        } finally {
             connectionPool.returnConnection(connection);
 
         }

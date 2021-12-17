@@ -23,11 +23,11 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/ratingMovies"}, name = "mainServlet")
 
 public class MainController extends HttpServlet {
-    public static final String ERROR = "/jsp/pages/error/error.jsp";
+    private static final String ERROR = "/jsp/pages/error/error.jsp";
     private static final String UTF_EIGHT = "UTF-8";
     private static final String JSON_CONTENT_TYPE = "application/json";
 
-    Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         processRequest(request, response);

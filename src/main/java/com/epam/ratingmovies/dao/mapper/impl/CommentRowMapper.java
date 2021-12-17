@@ -1,15 +1,16 @@
 package com.epam.ratingmovies.dao.mapper.impl;
 
 import com.epam.ratingmovies.dao.entity.Comment;
-import com.epam.ratingmovies.dao.entity.Genre;
-import com.epam.ratingmovies.dao.entity.Movie;
-import com.epam.ratingmovies.dao.impl.MovieDaoImpl;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.epam.ratingmovies.dao.entity.ColumnName.*;
+import static com.epam.ratingmovies.dao.entity.ColumnName.COMMENT_CREATE_TIME;
+import static com.epam.ratingmovies.dao.entity.ColumnName.COMMENT_ID;
+import static com.epam.ratingmovies.dao.entity.ColumnName.COMMENT_MESSAGE;
+import static com.epam.ratingmovies.dao.entity.ColumnName.MOVIE_ID;
+import static com.epam.ratingmovies.dao.entity.ColumnName.USER_ID;
 
 public class CommentRowMapper implements RowMapper<Comment> {
 
@@ -22,10 +23,9 @@ public class CommentRowMapper implements RowMapper<Comment> {
         return instance;
     }
 
-    //todo хз корректно или нет скоррее точно нет
     @Override
     public Comment map(ResultSet resultSet) throws SQLException {
-        return  Comment.builder()
+        return Comment.builder()
                 .setCommendId(resultSet.getInt(COMMENT_ID))
                 .setMessage(resultSet.getString(COMMENT_MESSAGE))
                 .setMovie(resultSet.getInt(MOVIE_ID))

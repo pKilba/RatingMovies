@@ -5,7 +5,7 @@ import com.epam.ratingmovies.exception.DaoException;
 
 import java.util.List;
 
-public interface MovieDao extends DAO<Movie,Long>{
+public interface MovieDao extends DAO<Movie, Long> {
 
 
     List<Movie> findMoviesByGenre(String genre) throws DaoException;

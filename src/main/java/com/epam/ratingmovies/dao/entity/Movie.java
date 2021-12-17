@@ -47,8 +47,7 @@ public class Movie extends AbstractEntity<Long> {
         this.name = name;
     }
 
-    public Movie(String name, String poster, String about, Timestamp releaseDate, int amount_like, int amount_dislike, Genre genre, String producer, int duration, String background)
-    {
+    public Movie(String name, String poster, String about, Timestamp releaseDate, int amount_like, int amount_dislike, Genre genre, String producer, int duration, String background) {
         this.name = name;
         this.poster = poster;
         this.about = about;
@@ -142,6 +141,7 @@ public class Movie extends AbstractEntity<Long> {
             newMovie.setProducer(producer);
             return this;
         }
+
         public Movie.MovieBuilder setMovieDuration(int duration) {
             newMovie.setDuration(duration);
             return this;
@@ -151,6 +151,7 @@ public class Movie extends AbstractEntity<Long> {
             newMovie.setBackground(background);
             return this;
         }
+
         public Movie.MovieBuilder setMovieName(String name) {
             newMovie.setName(name);
             return this;

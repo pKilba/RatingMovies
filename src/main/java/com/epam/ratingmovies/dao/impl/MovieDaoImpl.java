@@ -44,7 +44,7 @@ public class MovieDaoImpl implements MovieDao {
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
 
 
-    static private MovieDaoImpl instance;
+    private static MovieDaoImpl instance;
 
     private MovieDaoImpl() {
     }
@@ -86,8 +86,7 @@ public class MovieDaoImpl implements MovieDao {
 
         } catch (SQLException e) {
             throw new DaoException(e);
-        }
-        finally {
+        } finally {
             connectionPool.returnConnection(connection);
 
         }
@@ -119,7 +118,7 @@ public class MovieDaoImpl implements MovieDao {
                 Movie movie = mapper.map(resultSet);
                 result.add(movie);
 
-        }
+            }
 
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -165,8 +164,7 @@ public class MovieDaoImpl implements MovieDao {
 
         } catch (SQLException e) {
             throw new DaoException(e);
-        }
-        finally {
+        } finally {
             connectionPool.returnConnection(connection);
 
         }

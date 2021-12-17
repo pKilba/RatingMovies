@@ -6,12 +6,10 @@ import com.epam.ratingmovies.exception.DaoException;
 import java.util.List;
 import java.util.Optional;
 
-public interface DAO <T extends AbstractEntity<K>, K> {
-    //todo или назвать креейт
+public interface DAO<T extends AbstractEntity<K>, K> {
     T save(T entity) throws DaoException;
 
     T update(T entity) throws DaoException;
-
 
 
     void delete(K id) throws DaoException;
