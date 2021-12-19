@@ -6,7 +6,14 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <c:import url="/jsp/partspages/head.jsp"/>
     <%@ taglib prefix="sc" uri="custom-tags" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
     <link rel="stylesheet" type="text/css" href="../../css/reviews.css">
+
+    <fmt:setBundle basename="locale"/>
+    <fmt:setLocale value="${sessionScope.lang}"/>
+
+
 </head>
 <body>
 
@@ -33,7 +40,7 @@
             </c:forEach>
         </div>
 
-        <div class="">
+        <div class="comment mt-3 ml-5">
             <c:if test="${commentUserList.size() != 0}">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
@@ -57,34 +64,35 @@
             </c:if>
         </div>
 
-
-        <div class="comment">
-            <sc:access role="USER">
+        <sc:access role="USER">
+            <div class="comment mt-5">
                 <div class="col-lg-10 col-md-8  offset-md-1 offset-sm-3 col-12 mt-8">
                     <form id="algin-form" method="POST"
                           action="${pageContext.request.contextPath}/ratingMovies?command=leaveComment&movieId=${id}&id=${sessionScope.get("userId")}">
                         <div class="form-group">
-                            <h4>PIIIIIIIIIIDOR Leave a comment</h4>
-                            <textarea name="leaveComment" id="" cols="120" rows="5" class="form-control"style="background-color: black;" required></textarea>
+                            <textarea name="leaveComment" id="" cols="120" rows="5" class="form-control"
+                                      style="background-color: black;" required></textarea>
                         </div>
-              <button type="submit" class="btn btn-outline-light">post</button>
+                        <button type="submit" class="btn btn-outline-light"><fmt:message key="comment.leave"/></button>
                     </form>
                 </div>
-            </sc:access>
+            </div>
+        </sc:access>
 
-            <sc:access role="ADMIN">
+        <sc:access role="ADMIN">
+            <div class="comment mt-5">
                 <div class="col-lg-10 col-md-8  offset-md-1 offset-sm-3 col-12 mt-8">
                     <form id="algin-form" method="POST"
                           action="${pageContext.request.contextPath}/ratingMovies?command=leaveComment&movieId=${id}&id=${sessionScope.get("userId")}">
                         <div class="form-group">
-                            <h4>Leave a comment</h4>
-                            <textarea name="leaveComment" cols="120" rows="5" class="form-control" style="background-color: black;" required></textarea>
+                            <textarea name="leaveComment" cols="120" rows="5" class="form-control"
+                                      style="background-color: black;" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-outline-light">PIIIIIIIIIIDOR</button>
+                        <button type="submit" class="btn btn-outline-light"><fmt:message key="comment.leave"/></button>
                     </form>
                 </div>
-            </sc:access>
-        </div>
+            </div>
+        </sc:access>
 
 
     </div>

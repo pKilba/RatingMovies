@@ -148,6 +148,14 @@ public class UserService {
         return user.get();
     }
 
+    public void save(User user) throws ServiceException {
+        try {
+            userDao.save(user);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     public Optional<User> findUserByLoginAndPassword(String login, String password) throws ServiceException {
         Optional<User> user;
         try {

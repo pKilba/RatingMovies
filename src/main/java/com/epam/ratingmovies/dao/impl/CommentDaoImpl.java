@@ -22,10 +22,7 @@ public class CommentDaoImpl implements CommentDao {
 
     private final RowMapper<Comment> mapper = new CommentRowMapper();
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
-    private static final String
-            SQL_SAVE_COMMENT = "INSERT INTO comments(message,movie_id," +
-            "user_id,create_time)" +
-            " values (?,?,?,?)";
+    private static final String SQL_SAVE_COMMENT = "INSERT INTO comments(message,movie_id," + "user_id,create_time)" + " values (?,?,?,?)";
     private static final String SQL_FIND_ALL_COMMENTS = "SELECT * FROM comments";
 
     private static final String SQL_FIND_BY_ID_MOVIES =
