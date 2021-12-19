@@ -8,8 +8,8 @@ public class Movie extends AbstractEntity<Long> {
     private String poster;
     private String about;
     private Timestamp releaseDate;
-    private int amount_like;
-    private int amount_dislike;
+    private int amountLike;
+    private int amountDislike;
     private Genre genre;
     private String producer;
     private int duration;
@@ -52,8 +52,8 @@ public class Movie extends AbstractEntity<Long> {
         this.poster = poster;
         this.about = about;
         this.releaseDate = releaseDate;
-        this.amount_like = amount_like;
-        this.amount_dislike = amount_dislike;
+        this.amountLike = amount_like;
+        this.amountDislike = amount_dislike;
         this.genre = genre;
         this.producer = producer;
         this.duration = duration;
@@ -65,12 +65,12 @@ public class Movie extends AbstractEntity<Long> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return amount_like == movie.amount_like && amount_dislike == movie.amount_dislike && duration == movie.duration && Objects.equals(name, movie.name) && Objects.equals(poster, movie.poster) && Objects.equals(about, movie.about) && Objects.equals(releaseDate, movie.releaseDate) && genre == movie.genre && Objects.equals(producer, movie.producer) && Objects.equals(background, movie.background);
+        return amountLike == movie.amountLike && amountDislike == movie.amountDislike && duration == movie.duration && Objects.equals(name, movie.name) && Objects.equals(poster, movie.poster) && Objects.equals(about, movie.about) && Objects.equals(releaseDate, movie.releaseDate) && genre == movie.genre && Objects.equals(producer, movie.producer) && Objects.equals(background, movie.background);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, poster, about, releaseDate, amount_like, amount_dislike, genre, producer, duration, background);
+        return Objects.hash(name, poster, about, releaseDate, amountLike, amountDislike, genre, producer, duration, background);
     }
 
     public String getPoster() {
@@ -98,20 +98,20 @@ public class Movie extends AbstractEntity<Long> {
         this.releaseDate = releaseDate;
     }
 
-    public int getAmount_like() {
-        return amount_like;
+    public int getamountLike() {
+        return amountLike;
     }
 
-    public void setAmount_like(int amount_like) {
-        this.amount_like = amount_like;
+    public void setamountLike(int amountLike) {
+        this.amountLike = amountLike;
     }
 
-    public int getAmount_dislike() {
-        return amount_dislike;
+    public int getamountDislike() {
+        return amountDislike;
     }
 
-    public void setAmount_dislike(int amount_dislike) {
-        this.amount_dislike = amount_dislike;
+    public void setamountDislike(int amountDislike) {
+        this.amountDislike = amountDislike;
     }
 
     public Genre getGenre() {
@@ -180,13 +180,13 @@ public class Movie extends AbstractEntity<Long> {
         }
 
         public Movie.MovieBuilder setAmountLike(Integer like) {
-            newMovie.setAmount_like(like);
+            newMovie.setamountLike(like);
             return this;
         }
 
 
         public Movie.MovieBuilder setAmountDislike(Integer dislike) {
-            newMovie.setAmount_dislike(dislike);
+            newMovie.setamountDislike(dislike);
             return this;
         }
 

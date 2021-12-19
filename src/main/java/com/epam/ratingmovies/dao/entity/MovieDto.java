@@ -57,20 +57,20 @@ public class MovieDto extends AbstractEntity<Long>{
         this.releaseDate = releaseDate;
     }
 
-    public int getAmount_like() {
+    public int getamountLike() {
         return amount_like;
     }
 
-    public void setAmount_like(int amount_like) {
-        this.amount_like = amount_like;
+    public void setamountLike(int amountLike) {
+        this.amount_like = amountLike;
     }
 
-    public int getAmount_dislike() {
+    public int getamountDislike() {
         return amount_dislike;
     }
 
-    public void setAmount_dislike(int amount_dislike) {
-        this.amount_dislike = amount_dislike;
+    public void setamountDislike(int amountDislike) {
+        this.amount_dislike = amountDislike;
     }
 
     public Genre getGenre() {

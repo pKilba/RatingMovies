@@ -29,12 +29,9 @@ public class MainController extends HttpServlet {
 
     private static final Logger logger = LogManager.getLogger();
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        processRequest(request, response);
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -89,6 +86,7 @@ public class MainController extends HttpServlet {
     }
 
 
+    @Override
     public void destroy() {
         ConnectionPool pool = ConnectionPoolImpl.getInstance();
         pool.shutDown();

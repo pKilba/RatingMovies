@@ -26,7 +26,6 @@ public class AccountChangePassword {
 
 
         return isValidPassword(newPasswordFirst) &&
-                isValidPassword(newPasswordFirst) &&
                 isEqualFirstNewPasswordAndSecond(newPasswordFirst, newPasswordSecond) &&
                 isEqualPasswordUserAndCurrentPassword(user, currentPassword);
     }

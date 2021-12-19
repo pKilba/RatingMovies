@@ -19,10 +19,6 @@ public class AccessFilter implements Filter {
     private static final String PERMISSION_DENIED = "Permission denied";
 
     @Override
-    public void init(FilterConfig filterConfig) {
-    }
-
-    @Override
     public void doFilter(ServletRequest servletRequest,
                          ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
@@ -59,7 +55,4 @@ public class AccessFilter implements Filter {
         }
     }
 
-    @Override
-    public void destroy() {
-    }
 }

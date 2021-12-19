@@ -1,13 +1,14 @@
 package com.epam.ratingmovies.service.validator.impl;
 
 
+import com.epam.ratingmovies.service.validator.api.UserValidatorApi;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-//todo можно логику немного поменять дорабоать + проверить
 
-public class UserValidator implements com.epam.ratingmovies.service.validator.api.UserValidator {
+public class UserValidator implements UserValidatorApi {
 
     private static final String NAME_PATTERN = "[A-zА-яЁё]+";
     private static final String TELEGRAM_PATTERN = "^@[a-zA-Z0-9+]+$";
@@ -58,7 +59,6 @@ public class UserValidator implements com.epam.ratingmovies.service.validator.ap
     public boolean isValidTelegram(String telegram) {
         Matcher matcher = COMPILED_PATTERN_TELEGRAM.matcher(telegram);
         boolean isCorrect = matcher.matches();
-        System.out.println(isCorrect);
         if (!isCorrect ||
                 telegram.length() < MIN_TELEGRAM_LENGTH ||
                 telegram.length() > MAX_TELEGRAM_LENGTH) {
@@ -70,7 +70,6 @@ public class UserValidator implements com.epam.ratingmovies.service.validator.ap
     public boolean isValidName(String name) {
         Matcher matcher = COMPILED_PATTERN_NAME.matcher(name);
         boolean isCorrect = matcher.matches();
-        System.out.println(isCorrect);
         if (!isCorrect || name.length() > MAX_USER_NAME_LENGTH
                 || name.length() < MIN_USER_NAME_LENGTH) {
             return false;
@@ -89,7 +88,6 @@ public class UserValidator implements com.epam.ratingmovies.service.validator.ap
     public boolean isValidEmail(String email) {
         Matcher matcher = COMPILED_PATTERN_EMAIL.matcher(email);
         boolean isCorrect = matcher.matches();
-        System.out.println(isCorrect);
         if (!isCorrect || email.length() > MAX_EMAIL_LENGTH
                 || email.length() < MIN_EMAIL_LENGTH
         ) {

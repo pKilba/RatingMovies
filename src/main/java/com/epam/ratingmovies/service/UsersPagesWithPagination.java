@@ -35,7 +35,7 @@ public class UsersPagesWithPagination {
         int page = ParameterTaker.takeNumber(Parameter.PAGE, requestContext);
         int size = ParameterTaker.takeNumber(Parameter.SIZE, requestContext);
         long amount = userService.findUsersAmount();
-        long amountQuery = (page - 1) * size;
+        long amountQuery = (long) (page - 1) * size;
         if (amountQuery > amount) {
             logger.warn(INVALID_PARAMETER);
             throw new ServiceException(INVALID_PARAMETER);

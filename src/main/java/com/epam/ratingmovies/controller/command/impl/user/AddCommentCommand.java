@@ -15,8 +15,8 @@ import java.sql.Timestamp;
 public class AddCommentCommand implements Command {
 
     private static final String RATING_MOVIES_COMMAND = "ratingMovies?command=" + CommandName.MOVIE_PAGE + "&id=";
-    private static final CommentService commentService = CommentService.getInstance();
-    private static final String LeaveCommentParameter = "leaveComment";
+    private static final CommentService COMMENT_SERVICE = CommentService.getInstance();
+    private static final String LEAVE_COMMENT = "leaveComment";
 
 
     @Override
@@ -24,11 +24,11 @@ public class AddCommentCommand implements Command {
         long id = ParameterTaker.takeId(request);
         long idMovie = ParameterTaker.takeIdNow(request);
         Comment newComment = Comment.builder().
-                setMessage(request.getRequestParameter(LeaveCommentParameter))
+                setMessage(request.getRequestParameter(LEAVE_COMMENT))
                 .setMovie(idMovie).
                 setUser(id).
                 setCreateTime(new Timestamp(System.currentTimeMillis())).build();
-        commentService.save(newComment);
+        COMMENT_SERVICE.save(newComment);
         request.addAttribute(Attribute.ID, idMovie);
         return CommandResponse.redirect(RATING_MOVIES_COMMAND + idMovie);
     }

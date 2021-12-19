@@ -20,7 +20,7 @@ public class MoviesPagesWithPagination {
     private static final String INVALID_PAGE_OR_SIZE = "Invalid page or size!";
     private static final String PARAMETER_INVALID = "Parameter in query invalid";
 
-    static private MoviesPagesWithPagination instance;
+    private static MoviesPagesWithPagination instance;
 
     private MoviesPagesWithPagination() {
 
@@ -38,7 +38,7 @@ public class MoviesPagesWithPagination {
         int page = ParameterTaker.takeNumber(Parameter.PAGE, requestContext);
         int size = ParameterTaker.takeNumber(Parameter.SIZE, requestContext);
         long amount = movieService.findMoviesAmount();
-        long amountQuery = (page - 1) * size;
+        long amountQuery = (long) (page - 1) * size;
         if (amountQuery > amount) {
             logger.warn(PARAMETER_INVALID);
             throw new ServiceException(PARAMETER_INVALID);
@@ -51,9 +51,9 @@ public class MoviesPagesWithPagination {
         List<MovieDto> movieList = new ArrayList<>();
         for (Movie movie : movieList1) {
 
-            MovieDto movieDto = new MovieDto(movie.getName(),movie.getPoster(), movie.getAbout(),
-                    movie.getReleaseDate().toString().substring(0,11), movie.getAmount_like(),
-                    movie.getAmount_dislike(), movie.getGenre(), movie.getProducer(),
+            MovieDto movieDto = new MovieDto(movie.getName(), movie.getPoster(), movie.getAbout(),
+                    movie.getReleaseDate().toString().substring(0, 11), movie.getamountLike(),
+                    movie.getamountDislike(), movie.getGenre(), movie.getProducer(),
                     movie.getDuration(), movie.getBackground());
             movieDto.setId(movie.getId());
 

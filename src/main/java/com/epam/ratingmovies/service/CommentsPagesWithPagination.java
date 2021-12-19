@@ -25,7 +25,7 @@ public class CommentsPagesWithPagination {
     private static final String INVALID_PAGE_OR_SIZE = "Invalid page or size!";
     private static final String ATTRIBUTE_LEAVE_COMMENT = "commentUserList";
     private static final Logger logger = LogManager.getLogger();
-    static private CommentsPagesWithPagination instance;
+    private static CommentsPagesWithPagination instance;
 
     private CommentsPagesWithPagination() {
 
@@ -46,7 +46,7 @@ public class CommentsPagesWithPagination {
         int page = ParameterTaker.takeNumber(Parameter.PAGE, requestContext);
         int size = ParameterTaker.takeNumber(Parameter.SIZE, requestContext);
         long amount = commentService.findCommentsAmountByMovieId(id);
-        long amountQuery = (page - 1) * size;
+        long amountQuery = (long) (page - 1) * size;
         if (amountQuery > amount) {
             logger.warn(INVALID_PARAMETER);
             throw new ServiceException(INVALID_PARAMETER);

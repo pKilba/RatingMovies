@@ -2,8 +2,15 @@ package com.epam.ratingmovies.util;
 
 import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class ParameterTaker {
+
+    private static final Logger logger = LogManager.getLogger();
+
+
     public static String takeString(String parameterName, RequestContext requestContext) {
         return requestContext.getRequestParameter(parameterName);
     }
@@ -26,8 +33,7 @@ public class ParameterTaker {
         try {
             number = Integer.parseInt(numberStr);
         } catch (NumberFormatException e) {
-        }
-        if (number < 0) {
+            logger.warn(e);
         }
         return number;
     }

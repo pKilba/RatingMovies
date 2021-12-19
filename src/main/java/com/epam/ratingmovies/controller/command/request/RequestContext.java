@@ -1,12 +1,14 @@
 package com.epam.ratingmovies.controller.command.request;
 
 import com.epam.ratingmovies.util.Attribute;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 public class RequestContext {

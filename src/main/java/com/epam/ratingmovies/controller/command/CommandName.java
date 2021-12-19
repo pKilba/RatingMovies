@@ -29,4 +29,7 @@ public class CommandName {
     public static final String LOCALIZATION = "localization";
 
     public static final String USERS = "users";
+
+    private CommandName(){}
+
 }

@@ -10,14 +10,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 
-//final ubrats?
 public final class ConnectionPoolImpl implements ConnectionPool {
 
     private static final String DB_URL = "jdbc:mysql://c8u4r7fp8i8qaniw.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/cnrandw4tw0rd9pd?autoReconnect=true";
@@ -33,10 +29,6 @@ public final class ConnectionPoolImpl implements ConnectionPool {
 
     private static final Logger logger = LogManager.getLogger(ConnectionPoolImpl.class);
 
-
-    //мой синглтон потокобезопасный точно ?
-
-    //мб надо инстенс большими
     private static ConnectionPoolImpl instance;
 
     private ConnectionPoolImpl() {
@@ -58,8 +50,6 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     }
 
 
-    //мб не надо проверять на создание и тд и вообще нафиг будлеан возвращать
-    //проверяется прст это всё выше
     @Override
     public boolean init() {
         if (!IS_POOL_CREATED.get()) {

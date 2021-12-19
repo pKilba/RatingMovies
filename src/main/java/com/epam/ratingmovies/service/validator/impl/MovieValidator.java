@@ -11,13 +11,13 @@ public class MovieValidator {
     private static final int MAX_FILM_NAME_LENGTH = 64;
     private static final int MAX_FILM_ABOUT_LENGTH = 4080;
     private static final int MAX_FILM_PRODUCER_LENGTH = 64;
-    private static final int MAX_FILM_NUMBER_ = 10000;
-    private static final int MIN_FILM_NUMBER_ = 0;
+    private static final int MAX_FILM_NUMBER = 10000;
+    private static final int MIN_FILM_NUMBER = 0;
     private static final int MIN_FILM_ABOUT_LENGTH = 8;
     private static final int MIN_FILM_PRODUCER_LENGTH = 2;
     private static final int MIN_FILM_NAME_LENGTH = 2;
 
-    static private MovieValidator instance;
+    private static MovieValidator instance;
 
     private MovieValidator() {
 
@@ -47,7 +47,6 @@ public class MovieValidator {
     public boolean isValidName(String name) {
         Matcher matcher = COMPILED_PATTERN_NAME.matcher(name);
         boolean isCorrect = matcher.matches();
-        System.out.println(isCorrect);
         if (!isCorrect || name.length() > MAX_FILM_NAME_LENGTH
                 || name.length() < MIN_FILM_NAME_LENGTH) {
             return false;
@@ -58,9 +57,8 @@ public class MovieValidator {
     public boolean isValidNumber(int number) {
         Matcher matcher = COMPILED_PATTERN_NUMBER.matcher(Integer.toString(number));
         boolean isCorrect = matcher.matches();
-        System.out.println(isCorrect);
-        if (!isCorrect || number > MAX_FILM_NUMBER_
-                || number < MIN_FILM_NUMBER_) {
+        if (!isCorrect || number > MAX_FILM_NUMBER
+                || number < MIN_FILM_NUMBER) {
             return false;
         }
         return true;
@@ -69,7 +67,6 @@ public class MovieValidator {
     public boolean isValidNameProducer(String name) {
         Matcher matcher = COMPILED_PATTERN_NAME.matcher(name);
         boolean isCorrect = matcher.matches();
-        System.out.println(isCorrect);
         if (!isCorrect || name.length() > MAX_FILM_PRODUCER_LENGTH
                 || name.length() < MIN_FILM_PRODUCER_LENGTH) {
             return false;

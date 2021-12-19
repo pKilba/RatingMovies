@@ -65,8 +65,8 @@ public class MovieDaoImpl implements MovieDao {
             preparedStatement.setString(1, movie.getPoster());
             preparedStatement.setString(2, movie.getAbout());
             preparedStatement.setTimestamp(3, movie.getReleaseDate());
-            preparedStatement.setInt(4, movie.getAmount_like());
-            preparedStatement.setInt(5, movie.getAmount_dislike());
+            preparedStatement.setInt(4, movie.getamountLike());
+            preparedStatement.setInt(5, movie.getamountDislike());
             preparedStatement.setInt(6, movie.getGenre().getId());
             preparedStatement.setString(7, movie.getName());
             preparedStatement.setString(8, movie.getProducer());

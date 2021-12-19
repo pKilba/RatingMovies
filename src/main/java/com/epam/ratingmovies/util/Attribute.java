@@ -29,4 +29,7 @@ public class Attribute {
     public static final String ID = "id";
     public static final String SUCCESS = "success";
     public static final String ERROR = "error";
+
+    private Attribute(){}
+
 }

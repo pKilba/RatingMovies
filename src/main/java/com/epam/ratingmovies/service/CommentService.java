@@ -15,7 +15,7 @@ public class CommentService {
     private static final Logger logger = LogManager.getLogger();
     private static final CommentDaoImpl commentDao = CommentDaoImpl.getInstance();
 
-    static private CommentService instance;
+    private static CommentService instance;
 
     private CommentService() {
 

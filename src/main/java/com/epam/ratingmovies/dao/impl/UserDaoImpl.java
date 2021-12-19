@@ -100,9 +100,7 @@ public class UserDaoImpl implements UserDAO {
             preparedStatement.setInt(7, user.getUserStatus().getId());
             preparedStatement.setTimestamp(8, user.getDate());
             preparedStatement.setString(9, user.getProfilePicture());
-
-
-            int execute = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -578,9 +576,8 @@ public class UserDaoImpl implements UserDAO {
             preparedStatement.setInt(7, user.getUserStatus().getId());
             preparedStatement.setTimestamp(8, user.getDate());
             preparedStatement.setString(9, user.getProfilePicture());
-            System.out.println(user.getId());
             preparedStatement.setLong(10, user.getId());
-            Boolean result = Objects.equals(preparedStatement.executeUpdate(), 1);
+            Objects.equals(preparedStatement.executeUpdate(), 1);
             preparedStatement.close();
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -593,9 +590,6 @@ public class UserDaoImpl implements UserDAO {
 
     }
 
-
-    //todo check nizhe
-    //чем адд отличается от сейв или креэйт ну у меня там чтото выше
     @Override
     public long add(User t) throws DaoException {
         return 0;

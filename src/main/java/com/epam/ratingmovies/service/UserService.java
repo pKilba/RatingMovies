@@ -76,7 +76,6 @@ public class UserService {
     }
 
 
-    //todo через isPresent чекать нал или нет
     public User findUserById(long id) throws ServiceException {
         try {
             Optional<User> user = userDao.findUserById(id);

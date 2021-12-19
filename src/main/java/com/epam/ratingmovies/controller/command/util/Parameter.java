@@ -28,4 +28,6 @@ public class Parameter {
     public static final String IMAGE_FILM_BACK = "genre";
 
 
+    private Parameter(){}
+
 }
