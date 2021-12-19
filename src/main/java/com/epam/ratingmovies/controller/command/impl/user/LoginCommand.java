@@ -4,7 +4,7 @@ import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.service.LoginService;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.util.LineHasher;
-import com.epam.ratingmovies.controller.ParameterTaker;
+import com.epam.ratingmovies.util.ParameterTaker;
 import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandName;
 import com.epam.ratingmovies.controller.command.CommandResponse;

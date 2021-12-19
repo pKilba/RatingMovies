@@ -2,7 +2,7 @@ package com.epam.ratingmovies.controller.command.impl.user;
 
 import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
-import com.epam.ratingmovies.controller.ParameterTaker;
+import com.epam.ratingmovies.util.ParameterTaker;
 import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.CommandResponse;
 import com.epam.ratingmovies.controller.command.util.Parameter;

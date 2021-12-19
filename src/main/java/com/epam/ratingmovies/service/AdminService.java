@@ -3,7 +3,7 @@ package com.epam.ratingmovies.service;
 import com.epam.ratingmovies.exception.DaoException;
 import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
-import com.epam.ratingmovies.controller.ParameterTaker;
+import com.epam.ratingmovies.util.ParameterTaker;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.entity.UserStatus;

@@ -1,6 +1,6 @@
 package com.epam.ratingmovies.service;
 
-import com.epam.ratingmovies.controller.ParameterTaker;
+import com.epam.ratingmovies.util.ParameterTaker;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.dao.entity.User;

@@ -1,4 +1,4 @@
-package com.epam.ratingmovies.controller;
+package com.epam.ratingmovies.util;
 
 import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.controller.command.request.RequestContext;

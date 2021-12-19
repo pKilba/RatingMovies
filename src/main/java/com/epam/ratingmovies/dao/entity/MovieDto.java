@@ -1,7 +1,5 @@
 package com.epam.ratingmovies.dao.entity;
 
-import java.sql.Timestamp;
-
 public class MovieDto extends AbstractEntity<Long>{
     private String name;
     private String poster;
@@ -14,7 +12,7 @@ public class MovieDto extends AbstractEntity<Long>{
     private int duration;
     private String background;
 
-    public MovieDto(String name, String poster, String about, String releaseDate, int amount_like, int amount_dislike, Genre genre, String producer, int duration, String background) {
+    public MovieDto(String name, String poster, String about,String releaseDate, int amount_like, int amount_dislike, Genre genre, String producer, int duration, String background) {
         this.name = name;
         this.poster = poster;
         this.about = about;

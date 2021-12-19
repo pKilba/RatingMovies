@@ -1,6 +1,7 @@
 package com.epam.ratingmovies.service;
 
-import com.epam.ratingmovies.controller.ParameterTaker;
+import com.epam.ratingmovies.dao.entity.MovieDto;
+import com.epam.ratingmovies.util.ParameterTaker;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.dao.entity.Movie;
@@ -9,6 +10,7 @@ import com.epam.ratingmovies.util.Attribute;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoviesPagesWithPagination {
@@ -44,8 +46,24 @@ public class MoviesPagesWithPagination {
         if (amount < size) {
             size = (int) amount;
         }
-        List<Movie> movieList = buildMovieList(page, size);
+        List<Movie> movieList1 = buildMovieList(page, size);
+
+        List<MovieDto> movieList = new ArrayList<>();
+        for (Movie movie : movieList1) {
+
+            MovieDto movieDto = new MovieDto(movie.getName(),movie.getPoster(), movie.getAbout(),
+                    movie.getReleaseDate().toString().substring(0,11), movie.getAmount_like(),
+                    movie.getAmount_dislike(), movie.getGenre(), movie.getProducer(),
+                    movie.getDuration(), movie.getBackground());
+            movieDto.setId(movie.getId());
+
+            movieList.add(movieDto);
+        }
+
+
         requestContext.addAttribute(Attribute.MOVIE_LIST, movieList);
+
+
         requestContext.addAttribute(Attribute.CURRENT_PAGE, page);
         int maxPage = (int) (amount / size);
         if (amount % size != 0) {
