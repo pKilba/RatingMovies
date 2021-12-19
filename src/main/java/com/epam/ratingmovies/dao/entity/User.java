@@ -1,7 +1,7 @@
 package com.epam.ratingmovies.dao.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.Objects;
 
 public class User extends AbstractEntity<Long> {
 
@@ -15,13 +15,9 @@ public class User extends AbstractEntity<Long> {
     private String telegramAccount;
     private UserStatus userStatus;
 
-    //todo add yourself and change tip profile picture mb na string
-
-    //todo test удалить потом
     public User(String login, String password) {
         this.login = login;
         this.password = password;
-        System.out.println(login + " --login ; password -- " + password);
     }
 
 
@@ -42,6 +38,18 @@ public class User extends AbstractEntity<Long> {
     public User() {
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(createTime, user.createTime) && Objects.equals(name, user.name) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && userRole == user.userRole && Objects.equals(profilePicture, user.profilePicture) && Objects.equals(email, user.email) && Objects.equals(telegramAccount, user.telegramAccount) && userStatus == user.userStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(createTime, name, login, password, userRole, profilePicture, email, telegramAccount, userStatus);
+    }
 
     public Timestamp getCreateTime() {
         return createTime;
@@ -125,7 +133,7 @@ public class User extends AbstractEntity<Long> {
 
 
     public static class UserBuilder {
-        private User newUser;
+        private final User newUser;
 
         UserBuilder() {
             newUser = new User();

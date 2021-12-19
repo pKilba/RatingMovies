@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale"/>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
     <head>
@@ -15,7 +16,7 @@
 <body>
 <c:import url="/jsp/partspages/navbar.jsp"/>
 
-<div class="row flex-column">
+<div class="row flex-column" style="padding-left: 10px">
 
     <form name="signupForm" method="POST" action="${pageContext.request.contextPath}/ratingMovies?command=createMovie"
           class="flex-box col-md-6">
@@ -82,7 +83,13 @@
                 <option value="4"><fmt:message key="genre.horror"/></option>
             </select>
         </div>
+        <h3 class="text-danger error-message text-centr">
+            <fmt:message key="settings.error.${errorMessage}" />
+        </h3>
 
+        <h3  style="color: green">
+            <fmt:message key="settings.success.${successMessage}" />
+        </h3>
 
         <button type="submit" class="btn btn-primary"><fmt:message key="create.film.button"/></button>
     </form>

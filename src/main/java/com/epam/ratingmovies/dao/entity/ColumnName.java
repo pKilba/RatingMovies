@@ -1,7 +1,8 @@
 package com.epam.ratingmovies.dao.entity;
 
 public final class ColumnName {
-    private ColumnName(){}
+    private ColumnName() {
+    }
     //Table "users"
 
     public static final String USER_ID = "user_id";
@@ -28,8 +29,6 @@ public final class ColumnName {
     public static final String MOVIE_PRODUCER = "producer";
     public static final String MOVIE_DURATION = "duration";
     public static final String MOVIE_BACKGROUND = "background";
-
-
 
 
     //Table comments

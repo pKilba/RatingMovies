@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <!DOCTYPE html>
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale"/>
@@ -26,19 +25,28 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Имя пользователя</th>
-                    <th>Логин пользоватлея</th>
-                    <th>Дата создание аккаунта</th>
-                    <th>Роль юзера</th>
-                    <th>Статус пользователя</th>
+                    <th><fmt:message
+                            key="user.users"/></th>
+                    <th><fmt:message
+                            key="user.login"/></th>
+                    <th><fmt:message
+                            key="user.data.time"/></th>
+                    <th><fmt:message
+                            key="user.role"/></th>
+                    <th><fmt:message
+                            key="user.active"/></th>
                 </tr>
                 </thead>
                 <tbody class="table-of-users">
                 <c:forEach items="${userList}"  varStatus="counter" var="user">
                     <tr>
-                        <td>${counter.index+1}</td>
+                        <td>${user.getId()}</td>
                         <td>
-                                ${user.getName()}
+                            <a href="${pageContext.request.contextPath}/ratingMovies?command=profile-page&id=${user.getId()}">
+                                <img src="${pageContext.request.contextPath}/images/photo/${user.getProfilePicture()}"
+                                     class="avatar rounded-circle mr-4" height="50px" width="50px"
+                                     alt="Avatar">
+                            </a>
                         </td>
                         <td>
                             <a href="${pageContext.request.contextPath}/ratingMovies?command=profile-page&id=${user.getId()}">
@@ -47,7 +55,6 @@
                         </td>
                         <td>${user.getCreateTime()}</td>
                         <td>${user.getUserRole()}</td>
-                        <td>${user.getUserStatus()}</td>
                         <td id="status-part">
                             <span id="status-dot" class="status
 <c:choose>

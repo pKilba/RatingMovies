@@ -13,7 +13,7 @@ public class GoToAccountSettingPageCommand implements Command {
 
 
     private static final String SETTING = "/jsp/pages/account-settings.jsp";
-    private static final UserService userService = new UserService();
+    private static final UserService userService = UserService.getInstance();
 
     @Override
     public CommandResponse execute(RequestContext requestContext) throws ServiceException {

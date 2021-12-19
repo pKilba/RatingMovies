@@ -17,10 +17,11 @@ import java.util.Optional;
 
 public class AdminService {
 
-    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
-    private static AdminService instance = new AdminService();
+    private static final Logger logger = LogManager.getLogger();
     private static final ObjectMapper mapper = new ObjectMapper();
     private static final UserService userService = UserService.getInstance();
+    private static final String BLOCKED_USER = "Exception blocked user";
+    private static AdminService instance;
 
     public static AdminService getInstance() {
         if (instance == null) {
@@ -29,22 +30,22 @@ public class AdminService {
         return instance;
     }
 
-    private AdminService(){}
+    private AdminService() {
+    }
 
 
     public boolean isBlockedById(long id) throws ServiceException {
         UserDaoImpl userDao = UserDaoImpl.getInstance();
-        Optional<User> user ;
+        Optional<User> user;
         try {
             user = userDao.findUserById(id);
         } catch (DaoException e) {
-            logger.warn("Exception blocked user" + e);
-            throw new ServiceException("Exception blocked user" + e);
+            logger.warn(BLOCKED_USER + e);
+            throw new ServiceException(BLOCKED_USER + e);
         }
         return user.filter(value -> value.getUserStatus() == UserStatus.BANNED).isPresent();
 
     }
-
 
     public String banUserById(RequestContext requestContext) throws ServiceException {
         long userId = -1;

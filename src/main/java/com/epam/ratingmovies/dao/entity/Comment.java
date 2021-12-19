@@ -1,6 +1,7 @@
 package com.epam.ratingmovies.dao.entity;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Comment extends AbstractEntity<Long> {
     private String message;
@@ -9,6 +10,19 @@ public class Comment extends AbstractEntity<Long> {
     private Timestamp createTimeComment;
 
     Comment() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return movieId == comment.movieId && userId == comment.userId && Objects.equals(message, comment.message) && Objects.equals(createTimeComment, comment.createTimeComment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(message, movieId, userId, createTimeComment);
     }
 
     public String getMessage() {
@@ -56,7 +70,7 @@ public class Comment extends AbstractEntity<Long> {
 
 
     public static class CommentBuilder {
-        private Comment newComment;
+        private final Comment newComment;
 
         CommentBuilder() {
             newComment = new Comment();

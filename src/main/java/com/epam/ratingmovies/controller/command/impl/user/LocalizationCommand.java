@@ -9,16 +9,15 @@ import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
 
 public class LocalizationCommand implements Command {
-    private static final String EN = "en";
     private static final String RU = "ru";
     private static final String EN_LOCALE = "en_US";
     private static final String RU_LOCALE = "ru_RU";
     private static final String PARAMETER_SPLITERATOR = "&";
     private static final String LOGIN_PAGE = "ratingMovies?command=" + CommandName.LOGIN_PAGE;
     private static final String SIGN_UP_PAGE = "ratingMovies?command=" + CommandName.SIGN_UP_PAGE;
-    public static final String MOVIES = "/jsp/pages/movies.jsp";
+
     @Override
-    public CommandResponse execute(RequestContext requestContext)  {
+    public CommandResponse execute(RequestContext requestContext) {
         String language = ParameterTaker.takeString(Parameter.LANGUAGE, requestContext);
         String locale = getLocaleByLanguage(language);
         requestContext.addSession(Attribute.LANGUAGE, locale);
@@ -33,18 +32,23 @@ public class LocalizationCommand implements Command {
     }
 
     private String getLocaleByLanguage(String language) {
-        return switch (language) {
-            case RU -> RU_LOCALE;
-            default -> EN_LOCALE;
-        };
+        if (RU.equals(language)) {
+            return RU_LOCALE;
+        }
+        return EN_LOCALE;
     }
 
     private String changeCommandToCommandPage(String prevCommand) {
-        return switch (prevCommand) {
-            case CommandName.LOGIN -> LOGIN_PAGE;
-            case CommandName.SIGN_UP -> SIGN_UP_PAGE;
-            default -> MOVIES;
-        };
+        switch (prevCommand) {
+            case CommandName.LOGIN:
+                return LOGIN_PAGE;
+            case CommandName.SIGN_UP:
+                return SIGN_UP_PAGE;
+            default:
+                return EN_LOCALE;
+        }
+
+
     }
 
     private String extractCommand(String url) {

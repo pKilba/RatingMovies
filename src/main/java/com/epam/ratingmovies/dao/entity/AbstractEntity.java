@@ -1,7 +1,7 @@
 package com.epam.ratingmovies.dao.entity;
 
 public abstract class AbstractEntity<T> {
-   private T id;
+    private T id;
 
     public T getId() {
         return id;

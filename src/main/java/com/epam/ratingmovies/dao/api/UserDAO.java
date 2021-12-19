@@ -1,8 +1,7 @@
 package com.epam.ratingmovies.dao.api;
 
-import com.epam.ratingmovies.dao.api.DAO;
 import com.epam.ratingmovies.dao.entity.User;
-import com.epam.ratingmovies.dao.exception.DaoException;
+import com.epam.ratingmovies.exception.DaoException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -46,8 +45,10 @@ public interface UserDAO extends DAO<User, Long> {
      * @return an optional container of account.
      * @throws DaoException if database errors occurs.
      */
-   Optional<User> findUserByLogin(String login) throws DaoException;
+    Optional<User> findUserByLogin(String login) throws DaoException;
+
     boolean findUserByLogin(User user) throws DaoException;
+
     boolean findUserByTelegram(User user) throws DaoException;
 
     /**
@@ -59,7 +60,8 @@ public interface UserDAO extends DAO<User, Long> {
      * @throws DaoException if database errors occurs.
      */
     Optional<User> findUserByEmail(String email) throws DaoException;
-    boolean  findUserByEmail(User user) throws DaoException;
+
+    boolean findUserByEmail(User user) throws DaoException;
 
 
     /**

@@ -7,6 +7,8 @@ import com.epam.ratingmovies.dao.entity.Comment;
 import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +19,12 @@ import java.util.stream.IntStream;
 
 public class CommentsPagesWithPagination {
 
-    private final CommentService commentService = CommentService.getInstance();
-
-
-    private UserService userService = UserService.getInstance();
+    private static final CommentService commentService = CommentService.getInstance();
+    private static final UserService userService = UserService.getInstance();
+    private static final String INVALID_PARAMETER = "Parameter in query invalid";
+    private static final String INVALID_PAGE_OR_SIZE = "Invalid page or size!";
+    private static final String ATTRIBUTE_LEAVE_COMMENT = "commentUserList";
+    private static final Logger logger = LogManager.getLogger();
     static private CommentsPagesWithPagination instance;
 
     private CommentsPagesWithPagination() {
@@ -44,7 +48,8 @@ public class CommentsPagesWithPagination {
         long amount = commentService.findCommentsAmountByMovieId(id);
         long amountQuery = (page - 1) * size;
         if (amountQuery > amount) {
-            throw new ServiceException("Parameter in query invalid");
+            logger.warn(INVALID_PARAMETER);
+            throw new ServiceException(INVALID_PARAMETER);
         }
         if (amount < size) {
             size = (int) amount;
@@ -54,7 +59,7 @@ public class CommentsPagesWithPagination {
 
 
         List<User> users = new ArrayList<>();
-        User user = new User();
+        User user;
         for (Comment comment : commentList) {
             user = userService.findUserById(comment.getUserId());
             users.add(user);
@@ -64,10 +69,7 @@ public class CommentsPagesWithPagination {
                 .boxed()
                 .collect(Collectors.toMap(commentList::get, users::get));
 
-
-        requestContext.addAttribute("commentUserList", commentUserMap);
-
-
+        requestContext.addAttribute(ATTRIBUTE_LEAVE_COMMENT, commentUserMap);
         requestContext.addAttribute(Attribute.CURRENT_PAGE, page);
         int maxPage;
         if (amount != 0 && size != 0) {
@@ -88,8 +90,8 @@ public class CommentsPagesWithPagination {
         try {
             commentsList = commentService.findCommentRange(offset, size);
         } catch (ServiceException e) {
-            //todo logger
-            throw new ServiceException("Invalid page or size!");
+            logger.warn(INVALID_PAGE_OR_SIZE + e);
+            throw new ServiceException(INVALID_PAGE_OR_SIZE);
         }
 
         return commentsList;

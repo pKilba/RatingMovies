@@ -7,6 +7,7 @@ import com.epam.ratingmovies.exception.ServiceException;
 
 
 public class GoToAddMoviePageCommand implements Command {
+
     private static final String CREATE_MOVIE = "/jsp/pages/createMovie.jsp";
 
     @Override

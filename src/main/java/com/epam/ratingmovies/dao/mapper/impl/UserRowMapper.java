@@ -4,7 +4,6 @@ import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.dao.entity.UserRole;
 import com.epam.ratingmovies.dao.entity.UserStatus;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -26,7 +25,7 @@ public class UserRowMapper implements RowMapper<User> {
                 .setUserId(resultSet.getInt(USER_ID))
                 .setLogin(resultSet.getString(USER_LOGIN))
                 .setPassword(resultSet.getString(USER_PASSWORD))
-                .setUserRole(UserRole.getById(resultSet.getInt(USER_ROLE)))
+                .setUserRole(UserRole.values()[(resultSet.getInt(USER_ROLE))])
                 .setName(resultSet.getString(USER_NAME))
                 .setEmail(resultSet.getString(USER_EMAIL))
                 .setTelegram (resultSet.getString(USER_TELEGRAM))

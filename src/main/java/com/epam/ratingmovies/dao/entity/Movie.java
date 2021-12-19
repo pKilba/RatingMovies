@@ -1,7 +1,7 @@
 package com.epam.ratingmovies.dao.entity;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Movie extends AbstractEntity<Long> {
     private String name;
@@ -47,8 +47,7 @@ public class Movie extends AbstractEntity<Long> {
         this.name = name;
     }
 
-    public Movie(String name, String poster, String about, Timestamp releaseDate, int amount_like, int amount_dislike, Genre genre, String producer, int duration, String background)
-    {
+    public Movie(String name, String poster, String about, Timestamp releaseDate, int amount_like, int amount_dislike, Genre genre, String producer, int duration, String background) {
         this.name = name;
         this.poster = poster;
         this.about = about;
@@ -61,8 +60,18 @@ public class Movie extends AbstractEntity<Long> {
         this.background = background;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return amount_like == movie.amount_like && amount_dislike == movie.amount_dislike && duration == movie.duration && Objects.equals(name, movie.name) && Objects.equals(poster, movie.poster) && Objects.equals(about, movie.about) && Objects.equals(releaseDate, movie.releaseDate) && genre == movie.genre && Objects.equals(producer, movie.producer) && Objects.equals(background, movie.background);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, poster, about, releaseDate, amount_like, amount_dislike, genre, producer, duration, background);
+    }
 
     public String getPoster() {
         return poster;
@@ -122,7 +131,7 @@ public class Movie extends AbstractEntity<Long> {
 
 
     public static class MovieBuilder {
-        private Movie newMovie;
+        private final Movie newMovie;
 
         MovieBuilder() {
             newMovie = new Movie();
@@ -132,6 +141,7 @@ public class Movie extends AbstractEntity<Long> {
             newMovie.setProducer(producer);
             return this;
         }
+
         public Movie.MovieBuilder setMovieDuration(int duration) {
             newMovie.setDuration(duration);
             return this;
@@ -141,6 +151,7 @@ public class Movie extends AbstractEntity<Long> {
             newMovie.setBackground(background);
             return this;
         }
+
         public Movie.MovieBuilder setMovieName(String name) {
             newMovie.setName(name);
             return this;

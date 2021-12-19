@@ -4,16 +4,15 @@ import com.epam.ratingmovies.dao.api.MovieDao;
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
 import com.epam.ratingmovies.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.ratingmovies.dao.entity.Movie;
-import com.epam.ratingmovies.dao.entity.User;
-import com.epam.ratingmovies.dao.exception.DaoException;
 import com.epam.ratingmovies.dao.mapper.api.RowMapper;
 import com.epam.ratingmovies.dao.mapper.impl.MovieRowMapper;
-import com.epam.ratingmovies.dao.mapper.impl.UserRowMapper;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.epam.ratingmovies.exception.DaoException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +24,7 @@ public class MovieDaoImpl implements MovieDao {
     private static final String SQL_SAVE_MOVIE = "INSERT INTO movies(poster,about," +
             "movie_release_date,amount_like,amount_dislike,genre_id,name,producer,duration,background)" +
             " values (?,?,?,?,?,?,?,?,?,?)";
-    private static final String SQL_FIND_ALL_MOVIES = "SELECT movie_id, poster, about," +
-            "movie_release_date,amount_like,amount_dislike," +
-            "genre_id,name,producer,duration,background FROM movies";
+    private static final String SQL_FIND_ALL_MOVIES = "SELECT movie_id, poster, about,movie_release_date,amount_like,amount_dislike, genre_id,name,producer,duration,background FROM movies";
 
     private static final String SQL_FIND_MOVIE_BY_ID =
             "SELECT movie_id, poster, about," +
@@ -35,12 +32,33 @@ public class MovieDaoImpl implements MovieDao {
                     "genre_id , name,producer,duration,background FROM movies WHERE movie_id = ?";
 
 
+    private static final String SQL_FIND_MOVIES_RANGE =
+            "SELECT movie_id, poster, about," +
+                    " movie_release_date, amount_like, amount_dislike," +
+                    "genre_id," +
+                    " name, producer, duration, " +
+                    "background FROM movies ORDER BY " +
+                    "movie_release_date DESC LIMIT ?,?";
+
+
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
-    private static final Logger logger = LogManager.getLogger(MovieDaoImpl.class);
-    private long idMovie;
+
+
+    private static MovieDaoImpl instance;
+
+    private MovieDaoImpl() {
+    }
+
+    public static MovieDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new MovieDaoImpl();
+        }
+        return instance;
+    }
+
 
     @Override
-    public Movie save(Movie movie) {
+    public Movie save(Movie movie) throws DaoException {
         Connection connection = connectionPool.takeConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_MOVIE, Statement.RETURN_GENERATED_KEYS);
@@ -61,15 +79,15 @@ public class MovieDaoImpl implements MovieDao {
                 if (generatedKeys.next()) {
                     movie.setId(generatedKeys.getLong(1));
                 } else {
-                    logger.warn("No id obtained");
                     throw new DaoException("Creating user failed, no ID obtained.");
                 }
-                connectionPool.returnConnection(connection);
+                preparedStatement.close();
             }
 
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
 
         }
         return movie;
@@ -81,7 +99,6 @@ public class MovieDaoImpl implements MovieDao {
     }
 
 
-
     @Override
     public void delete(Long id) {
 
@@ -89,49 +106,47 @@ public class MovieDaoImpl implements MovieDao {
 
 
     @Override
-    public List<Movie> findAll() {
+    public List<Movie> findAll() throws DaoException {
 
         Connection connection = connectionPool.takeConnection();
         List<Movie> result = new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+            preparedStatement.close();
             while (resultSet.next()) {
                 Movie movie = mapper.map(resultSet);
                 result.add(movie);
+
             }
-            preparedStatement.close();
-            connectionPool.returnConnection(connection);
 
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
+        } finally {
+
+            connectionPool.returnConnection(connection);
         }
         return result;
     }
 
 
-
-    //todo изменить логику крч я сравниваю по айди а например в моей бд
-    //были удалены юзеры с некоторыми айди поэтому не ровно выводит
-    //todo!!!! obezatelno
     public List<Movie> findMoviesRange(int offset, int amount) throws DaoException {
         Connection connection = connectionPool.takeConnection();
         List<Movie> result = new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_MOVIES_RANGE)) {
+            preparedStatement.setInt(1, offset);
+            preparedStatement.setInt(2, amount);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Movie movie = mapper.map(resultSet);
-                if (offset < movie.getId() && movie.getId() <= offset + amount) {
-                    result.add(movie);
-                }
+                result.add(movie);
             }
-            preparedStatement.close();
-            connectionPool.returnConnection(connection);
+
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
         }
         return result;
     }
@@ -139,30 +154,31 @@ public class MovieDaoImpl implements MovieDao {
     public int findMoviesAmount() throws DaoException {
         Connection connection = connectionPool.takeConnection();
         int counter = 0;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (
+
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_MOVIES);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 counter++;
             }
-            preparedStatement.close();
 
-            connectionPool.returnConnection(connection);
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
+        } finally {
+            connectionPool.returnConnection(connection);
+
         }
         return counter;
     }
 
 
     @Override
-    public Optional<Movie> findById(Long idMovie) {
-        this.idMovie = idMovie;
+    public Optional<Movie> findById(Long idMovie) throws DaoException {
         ResultSet resultSet = null;
-        Optional<Movie> movieOptional = null;
-        try (Connection connection = connectionPool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_MOVIE_BY_ID)) {
+        Optional<Movie> movieOptional = Optional.empty();
+        Connection connection = connectionPool.takeConnection();
+        try (
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_MOVIE_BY_ID)) {
             statement.setLong(1, idMovie);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -170,16 +186,17 @@ public class MovieDaoImpl implements MovieDao {
             }
 
             connectionPool.returnConnection(connection);
+
         } catch (SQLException e) {
-            logger.throwing(Level.WARN, e);
             throw new DaoException(e);
         } finally {
+            connectionPool.returnConnection(connection);
+
             try {
                 if (resultSet != null) {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                logger.throwing(Level.WARN, e);
                 throw new DaoException(e);
             }
 

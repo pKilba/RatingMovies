@@ -5,23 +5,22 @@ import com.epam.ratingmovies.controller.command.request.RequestContext;
 
 public class ParameterTaker {
     public static String takeString(String parameterName, RequestContext requestContext) {
-        String paramValue = requestContext.getRequestParameter(parameterName);
-        return paramValue;
+        return requestContext.getRequestParameter(parameterName);
     }
-    public static long takeId(RequestContext requestContext)
-           {
+
+    public static long takeId(RequestContext requestContext) {
         String idStr = requestContext.getRequestParameter(Parameter.ID);
-            return Long.parseLong(idStr);
+        return Long.parseLong(idStr);
 
     }
-    public static long takeIdNow(RequestContext requestContext)
-    {
+
+    public static long takeIdNow(RequestContext requestContext) {
         String idStr = requestContext.getRequestParameter("movieId");
         return Long.parseLong(idStr);
 
     }
-    public static int takeNumber(String parameterName, RequestContext requestContext)
-            {
+
+    public static int takeNumber(String parameterName, RequestContext requestContext) {
         String numberStr = requestContext.getRequestParameter(parameterName);
         int number = -1;
         try {

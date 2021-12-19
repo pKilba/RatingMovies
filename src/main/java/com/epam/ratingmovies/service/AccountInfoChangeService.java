@@ -5,10 +5,9 @@ import com.epam.ratingmovies.service.validator.impl.UserValidator;
 
 public class AccountInfoChangeService {
 
-    UserValidator userValidator = UserValidator.getInstance();
+    private static final UserValidator userValidator = UserValidator.getInstance();
 
-
-    static private AccountInfoChangeService instance ;
+    private static AccountInfoChangeService instance;
 
     private AccountInfoChangeService() {
 
@@ -29,9 +28,9 @@ public class AccountInfoChangeService {
 
 
     public boolean isValidInfoAccount(String email, String telegram, String name) {
-        return isValidTelegram(telegram)&&
-         isValidName(name)&&
-         isValidEmail(email);
+        return isValidTelegram(telegram) &&
+                isValidName(name) &&
+                isValidEmail(email);
 
     }
 

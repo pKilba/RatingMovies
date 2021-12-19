@@ -1,24 +1,25 @@
 package com.epam.ratingmovies.controller.filter;
 
 
+import com.epam.ratingmovies.controller.command.util.Parameter;
+import com.epam.ratingmovies.dao.entity.UserRole;
+import com.epam.ratingmovies.util.Attribute;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 public class AccessFilter implements Filter {
     private static final Logger logger = LogManager.getLogger();
     private static final String WARN_MESSAGE = "Permission denied. Role: ";
     private static final String PERMISSION_DENIED = "Permission denied";
-////    private static final ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
-//    private static final JwtProvider jwtProvider = JwtProvider.getInstance();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override
@@ -29,10 +30,9 @@ public class AccessFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession();
         UserRole userRole;
-        if (session.getAttribute("role")==null){
+        if (session.getAttribute("role") == null) {
             userRole = UserRole.GUEST;
-        }
-        else{
+        } else {
             userRole = (UserRole) session.getAttribute("role");
         }
         session.setAttribute(Attribute.ROLE, userRole);

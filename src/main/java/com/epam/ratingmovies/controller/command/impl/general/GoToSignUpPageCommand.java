@@ -6,7 +6,7 @@ import com.epam.ratingmovies.controller.command.request.RequestContext;
 
 public class GoToSignUpPageCommand implements Command {
 
-    public static final String SIGN_UP = "/jsp/pages/sign-up.jsp";
+    private static final String SIGN_UP = "/jsp/pages/sign-up.jsp";
 
     @Override
     public CommandResponse execute(RequestContext request) {

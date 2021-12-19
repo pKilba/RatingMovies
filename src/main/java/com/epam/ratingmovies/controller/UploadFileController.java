@@ -32,7 +32,7 @@ public class UploadFileController extends HttpServlet {
     private static final String SUCCESS_RESPONSE = "{\"success\": true}";
     private static final String WRONG_RESPONSE = "{\"success\": false}";
     private static final String DEFAULT_PHOTO = "notAva.jpg";
-    private static final UserService userService = new UserService();
+    private static final UserService userService = UserService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

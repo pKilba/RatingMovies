@@ -11,15 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserService {
-    private static UserService instance;
-    //todo мб надо синглтон на юзердао
     private static final UserDaoImpl userDao = UserDaoImpl.getInstance();
-
     private static final String UPDATE_PROBLEM = "Update exception  ";
     private static final String FIND_PROBLEM = "Find exception  ";
     private static final String BLOCKED_PROBLEM = "Blocked exception  ";
-
     private static final Logger logger = LogManager.getLogger();
+    private static UserService instance;
 
     public static UserService getInstance() {
         if (instance == null) {
@@ -29,6 +26,8 @@ public class UserService {
     }
 
 
+    private UserService() {
+    }
 
     public List findUsers() throws ServiceException {
         try {
@@ -138,7 +137,6 @@ public class UserService {
         }
     }
 
-    //todo optional return
     public User findUserByLogin(String login) throws ServiceException {
         Optional<User> user;
         try {

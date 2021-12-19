@@ -1,12 +1,11 @@
 package com.epam.ratingmovies.dao.connectionpool.impl;
 
 import com.epam.ratingmovies.dao.connectionpool.api.ConnectionPool;
-import com.epam.ratingmovies.dao.exception.ConnectionPoolException;
+import com.epam.ratingmovies.exception.ConnectionPoolException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,16 +18,16 @@ import java.util.concurrent.locks.ReentrantLock;
 //final ubrats?
 public final class ConnectionPoolImpl implements ConnectionPool {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/mydb";
-    private static final String USER = "root";
-    private static final String PASS = "jsp1977";
+    private static final String DB_URL = "jdbc:mysql://c8u4r7fp8i8qaniw.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/cnrandw4tw0rd9pd?autoReconnect=true";
+    private static final String USER = "nfjpip0zodjdbk23";
+    private static final String PASS = "m0tm1u4yb9jefy5z";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static int INITIAL_PO0L_SIZE = 50;
+    private static final int INITIAL_PO0L_SIZE = 3;
     private static final AtomicBoolean IS_POOL_CREATED = new AtomicBoolean(false);
     private static final ReentrantLock INSTANCE_LOCKER = new ReentrantLock();
     //мб слева простая очередь и простой лист справа уже это реализация
-    private final BlockingQueue<ProxyConnection> availableConnections;
-    private final BlockingQueue<ProxyConnection> giveAwayConnections;
+    private final LinkedBlockingQueue availableConnections;
+    private final LinkedBlockingQueue giveAwayConnections;
 
     private static final Logger logger = LogManager.getLogger(ConnectionPoolImpl.class);
 
@@ -122,7 +121,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
 
             }
         }
-        ProxyConnection connection = availableConnections.poll();
+        ProxyConnection connection = (ProxyConnection) availableConnections.poll();
         giveAwayConnections.add(connection);
         return connection;
     }
@@ -134,7 +133,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     @Override
     public synchronized void returnConnection(Connection connection) {
         if (giveAwayConnections.remove(connection)) {
-            availableConnections.add((ProxyConnection) connection);
+            availableConnections.add(connection);
             notifyAll();
         } else {
             logger.warn("Failed to get the connection back ");
@@ -144,7 +143,6 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     private boolean initializeConnections(int amount) {
         try {
             for (int i = 0; i < amount; i++) {
-                //FINAL&&&
                 Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
                 ProxyConnection proxyConnection = new ProxyConnection(connection, this);
                 availableConnections.add(proxyConnection);

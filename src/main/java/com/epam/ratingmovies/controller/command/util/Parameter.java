@@ -4,7 +4,8 @@ public class Parameter {
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
     public static final String CURRENT_PASSWORD = "currPas";
-    public static final String NEW_PASSWORD = "newPas";
+    public static final String NEW_PASSWORD_FIRST = "newPas1";
+    public static final String NEW_PASSWORD_SECOND = "newPas2";
     public static final String EMAIL = "email";
     public static final String NAME = "name";
     public static final String TELEGRAM = "telegram";
@@ -15,7 +16,16 @@ public class Parameter {
     public static final String PAGE = "p";
     public static final String SIZE = "s";
     public static final String DATE = "date";
-    public static final String BIO = "bio";
     public static final String LEAVE_COMMENT = "leaveComment";
+    public static final String ABOUT = "about";
+    public static final String IMAGE_FILM = "img";
+    public static final String DATA = "data";
+    public static final String LIKE = "like";
+    public static final String DISLIKE = "dislike";
+    public static final String PRODUCER = "producer";
+    public static final String DURATION = "duration";
+    public static final String GENRE = "genre";
+    public static final String IMAGE_FILM_BACK = "genre";
+
 
 }

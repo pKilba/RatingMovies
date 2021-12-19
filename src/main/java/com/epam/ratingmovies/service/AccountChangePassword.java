@@ -4,11 +4,10 @@ import com.epam.ratingmovies.dao.entity.User;
 import com.epam.ratingmovies.service.validator.impl.UserValidator;
 
 public class AccountChangePassword {
-    private final UserValidator userValidator = UserValidator.getInstance();
 
+    private static final UserValidator userValidator = UserValidator.getInstance();
 
-
-    static private AccountChangePassword instance ;
+    private static AccountChangePassword instance;
 
     private AccountChangePassword() {
 
@@ -20,7 +19,6 @@ public class AccountChangePassword {
         }
         return instance;
     }
-
 
 
     public boolean

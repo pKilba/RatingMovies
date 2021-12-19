@@ -6,15 +6,19 @@ import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.dao.entity.Movie;
 import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.util.Attribute;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class MoviesPagesWithPagination {
 
-    MovieService movieService = MovieService.getInstance();
+    private static final MovieService movieService = MovieService.getInstance();
+    private static final Logger logger = LogManager.getLogger();
+    private static final String INVALID_PAGE_OR_SIZE = "Invalid page or size!";
+    private static final String PARAMETER_INVALID = "Parameter in query invalid";
 
-
-    static private MoviesPagesWithPagination instance ;
+    static private MoviesPagesWithPagination instance;
 
     private MoviesPagesWithPagination() {
 
@@ -34,7 +38,8 @@ public class MoviesPagesWithPagination {
         long amount = movieService.findMoviesAmount();
         long amountQuery = (page - 1) * size;
         if (amountQuery > amount) {
-            throw new ServiceException("Parameter in query invalid");
+            logger.warn(PARAMETER_INVALID);
+            throw new ServiceException(PARAMETER_INVALID);
         }
         if (amount < size) {
             size = (int) amount;
@@ -52,12 +57,12 @@ public class MoviesPagesWithPagination {
 
     private List<Movie> buildMovieList(int page, int size) throws ServiceException {
         int offset = (page - 1) * size;
-        List<Movie> movieList = null;
+        List<Movie> movieList;
         try {
             movieList = movieService.findMoviesRange(offset, size);
         } catch (ServiceException e) {
-            //todo logger
-              throw new ServiceException("Invalid page or size!");
+            logger.warn(INVALID_PAGE_OR_SIZE + e);
+            throw new ServiceException(INVALID_PAGE_OR_SIZE);
         }
 
         return movieList;

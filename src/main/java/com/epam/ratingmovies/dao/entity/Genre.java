@@ -11,7 +11,7 @@ public enum Genre {
     HORROR(4);
 
 
-    private int id;
+    private final int id;
 
     Genre(int id) {
         this.id = id;

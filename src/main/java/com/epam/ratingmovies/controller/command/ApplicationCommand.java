@@ -17,7 +17,6 @@ public enum ApplicationCommand {
     GO_TO_ACCOUNT_SETTING_PAGE(new GoToAccountSettingPageCommand(), CommandName.ACCOUNT_SETTINGS_PAGE),
     GO_TO_CREATE_MOVIE(new GoToAddMoviePageCommand(), CommandName.CREATE_MOVIE_PAGE),
     CREATE_MOVIE(new CreateMovieCommand(), "createMovie"),
-    //todo добавить только для админа ?
     GO_TO_USERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
     GO_TO_MOVIES_PAGE(new GoToMoviesPageCommand(), CommandName.MOVIES_PAGE),
     SIGN_UP(new SignUpCommand(), CommandName.SIGN_UP),
@@ -28,6 +27,7 @@ public enum ApplicationCommand {
     GO_TO_REVIEWS_PAGE(new GoToReviewsPageCommand(), CommandName.REVIEWS_PAGE),
     LOGOUT(new LogOutCommand(), CommandName.LOGOUT),
     LOCALIZATION(new LocalizationCommand(), CommandName.LOCALIZATION);
+
     private final Command command;
     private final String commandName;
 
@@ -59,7 +59,5 @@ public enum ApplicationCommand {
             }
         }
         return null;
-        //todo
-        // return GoToNotFoundPageCommand.INSTANCE;
     }
 }

@@ -13,14 +13,16 @@ import java.util.Optional;
 
 public class SignUpService {
 
-    private static final String SIGN_UP_PROBLEM ="Error sign-up";
-    private static final String EXIST_PROBLEM_LOGIN ="Login exist";
-    private static final String EXIST_PROBLEM_EMAIL ="Email exist";
-    private static final String EXIST_PROBLEM_TELEGRAM ="Telegram exist";
-    private static SignUpService instance;
-    private final UserDaoImpl userDao = UserDaoImpl.getInstance();
-    private final UserValidator userValidator = UserValidator.getInstance();
+    private static final String SIGN_UP_PROBLEM = "Error sign-up";
+    private static final String EXIST_PROBLEM_LOGIN = "Login exist";
+    private static final String EXIST_PROBLEM_EMAIL = "Email exist";
+    private static final String EXIST_PROBLEM_TELEGRAM = "Telegram exist";
+    private static final UserValidator userValidator = UserValidator.getInstance();
     private static final Logger logger = LogManager.getLogger();
+    private static final UserDaoImpl userDao = UserDaoImpl.getInstance();
+
+    private static SignUpService instance;
+
     private SignUpService() {
     }
 
@@ -32,12 +34,10 @@ public class SignUpService {
     }
 
 
-    public boolean isValid(String login,String email,String telegram ,String password,String name) {
-        return userValidator.isValid(login,email,telegram,password,name);
+    public boolean isValid(String login, String email, String telegram, String password, String name) {
+        return userValidator.isValid(login, email, telegram, password, name);
     }
 
-    //todo нужен ли тут вообще юзердто??!
-    //todo userDto ВМЕСТО ЮЗЕР В ПАРАМЕТРАХ
     public long signUp(User user) throws ServiceException {
         long userId = 1;
         try {
@@ -52,7 +52,7 @@ public class SignUpService {
     }
 
     public boolean isUserLoginExist(String login) throws ServiceException {
-        Optional<User> user = Optional.empty() ;
+        Optional<User> user = Optional.empty();
         try {
             user = userDao.findUserByLogin(login);
         } catch (DaoException e) {
@@ -70,11 +70,6 @@ public class SignUpService {
     }
 
 
-    //todo крч при регистрации и ввода несущ данныъ или сущ логина
-    // всё гуд при вводе сущ емейл или телега при повторном заполнении страница долго грузится
-
-
-    //todo проверить сущ емейла и телеги не проверял
     public boolean isUserEmailExist(String email) throws ServiceException {
         Optional<User> user = Optional.empty();
         try {
