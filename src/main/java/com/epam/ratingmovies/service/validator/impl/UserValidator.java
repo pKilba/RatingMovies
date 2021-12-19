@@ -37,8 +37,11 @@ public class UserValidator implements com.epam.ratingmovies.service.validator.ap
 
     @Override
     public boolean isValid(String login, String email, String telegram, String password, String name) {
-        if (isValidName(name) && isValidLogin(login)
-                && isValidTelegram(telegram) && isValidPassword(password) && isValidEmail(email)) {
+        if (isValidName(name)
+                && isValidLogin(login)
+                && isValidTelegram(telegram)
+                && isValidPassword(password)
+                && isValidEmail(email)) {
             return true;
         }
         return false;

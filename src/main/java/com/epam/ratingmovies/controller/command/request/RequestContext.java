@@ -10,7 +10,7 @@ import java.util.*;
 
 
 public class RequestContext {
-    private static final ObjectMapper mapper = new ObjectMapper();
+
     private static final String REFERER_HEADER = "Referer";
     private final Map<String, Object> requestAttributes;
     private final Map<String, Object> sessionAttributes;

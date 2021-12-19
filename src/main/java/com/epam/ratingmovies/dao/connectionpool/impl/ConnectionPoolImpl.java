@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -25,9 +27,9 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     private static final int INITIAL_PO0L_SIZE = 3;
     private static final AtomicBoolean IS_POOL_CREATED = new AtomicBoolean(false);
     private static final ReentrantLock INSTANCE_LOCKER = new ReentrantLock();
-    //мб слева простая очередь и простой лист справа уже это реализация
-    private final LinkedBlockingQueue availableConnections;
-    private final LinkedBlockingQueue giveAwayConnections;
+
+    private final LinkedList availableConnections;
+    private final LinkedList giveAwayConnections;
 
     private static final Logger logger = LogManager.getLogger(ConnectionPoolImpl.class);
 
@@ -38,8 +40,8 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     private static ConnectionPoolImpl instance;
 
     private ConnectionPoolImpl() {
-        availableConnections = new LinkedBlockingQueue();
-        giveAwayConnections = new LinkedBlockingQueue();
+        availableConnections = new LinkedList();
+        giveAwayConnections = new LinkedList();
         init();
     }
 
@@ -85,7 +87,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
         return false;
     }
 
-    private void closeConnections(BlockingQueue<ProxyConnection> connections) {
+    private void closeConnections(LinkedList<ProxyConnection> connections) {
         for (ProxyConnection connection : connections) {
             closeConnection(connection);
 
@@ -126,10 +128,6 @@ public final class ConnectionPoolImpl implements ConnectionPool {
         return connection;
     }
 
-
-    //todo чекнуть мб тут не надо синхранайз
-    //todo rolback setautocommit?
-    //todo порабоать над этим методом
     @Override
     public synchronized void returnConnection(Connection connection) {
         if (giveAwayConnections.remove(connection)) {

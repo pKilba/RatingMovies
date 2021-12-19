@@ -7,7 +7,7 @@ import com.epam.ratingmovies.exception.ServiceException;
 
 public interface Command {
 
-    CommandResponse execute(RequestContext request) throws ServiceException; //throws ServiceException, InvalidParametersException;;
+    CommandResponse execute(RequestContext request) throws ServiceException;
 
     static Command withName(String name) {
         return ApplicationCommand.of(name);

@@ -10,6 +10,7 @@ import com.epam.ratingmovies.dao.entity.UserRole;
 import com.epam.ratingmovies.dao.entity.UserStatus;
 import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.service.SignUpService;
+import com.epam.ratingmovies.service.UserService;
 import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.util.LineHasher;
 
@@ -18,10 +19,11 @@ import java.sql.Timestamp;
 public class SignUpCommand implements Command {
 
     public static final String SIGN_UP = "/jsp/pages/sign-up.jsp";
+    public static final String SIGN_IN = "/jsp/pages/login.jsp";
     private static final SignUpService signUpService = SignUpService.getInstance();
     private static final String PRE_PHOTO = "notAva.jpg";
     private static final String INVALID_DATA_KEY = "invalid.data";
-
+    private static final UserService userService = UserService.getInstance();
 
     @Override
     public CommandResponse execute(RequestContext requestContext) throws ServiceException {
@@ -50,6 +52,9 @@ public class SignUpCommand implements Command {
                     setUserStatus(UserStatus.ACTIVE).
                     setCreateTime(nowTime).
                     setProfilePicture(PRE_PHOTO).build();
+
+            userService.save(user);
+            return CommandResponse.forward(SIGN_IN);
 
         } else {
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, INVALID_DATA_KEY);
