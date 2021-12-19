@@ -38,7 +38,7 @@
                 </tr>
                 </thead>
                 <tbody class="table-of-users">
-                <c:forEach items="${userList}"  varStatus="counter" var="user">
+                <c:forEach items="${userList}" varStatus="counter" var="user">
                     <tr>
                         <td>${user.getId()}</td>
                         <td>
@@ -77,9 +77,6 @@
                 </c:forEach>
                 </tbody>
             </table>
-
-
-
 
 
             <c:if test="${userList.size() != 0}">

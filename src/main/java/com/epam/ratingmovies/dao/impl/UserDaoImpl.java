@@ -121,6 +121,7 @@ public class UserDaoImpl implements UserDAO {
         return user;
     }
 
+    @Override
     public long findIdByLogin(String login) throws DaoException {
         ResultSet resultSet = null;
         long id = 0;
@@ -170,6 +171,7 @@ public class UserDaoImpl implements UserDAO {
         }
     }
 
+    @Override
     public Optional<User> findUserById(long id) throws DaoException {
         ResultSet resultSet = null;
         Optional<User> userOptional = Optional.empty();
@@ -225,11 +227,6 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public Optional<User> findById(Long idEntity) {
-
-        return Optional.empty();
-    }
-
     public boolean blockById(Long id) throws DaoException {
         Connection connection = connectionPool.takeConnection();
         try {
@@ -247,17 +244,19 @@ public class UserDaoImpl implements UserDAO {
         return true;
     }
 
-
+    @Override
     public boolean isUnblockedById(long id) throws DaoException {
         User user = findUserById(id).get();
         return user.getUserStatus().getId() == 1;
     }
 
+    @Override
     public boolean isBlockedById(long id) throws DaoException {
         User user = findUserById(id).get();
         return user.getUserStatus().getId() == 2;
     }
 
+    @Override
     public boolean unblockById(Long id) throws DaoException {
 
         Connection connection = connectionPool.takeConnection();
@@ -353,6 +352,7 @@ public class UserDaoImpl implements UserDAO {
     }
 
 
+    @Override
     public Optional<User> findUserByTelegram(String telegram) throws DaoException {
         ResultSet resultSet = null;
         Optional<User> userOptional = Optional.empty();
@@ -526,7 +526,7 @@ public class UserDaoImpl implements UserDAO {
         return false;
     }
 
-
+    @Override
     public void updatePhotoByUserId(long id, String photo) throws DaoException {
 
         Connection connection = connectionPool.takeConnection();
@@ -543,6 +543,7 @@ public class UserDaoImpl implements UserDAO {
         }
     }
 
+    @Override
     public boolean updatePasswordByUserId(long id, String password) throws DaoException {
         Connection connection = connectionPool.takeConnection();
 
@@ -590,13 +591,4 @@ public class UserDaoImpl implements UserDAO {
 
     }
 
-    @Override
-    public long add(User t) throws DaoException {
-        return 0;
-    }
-
-    @Override
-    public boolean updateGeneralInfoByUserId(long userId, User user) throws DaoException {
-        return false;
-    }
 }

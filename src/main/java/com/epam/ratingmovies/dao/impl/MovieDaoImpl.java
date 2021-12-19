@@ -94,18 +94,6 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public Movie update(Movie movie) {
-        return null;
-    }
-
-
-    @Override
-    public void delete(Long id) {
-
-    }
-
-
-    @Override
     public List<Movie> findAll() throws DaoException {
 
         Connection connection = connectionPool.takeConnection();
@@ -130,6 +118,7 @@ public class MovieDaoImpl implements MovieDao {
     }
 
 
+    @Override
     public List<Movie> findMoviesRange(int offset, int amount) throws DaoException {
         Connection connection = connectionPool.takeConnection();
         List<Movie> result = new ArrayList<>();
@@ -151,6 +140,7 @@ public class MovieDaoImpl implements MovieDao {
         return result;
     }
 
+    @Override
     public int findMoviesAmount() throws DaoException {
         Connection connection = connectionPool.takeConnection();
         int counter = 0;
@@ -205,8 +195,4 @@ public class MovieDaoImpl implements MovieDao {
     }
 
 
-    @Override
-    public List<Movie> findMoviesByGenre(String genre) throws DaoException {
-        return null;
-    }
 }

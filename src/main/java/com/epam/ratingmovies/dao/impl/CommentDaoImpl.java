@@ -23,12 +23,12 @@ public class CommentDaoImpl implements CommentDao {
     private final RowMapper<Comment> mapper = new CommentRowMapper();
     private final ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
     private static final String SQL_SAVE_COMMENT = "INSERT INTO comments(message,movie_id," + "user_id,create_time)" + " values (?,?,?,?)";
-    private static final String SQL_FIND_ALL_COMMENTS = "SELECT * FROM comments";
+    private static final String SQL_FIND_ALL_COMMENTS = "SELECT comment_id,message,movie_id,user_id,create_time FROM comments";
 
-    private static final String SQL_FIND_BY_ID_MOVIES = "SELECT * FROM comments WHERE movie_id = ?";
+    private static final String SQL_FIND_BY_ID_MOVIES = "SELECT comment_id,message,movie_id,user_id,create_time FROM comments WHERE movie_id = ?";
 
     private static final String SQL_FIND_COMMENTS_RANGE =
-            "SELECT * FROM comments ORDER BY " +
+            "SELECT comment_id,message,movie_id,user_id,create_time FROM comments ORDER BY " +
                     "create_time DESC LIMIT ?,?";
 
     private static CommentDaoImpl instance;
@@ -73,6 +73,7 @@ public class CommentDaoImpl implements CommentDao {
         return comment;
     }
 
+    @Override
     public List<Comment> findCommentsRange(int offset, int amount) throws DaoException {
         Connection connection = connectionPool.takeConnection();
         List<Comment> result = new ArrayList<>();
@@ -94,6 +95,7 @@ public class CommentDaoImpl implements CommentDao {
     }
 
 
+    @Override
     public int findCommentsAmountByMovieId(long id) throws DaoException {
         ResultSet resultSet = null;
         int result = 0;
@@ -123,6 +125,7 @@ public class CommentDaoImpl implements CommentDao {
         return result;
     }
 
+    @Override
     public int findCommentsAmount() throws DaoException {
         Connection connection = connectionPool.takeConnection();
         int counter = 0;
@@ -140,10 +143,10 @@ public class CommentDaoImpl implements CommentDao {
         return counter;
     }
 
-
+    @Override
     public List<Comment> findCommentByIdMovies(long id) throws DaoException {
         ResultSet resultSet = null;
-        ArrayList<Comment> result = new ArrayList<Comment>();
+        ArrayList<Comment> result = new ArrayList();
         Connection connection = connectionPool.takeConnection();
         try (
                 PreparedStatement statement =
@@ -176,17 +179,6 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public Comment update(Comment entity) {
-        return null;
-    }
-
-
-    @Override
-    public void delete(Long id) {
-
-    }
-
-    @Override
     public List<Comment> findAll() throws DaoException {
         Connection connection = connectionPool.takeConnection();
         List<Comment> result = new ArrayList<>();
@@ -206,8 +198,4 @@ public class CommentDaoImpl implements CommentDao {
         return result;
     }
 
-    @Override
-    public Optional<Comment> findById(Long idEntity) {
-        return Optional.empty();
-    }
 }

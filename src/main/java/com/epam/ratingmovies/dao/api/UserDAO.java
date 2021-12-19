@@ -63,26 +63,6 @@ public interface UserDAO extends DAO<User, Long> {
 
     boolean findUserByEmail(User user) throws DaoException;
 
-
-    /**
-     * Saves specific object to database.
-     * Object User should be conatin UserId field
-     *
-     * @param item User object to update.
-     * @return boolean value successe or fail update
-     * @throws DaoException if database errors occurs.
-     */
-    User update(User item) throws DaoException;
-
-    /**
-     * Add long.
-     *
-     * @param t the t
-     * @return the long
-     * @throws DaoException the dao exception
-     */
-    long add(User t) throws DaoException;
-
     /**
      * Update password by user id boolean.
      *
@@ -91,17 +71,27 @@ public interface UserDAO extends DAO<User, Long> {
      * @return the boolean
      * @throws DaoException the dao exception
      */
-    boolean updatePasswordByUserId(long userId, String password) throws DaoException, SQLException;
-
-    /**
-     * Update general info by user id boolean.
-     *
-     * @param userId the user id
-     * @param user   the user
-     * @return the boolean
-     * @throws DaoException the dao exception
-     */
-    boolean updateGeneralInfoByUserId(long userId, User user) throws DaoException;
 
 
+    long findIdByLogin(String login) throws DaoException;
+
+    void delete(Long id) throws DaoException;
+
+    Optional<User> findUserById(long id) throws DaoException;
+
+    boolean blockById(Long id) throws DaoException;
+
+    boolean isUnblockedById(long id) throws DaoException;
+
+    boolean isBlockedById(long id) throws DaoException;
+
+    boolean unblockById(Long id) throws DaoException;
+
+    Optional<User> findUserByTelegram(String telegram) throws DaoException;
+
+    void updatePhotoByUserId(long id, String photo) throws DaoException;
+
+    boolean updatePasswordByUserId(long id, String password) throws DaoException;
+
+    User update(User user) throws DaoException;
 }
