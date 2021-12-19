@@ -25,8 +25,7 @@ public class CommentDaoImpl implements CommentDao {
     private static final String SQL_SAVE_COMMENT = "INSERT INTO comments(message,movie_id," + "user_id,create_time)" + " values (?,?,?,?)";
     private static final String SQL_FIND_ALL_COMMENTS = "SELECT * FROM comments";
 
-    private static final String SQL_FIND_BY_ID_MOVIES =
-            "SELECT * FROM comments WHERE movie_id = ?";
+    private static final String SQL_FIND_BY_ID_MOVIES = "SELECT * FROM comments WHERE movie_id = ?";
 
     private static final String SQL_FIND_COMMENTS_RANGE =
             "SELECT * FROM comments ORDER BY " +
