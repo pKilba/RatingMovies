@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Asus
-  Date: 23.11.2021
-  Time: 01:06
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lang}"/>
@@ -20,7 +14,7 @@
 
 <body class="main-bg">
 <form method="POST" name="loginForm" action="${pageContext.request.contextPath}/ratingMovies?command=login"
-      class="flex-box col-md-6">
+      class="flex-box col-md-12">
     <div class="login-container text-c animated flipInX " >
         <div>
             <h1 class="logo-badge text-whitesmoke"><span class="fa fa-user-circle"></span></h1>
