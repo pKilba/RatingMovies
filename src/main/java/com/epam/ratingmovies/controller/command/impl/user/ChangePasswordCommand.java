@@ -1,44 +1,42 @@
 package com.epam.ratingmovies.controller.command.impl.user;
 
-import com.epam.ratingmovies.util.Attribute;
 import com.epam.ratingmovies.controller.ParameterTaker;
-import com.epam.ratingmovies.controller.command.api.Command;
-import com.epam.ratingmovies.controller.command.CommandName;
 import com.epam.ratingmovies.controller.command.CommandResponse;
-import com.epam.ratingmovies.controller.command.util.Parameter;
+import com.epam.ratingmovies.controller.command.api.Command;
 import com.epam.ratingmovies.controller.command.request.RequestContext;
+import com.epam.ratingmovies.controller.command.util.Parameter;
 import com.epam.ratingmovies.dao.entity.User;
+import com.epam.ratingmovies.exception.ServiceException;
 import com.epam.ratingmovies.service.AccountChangePassword;
 import com.epam.ratingmovies.service.UserService;
-import com.epam.ratingmovies.service.validator.UserValidator;
-import com.google.protobuf.ServiceException;
-
-import java.sql.SQLException;
+import com.epam.ratingmovies.util.Attribute;
+import com.epam.ratingmovies.util.LineHasher;
 
 public class ChangePasswordCommand implements Command {
-    private static final String PROFILE_PAGE_COMMAND = "poker?command=" + CommandName.PROFILE_PAGE + "&id=";
     private static final String INVALID_DATA_KEY = "invalid.pass";
     private static final String VALID_DATA_KEY = "success.pass";
-    UserService userService = new UserService();
-    UserValidator userValidator = UserValidator.getInstance();
-    AccountChangePassword accountChangePassword = new AccountChangePassword();
-
+    private static final UserService userService = new UserService();
+    private static final AccountChangePassword accountChangePassword = AccountChangePassword.getInstance();
+    private static final String SETTINGS = "/jsp/pages/account-settings.jsp";
+    private static final LineHasher lineHasher = new LineHasher();
 
     @Override
     public CommandResponse execute(RequestContext requestContext)
-            throws ServiceException, SQLException {
+            throws ServiceException {
         long id = ParameterTaker.takeId(requestContext);
         User user = userService.findUserById(id);
         requestContext.addAttribute(Attribute.USER, user);
         String currentPassword = ParameterTaker.takeString(Parameter.CURRENT_PASSWORD, requestContext);
-        String newPassword = ParameterTaker.takeString(Parameter.NEW_PASSWORD, requestContext);
-
-        if (accountChangePassword.isCorrectPassword(newPassword, user, currentPassword)) {
-
-            userService.updatePasswordByUserId(id, newPassword);
+        String newPasswordFirst = ParameterTaker.takeString(Parameter.NEW_PASSWORD_FIRST, requestContext);
+        String newPasswordSecond = ParameterTaker.takeString(Parameter.NEW_PASSWORD_SECOND, requestContext);
+        String hashCurrentPassword = lineHasher.hashingLine(currentPassword);
+        String hashNewPasswordFirst = lineHasher.hashingLine(newPasswordFirst);
+        if (accountChangePassword.isCorrectPassword(newPasswordFirst, newPasswordSecond, user, hashCurrentPassword)) {
+            userService.updatePasswordByUserId(id, hashNewPasswordFirst);
+            requestContext.addAttribute(Attribute.SUCCESS_MESSAGE, VALID_DATA_KEY);
+            return CommandResponse.forward(SETTINGS);
         }
-
-
-        return CommandResponse.forward("");
+        requestContext.addAttribute(Attribute.ERROR_MESSAGE, INVALID_DATA_KEY);
+        return CommandResponse.forward(SETTINGS);
     }
 }

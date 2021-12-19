@@ -1,12 +1,25 @@
 package com.epam.ratingmovies.service;
 
 
-import com.epam.ratingmovies.service.validator.UserValidator;
+import com.epam.ratingmovies.service.validator.impl.UserValidator;
 
 public class AccountInfoChangeService {
 
-    private boolean isCorrectInfoAccount;
     UserValidator userValidator = UserValidator.getInstance();
+
+
+    static private AccountInfoChangeService instance ;
+
+    private AccountInfoChangeService() {
+
+    }
+
+    public static AccountInfoChangeService getInstance() {
+        if (instance == null) {
+            instance = new AccountInfoChangeService();
+        }
+        return instance;
+    }
 
 
     public boolean isValidTelegram(String telegram) {
@@ -16,10 +29,10 @@ public class AccountInfoChangeService {
 
 
     public boolean isValidInfoAccount(String email, String telegram, String name) {
-        boolean isCorrect = isValidTelegram(telegram);
-        isCorrect = isValidName(name);
-        isCorrect = isValidEmail(email);
-        return isCorrect;
+        return isValidTelegram(telegram)&&
+         isValidName(name)&&
+         isValidEmail(email);
+
     }
 
 

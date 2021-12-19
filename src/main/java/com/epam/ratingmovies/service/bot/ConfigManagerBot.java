@@ -9,8 +9,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public final class ConfigManagerBot {
+
     private static final Logger LOGGER = LogManager.getLogger();
-    private static String BOT_PROPERTIES = "bot.properties";
+    private static final String BOT_PROPERTIES = "bot.properties";
     private static String BOT_TOKEN;
     private static String CHANNEL_NAME;
     private static String BOT_NAME;
@@ -21,12 +22,17 @@ public final class ConfigManagerBot {
             Properties properties = new Properties();
             properties.load(inputStream);
             BOT_TOKEN = (String) properties.get("telegram.bot.token");
-            BOT_NAME = (String) properties.get("telegram.bot.name");
+            BOT_NAME = (String) properties.get("");
             CHANNEL_NAME = (String) properties.get("telegram.channel.name");
         } catch (IOException e) {
             LOGGER.fatal("Error not upload config Bot");
         }
     }
+
+
+
+
+
 
     public static String getBotToken() {
         return BOT_TOKEN;
