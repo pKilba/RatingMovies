@@ -73,7 +73,7 @@ public class MovieDaoImpl implements MovieDao {
             preparedStatement.setInt(9, movie.getDuration());
             preparedStatement.setString(10, movie.getBackground());
 
-            int execute = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {

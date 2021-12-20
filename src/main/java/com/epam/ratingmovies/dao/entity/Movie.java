@@ -47,13 +47,13 @@ public class Movie extends AbstractEntity<Long> {
         this.name = name;
     }
 
-    public Movie(String name, String poster, String about, Timestamp releaseDate, int amount_like, int amount_dislike, Genre genre, String producer, int duration, String background) {
+    public Movie(String name, String poster, String about, Timestamp releaseDate, int amountLike, int amountDislike, Genre genre, String producer, int duration, String background) {
         this.name = name;
         this.poster = poster;
         this.about = about;
         this.releaseDate = releaseDate;
-        this.amountLike = amount_like;
-        this.amountDislike = amount_dislike;
+        this.amountLike = amountLike;
+        this.amountDislike = amountDislike;
         this.genre = genre;
         this.producer = producer;
         this.duration = duration;

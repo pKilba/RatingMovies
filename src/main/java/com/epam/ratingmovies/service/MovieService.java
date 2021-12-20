@@ -20,7 +20,7 @@ public class MovieService {
     private static final MovieValidator movieValidator = MovieValidator.getInstance();
 
 
-    static private MovieService instance;
+    private static MovieService instance;
 
     private MovieService() {
 
@@ -88,7 +88,7 @@ public class MovieService {
         try {
             return movieDao.findMoviesRange(offset, size);
         } catch (DaoException e) {
-            logger.error(FIND_MOVIE_PROBLEM+e);
+            logger.error(FIND_MOVIE_PROBLEM + e);
             throw new ServiceException(FIND_MOVIE_PROBLEM);
         }
 

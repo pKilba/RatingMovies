@@ -5,20 +5,20 @@ public class MovieDto extends AbstractEntity<Long>{
     private String poster;
     private String about;
     private String releaseDate;
-    private int amount_like;
-    private int amount_dislike;
+    private int amountLike;
+    private int amountDislike;
     private Genre genre;
     private String producer;
     private int duration;
     private String background;
 
-    public MovieDto(String name, String poster, String about,String releaseDate, int amount_like, int amount_dislike, Genre genre, String producer, int duration, String background) {
+    public MovieDto(String name, String poster, String about,String releaseDate, int amountLike, int amountDislike, Genre genre, String producer, int duration, String background) {
         this.name = name;
         this.poster = poster;
         this.about = about;
         this.releaseDate = releaseDate;
-        this.amount_like = amount_like;
-        this.amount_dislike = amount_dislike;
+        this.amountLike = amountLike;
+        this.amountDislike = amountDislike;
         this.genre = genre;
         this.producer = producer;
         this.duration = duration;
@@ -58,19 +58,19 @@ public class MovieDto extends AbstractEntity<Long>{
     }
 
     public int getamountLike() {
-        return amount_like;
+        return amountLike;
     }
 
     public void setamountLike(int amountLike) {
-        this.amount_like = amountLike;
+        this.amountLike = amountLike;
     }
 
     public int getamountDislike() {
-        return amount_dislike;
+        return amountDislike;
     }
 
     public void setamountDislike(int amountDislike) {
-        this.amount_dislike = amountDislike;
+        this.amountDislike = amountDislike;
     }
 
     public Genre getGenre() {

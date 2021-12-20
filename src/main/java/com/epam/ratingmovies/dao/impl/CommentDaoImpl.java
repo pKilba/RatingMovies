@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class CommentDaoImpl implements CommentDao {
 
@@ -146,7 +145,7 @@ public class CommentDaoImpl implements CommentDao {
     @Override
     public List<Comment> findCommentByIdMovies(long id) throws DaoException {
         ResultSet resultSet = null;
-        ArrayList<Comment> result = new ArrayList();
+        List<Comment> result = new ArrayList();
         Connection connection = connectionPool.takeConnection();
         try (
                 PreparedStatement statement =
