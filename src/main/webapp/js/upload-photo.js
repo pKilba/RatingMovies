@@ -10,7 +10,6 @@ async function uploadFile() {
     if (!success) {
         alert("Error Upload!")
     }
-    // await sessionStorage.removeItem('photo')
     setTimeout(function () {
         location.reload();
     },1000);
