@@ -47,8 +47,19 @@ public interface UserDAO extends DAO<User, Long> {
      */
     Optional<User> findUserByLogin(String login) throws DaoException;
 
+
+    /**
+     * @param user user
+     * @return is there a user with this login
+     * @throws DaoException if database errors occurs.
+     */
     boolean findUserByLogin(User user) throws DaoException;
 
+    /**
+     * @param user user
+     * @return is there a user with this telegram
+     * @throws DaoException if database errors occurs
+     */
     boolean findUserByTelegram(User user) throws DaoException;
 
     /**
@@ -61,37 +72,94 @@ public interface UserDAO extends DAO<User, Long> {
      */
     Optional<User> findUserByEmail(String email) throws DaoException;
 
-    boolean findUserByEmail(User user) throws DaoException;
 
     /**
-     * Update password by user id boolean.
-     *
-     * @param userId   the user id
-     * @param password the password
-     * @return the boolean
-     * @throws DaoException the dao exception
+     * @param user user
+     * @return is there a user with this email
+     * @throws DaoException if database errors occurs.
      */
+    boolean findUserByEmail(User user) throws DaoException;
 
 
+    /**
+     * @param login login user
+     * @return an id by user login
+     * @throws DaoException if database errors occurs.
+     */
     long findIdByLogin(String login) throws DaoException;
+
+
+    /**
+     * @param id id user
+     * @throws DaoException if database errors occurs.
+     */
 
     void delete(Long id) throws DaoException;
 
+
+    /**
+     * @param id id user
+     * @return user optional by id
+     * @throws DaoException if database errors occurs.
+     */
     Optional<User> findUserById(long id) throws DaoException;
 
+    /**
+     * @param id id user
+     * @return true or false about block by id user
+     * @throws DaoException if database errors occurs.
+     */
     boolean blockById(Long id) throws DaoException;
 
+    /**
+     * @param id user
+     * @return true or false about unblock by id user
+     * @throws DaoException if database errors occurs.
+     */
     boolean isUnblockedById(long id) throws DaoException;
+
+    /**
+     * @param id user
+     * @return true or false about block by id user
+     * @throws DaoException if database errors occurs.
+     */
 
     boolean isBlockedById(long id) throws DaoException;
 
+    /**
+     * @param id user id
+     * @return true or false about unblock by id user
+     * @throws DaoException if database errors occurs.
+     */
     boolean unblockById(Long id) throws DaoException;
 
+    /**
+     * @param telegram user telegram
+     * @return find optional user by telegram
+     * @throws DaoException if database errors occurs.
+     */
     Optional<User> findUserByTelegram(String telegram) throws DaoException;
+
+    /**
+     * @param id    user id
+     * @param photo
+     * @throws DaoException if database errors occurs
+     */
 
     void updatePhotoByUserId(long id, String photo) throws DaoException;
 
+    /**
+     * @param id       id user
+     * @param password password user
+     * @return true or false , result operation
+     * @throws DaoException if database errors occurs
+     */
     boolean updatePasswordByUserId(long id, String password) throws DaoException;
 
+    /**
+     * @param user user
+     * @return update user by user
+     * @throws DaoException if database errors occurs
+     */
     User update(User user) throws DaoException;
 }

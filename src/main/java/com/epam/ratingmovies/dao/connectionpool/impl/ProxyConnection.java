@@ -57,8 +57,6 @@ public class ProxyConnection implements Connection {
         this.connection.rollback();
     }
 
-
-    //PEREOPREDELEN
     @Override
     public void close() throws SQLException {
         this.connectionPool.returnConnection(connection);

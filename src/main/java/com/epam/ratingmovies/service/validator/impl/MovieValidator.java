@@ -1,9 +1,11 @@
 package com.epam.ratingmovies.service.validator.impl;
 
+import com.epam.ratingmovies.service.validator.api.MovieValidatorApi;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MovieValidator {
+public class MovieValidator implements MovieValidatorApi {
     private static final String NAME_PATTERN = "[A-zА-яЁё\\s]+";
     private static final String NUMBER_PATTERN = "[0-9]+";
     private static final Pattern COMPILED_PATTERN_NAME = Pattern.compile(NAME_PATTERN);
@@ -31,6 +33,7 @@ public class MovieValidator {
     }
 
 
+    @Override
     public boolean isValid(String name, int like, int dislike, int duration, String producer, String about) {
         if (isValidName(name)
                 && isValidNameProducer(producer)

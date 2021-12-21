@@ -64,8 +64,6 @@ public class UserServiceTest {
     }
 
 
-
-
     @Test
     public void testFindUserByLogin() {
         User user = null;

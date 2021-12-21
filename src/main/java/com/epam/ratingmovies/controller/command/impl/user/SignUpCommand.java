@@ -18,8 +18,8 @@ import java.sql.Timestamp;
 
 public class SignUpCommand implements Command {
 
-    public static final String SIGN_UP = "/jsp/pages/sign-up.jsp";
-    public static final String SIGN_IN = "/jsp/pages/login.jsp";
+    private static final String SIGN_UP = "/jsp/pages/sign-up.jsp";
+    private static final String SIGN_IN = "/jsp/pages/login.jsp";
     private static final SignUpService signUpService = SignUpService.getInstance();
     private static final String PRE_PHOTO = "notAva.jpg";
     private static final String INVALID_DATA_KEY = "invalid.data";

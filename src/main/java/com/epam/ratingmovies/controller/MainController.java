@@ -25,7 +25,6 @@ import java.io.IOException;
 public class MainController extends HttpServlet {
     private static final String ERROR = "/jsp/pages/error/error.jsp";
     private static final String UTF_EIGHT = "UTF-8";
-    private static final String JSON_CONTENT_TYPE = "application/json";
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -54,7 +53,6 @@ public class MainController extends HttpServlet {
                           HttpServletResponse response)
             throws ServletException, IOException {
         if (commandResult.getPage().equals("json")) {
-            response.setContentType(JSON_CONTENT_TYPE);
             response.setCharacterEncoding(UTF_EIGHT);
             response.getWriter().write(commandResult.getLine());
         } else {

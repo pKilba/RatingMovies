@@ -10,6 +10,7 @@ import com.epam.ratingmovies.util.Attribute;
 public class LogOutCommand implements Command {
 
     private static final String MOVIES = "/jsp/pages/login.jsp";
+
     @Override
     public CommandResponse execute(RequestContext request) throws ServiceException {
         request.addSession(Attribute.INVALIDATE_ATTRIBUTE, true);

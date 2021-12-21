@@ -19,6 +19,7 @@ public class ChangePasswordCommand implements Command {
     private static final AccountChangePassword accountChangePassword = AccountChangePassword.getInstance();
     private static final String SETTINGS = "/jsp/pages/account-settings.jsp";
     private static final LineHasher lineHasher = new LineHasher();
+
     @Override
     public CommandResponse execute(RequestContext requestContext)
             throws ServiceException {
